@@ -1,0 +1,173 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    gap: 36px;
+}
+
+.header {
+    background-color: #1F2937;
+    padding: 24px;
+    display: flex;
+    height: 50px;
+    justify-content: space-around;
+    color: white;
+    font-size: 24px;
+    gap: 300px;
+}
+
+button:hover {
+    background-color: pink;
+}
+
+/* section-1 css */
+
+.section-1 {
+    background-color:#1F2937;
+    padding-top: 45px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    gap: 500px;
+}
+
+#hero {
+    width: 400px;
+}
+
+#hero-title {
+    font-size: 48px; 
+    font-weight: bolder;
+    color: #F9FAF8
+}
+
+#hero-small {
+    font-size: 18px;
+    color: #F9FAF8
+}
+
+.btn {
+    border: 0;
+    padding: 8px;
+    margin-top: 16px;
+    background-color: #f64e38;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* section-2 css */
+
+.section-2 {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    height: 400px;
+    gap: 50px;
+
+}
+
+.mid-img {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.mid-content {
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+}
+
+#info-header {
+    padding: 20 40px;
+    margin: 20 40px;
+    font-size: 36px;
+    font-weight: bolder;
+    color: #1F2937;
+    display: flex;
+    justify-content: center;
+}
+
+.img-info {
+    width: 150px;
+}
+
+/* section-3 css */
+
+.section-3 {
+    background-color: #E5E7EB;
+    height: 200px;
+}
+
+#test {
+    font-size: 28px;
+    color: #1F2937;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 54px;
+}
+
+#test-name {
+    font-size: 28px;
+    font-weight: 900;
+    display: flex;
+    justify-content: center;
+}
+
+/* section-4 */
+
+.section-4 {
+    height: 300px;
+    background-color: darkgrey; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background-color: #1F2937;
+    padding: 32px;
+    margin: 12px;
+    color: #F9FAF8;
+    width: 900px;
+}
+
+#cta-title {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#cta-text {
+    font-size: 18px;
+}
+
+#cta-button {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.footer {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+
+

@@ -1,0 +1,92 @@
+
+.main-heading {
+    background-color:red; color:white; font-size:32px; align : center; font-weight: 700;
+}
+
+.odd {
+    background-color: rgb(243, 157, 170); font-family: Verdana, "DejaVu Sans", sans-serif;
+}
+
+#Num-2 {
+    color: blue; font-size: 36px;
+}   
+
+.Num-3 {
+    font-size: 24px;
+}
+
+#Num-4 {
+    background-color: rgb(77, 197, 77); font-size: 24px
+}
+
+.left-button{
+    background-color: black; color: white;
+}
+
+.right-button{
+    background-color: yellow;
+}
+
+.right-button, .left-button {
+    font-size: 28px; font-family: Helvetica, "Times New Roman", sans-serif;
+}
+
+.avatar.proportioned {
+     height: auto; width: 300px;
+}
+
+.avatar.distorted {
+    height: 400px;   width: 200px; 
+}
+
+.container .text {
+    background-color: yellow; color: red; font-size: 20px; text-align:center; 
+}
+
+#Task-6 {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .para, 
+  .small-para {
+  color: hsl(0, 0%, 0%);
+  font-weight: 800;
+}
+
+p.small-para {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.para {
+  font-size: 22px;
+}
+
+#confirm-button {
+  background: green;
+  color: white;
+  font-weight: bold;
+} 
+
+.button {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  font-size: 20px;
+}
+
+.child {
+  color: rgb(0, 0, 0);
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.text {
+  color: rgb(0, 0, 0);
+  font-size: 22px;
+  font-weight: 100;
+}
+
+#text-child{
+  font-weight: 800;
+}
+

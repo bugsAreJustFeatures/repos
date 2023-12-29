@@ -1,0 +1,29 @@
+body {
+    background-color: lightskyblue; 
+}
+
+#title {
+    font-weight: bolder; 
+    text-align: center;
+}
+
+.recipe {
+    display: inline-block;
+    font-family:'Times New Roman', Times, serif; font-size: 28px; 
+    text-decoration: none;
+    color: black;
+    padding: 8px;
+    margin-left: 400px;
+    text-align: center;
+}
+
+.recipe:hover{
+    background-color: mediumaquamarine;
+}
+
+#pizza {
+
+}
+
+
+
