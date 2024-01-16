@@ -21,8 +21,12 @@ if ((playerSelection == "rock" && getComputerChoice == "scissors") ||
     (playerSelection == "scissors" && getComputerChoice == "rock")) {
     console.log(getComputerChoice + " beats " + playerSelection + " ,You Lose! ");
 
-} else if (playerSelection == getComputerChoice) 
-    console.log(playerSelection + " is the same as " + getComputerChoice + " ,It's a Draw ") }
+} else if (playerSelection == getComputerChoice) {
+    console.log(playerSelection + " is the same as " + getComputerChoice + " ,It's a Draw ") 
+
+} else console.log("An Error Has Occured, Please check your answer and play again.")
+}
+
 
 
 
