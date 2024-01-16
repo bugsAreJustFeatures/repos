@@ -1,24 +1,24 @@
 function getComputerChoice() {
-    let choices = ["Rock", "Paper", "Scissors"]
+    let choices = ["rock", "paper", "scissors"]
     return choices [Math.floor(Math.random() * choices.length)]
 }
  
 
 function playerSelection() {
-    return prompt(String("Rock, Paper or Scissors"))
+    return prompt(String("rock, paper or scissors")).toLowerCase()
 }
 
 function playRound(playerSelection, getComputerChoice) { 
 
 
-if ((playerSelection == "Rock" && getComputerChoice == "Scissors") || 
-    (playerSelection == "Paper" && getComputerChoice == "Rock") || 
-    (playerSelection == "Scissors" && getComputerChoice == "Paper")) {
+if ((playerSelection == "rock" && getComputerChoice == "scissors") || 
+    (playerSelection == "paper" && getComputerChoice == "rock") || 
+    (playerSelection == "scissors" && getComputerChoice == "paper")) {
     console.log(playerSelection + " beats " + getComputerChoice + " ,You Win! "); 
 
-} else if ((playerSelection == "Rock" && getComputerChoice == "Paper") || 
-    (playerSelection == "Paper" && getComputerChoice == "Scissors") || 
-    (playerSelection == "Scissors" && getComputerChoice == "Rock")) {
+} else if ((playerSelection == "rock" && getComputerChoice == "paper") || 
+    (playerSelection == "paper" && getComputerChoice == "scissors") || 
+    (playerSelection == "scissors" && getComputerChoice == "rock")) {
     console.log(getComputerChoice + " beats " + playerSelection + " ,You Lose! ");
 
 } else if (playerSelection == getComputerChoice) 
