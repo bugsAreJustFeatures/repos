@@ -10,37 +10,36 @@ function playerSelection() {
 
 function playRound(playerSelection, getComputerChoice) { 
 
-    let computerPoint = ""
-    let humanPoint = ""
+    let computerPoint = 0
+    let humanPoint = 0
 
 
-if ((playerSelection == "rock" && getComputerChoice == "scissors") || 
+    if ((playerSelection == "rock" && getComputerChoice == "scissors") || 
     (playerSelection == "paper" && getComputerChoice == "rock") || 
     (playerSelection == "scissors" && getComputerChoice == "paper")) {          
-    
     console.log(playerSelection + " beats " + getComputerChoice + " , You Win! ");
-    humanPoint++ ;
+    humanPoint+= 1;
 
 
-} else if ((playerSelection == "rock" && getComputerChoice == "paper") || 
+    } else if ((playerSelection == "rock" && getComputerChoice == "paper") || 
     (playerSelection == "paper" && getComputerChoice == "scissors") || 
     (playerSelection == "scissors" && getComputerChoice == "rock")) {
-
     console.log(getComputerChoice + " beats " + playerSelection + " , You Lose! ");    
-    computerPoint++ ;
+    computerPoint+= 1 ;
 
-} else if (playerSelection == getComputerChoice) {
+    } else if (playerSelection == getComputerChoice) {
     console.log("Both players selected " + playerSelection  + " , It's a Draw. Play Again ") 
 
-} else console.log("Please check your answer and play again.");
+    } else console.log("Please check your answer and play again.");
+
+    console.log(humanPoint + " : " + computerPoint)
 }
 
-// playRound(playerSelection(), getComputerChoice())
 
-function game() {
+function game(humanPoint, computerPoint) {
 
-    let humanPoint = 0
-    let computerPoint = 0
+    let humanScore = humanPoint
+    let computerScore = computerPoint 
 
     playRound(playerSelection(), getComputerChoice())
     playRound(playerSelection(), getComputerChoice())
@@ -48,31 +47,7 @@ function game() {
     playRound(playerSelection(), getComputerChoice())
     playRound(playerSelection(), getComputerChoice())
 
-    console.log("You  " + humanPoint + " : " + computerPoint + "  Computer")
-
-    
+    console.log("You " + humanScore + " : " + computerScore + " Computer")
 }
 
 game()
-
-
-
-
-
-    
-
-
-
-
-    
-
-
-
-   
-
-
-
-
-
-
-
