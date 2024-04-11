@@ -1,49 +1,88 @@
-humanPoint = 0;
-computerPoint = 0;
+// DOM
+// button function
+function createButton(text) {
+    const button = document.createElement("button");
+    button.textContent = text;
+    button.style.width = "150px";
+    button.style.height = "50px";
+    button.style.fontSize = "20px";
+    button.style.marginLeft = "30px"; 
+    document.body.appendChild(button);
+    return button;
+}
+// creation of buttons
+const rockBtn = createButton('rock');
+const paperBtn = createButton('paper');
+const scissorsBtn = createButton('scissors');
+
+// div displays the scores
+const scoresDiv = document.createElement('div');
+scoresDiv.style.margin = "100px";
+scoresDiv.style.maxWidth = "300px";
+document.body.appendChild(scoresDiv);
+
+// div displays end of round message
+const messageDiv = document.createElement('div');
+messageDiv.style.margin = "100px";
+messageDiv.style.maxWidth = "300px";
+document.body.appendChild(messageDiv);
+
+document.body.style.backgroundColor = "#41B3A3";
+
+// JS code
+let humanPoint = 0;
+let computerPoint = 0;
 
 function getComputerChoice() {
-    let choices = ["rock", "paper", "scissors"]
-    return choices [Math.floor(Math.random() * choices.length)]
-}
- 
-
-function playerSelection() {
-    return prompt(String("rock, paper or scissors")).toLowerCase()
+    const choices = ["rock", "paper", "scissors"]
+    return choices[Math.floor(Math.random() * choices.length)]
 }
 
-function playRound(playerSelection, getComputerChoice) { 
+function playRound(playerSelection) {
+    let computerSelection = getComputerChoice()
 
+    if ((playerSelection == "rock" && computerSelection == "scissors") ||
+        (playerSelection == "paper" && computerSelection == "rock") ||
+        (playerSelection == "scissors" && computerSelection == "paper")) {
+        humanPoint++;
+        messageDiv.textContent = playerSelection + " beats " + computerSelection;
 
-    if ((playerSelection == "rock" && getComputerChoice == "scissors") || 
-    (playerSelection == "paper" && getComputerChoice == "rock") || 
-    (playerSelection == "scissors" && getComputerChoice == "paper")) {          
-    console.log(playerSelection + " beats " + getComputerChoice + " , You Win! ");
-    humanPoint++;
+    } else if ((playerSelection == "rock" && computerSelection == "paper") ||
+        (playerSelection == "paper" && computerSelection == "scissors") ||
+        (playerSelection == "scissors" && computerSelection == "rock")) {
+        computerPoint++;
+        messageDiv.textContent = computerSelection + " beats " + playerSelection;
 
+    } else {
+        messageDiv.textContent = "Both players selected " + playerSelection + " , It's a Draw. Play Again "
+    };
 
-    } else if ((playerSelection == "rock" && getComputerChoice == "paper") || 
-    (playerSelection == "paper" && getComputerChoice == "scissors") || 
-    (playerSelection == "scissors" && getComputerChoice == "rock")) {
-    console.log(getComputerChoice + " beats " + playerSelection + " , You Lose! ");    
-    computerPoint++;
+    scoresDiv.textContent = "Your Score " + humanPoint + " : " + computerPoint + " Computer Score ";
 
-    } else if (playerSelection == getComputerChoice) {
-    console.log("Both players selected " + playerSelection  + " , It's a Draw. Play Again ") 
-
-    } else console.log("Please check your answer and play again.");
-
-    console.log(humanPoint + " : " + computerPoint)
-}
-
+    game();
+};
 
 function game() {
-    
-    while(humanPoint < 5 && computerPoint < 5) {
-        playRound(playerSelection(), getComputerChoice())
+    if (humanPoint == 5) {
+        messageDiv.textContent = "Congratulations, You have won " + humanPoint + " : " + computerPoint; resetGamePlaWins();
+    } else if (computerPoint == 5) {
+        messageDiv.textContent = "Bad luck, You have lost " + humanPoint + " : " + computerPoint; resetGameComWins();
     }
+};
 
+function resetGameComWins() {
 
-    console.log("You " + humanPoint + " : " + computerPoint + " Computer")
+   messageDiv.textContent = "Bad luck, You have lost " + humanPoint + " : " + computerPoint; 
+   humanPoint = 0;
+   computerPoint = 0;
 }
+function resetGamePlaWins() {
 
-game()
+    messageDiv.textContent = "Congratulations, You have won " + humanPoint + " : " + computerPoint;  
+    humanPoint = 0;
+    computerPoint = 0; 
+ }
+
+rockBtn.addEventListener("click", () => { playRound("rock")});
+paperBtn.addEventListener("click", () => { playRound("paper")});
+scissorsBtn.addEventListener("click", () => { playRound("scissors")});
