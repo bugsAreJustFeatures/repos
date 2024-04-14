@@ -1,0 +1,22 @@
+* {
+    background-color: brown;
+}
+
+#flexContainer {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    height: 70%; 
+    width: 40%;
+    justify-content: center;
+    margin: auto;
+    border: thick solid white;
+}
+
+.eachRow:nth-child(16n) {
+    flex-basis: 100%;
+}
+
+
+
+
