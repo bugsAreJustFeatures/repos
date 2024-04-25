@@ -1,22 +1,41 @@
 * {
-    background-color: brown;
+    background-color: darkcyan;
 }
 
-#flexContainer {
-    display: flex;
-    flex: 1;
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.btn {
+    margin: 0 auto;
+    text-align: center;
+}
+
+#resetBtn {
+    font-size: 50px;
+    background-color: #8a0c0c;
+    max-width: 300px;
+}
+
+#resetBtn:hover {
+    background-color: pink;
+}
+
+.row {
+    display: flex; 
     flex-wrap: wrap;
-    height: 70%; 
-    width: 40%;
-    justify-content: center;
-    margin: auto;
-    border: thick solid white;
+    padding-top: 30px;
+    
 }
 
-.eachRow:nth-child(16n) {
-    flex-basis: 100%;
+.column {
+    background-color: black;
+    padding: 20px;
+    flex: 1;  
+    border: 1px solid black;
 }
 
-
-
-
+.column:hover {
+    background-color: darkgray;
+}
