@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>objects 3</title>
+</head>
+    <script>
+        
+
+        function sumOfTripleEvens(array) {
+            let sum = 0;
+
+            let arr = [1, 2, 3, 4, 5];
+
+            function evenNums(num) {
+                return num % 2 === 0;
+            }
+
+            let filterArr = arr.filter(evenNums);
+            console.log(filterArr);
+
+            function tripledEven(num) {
+                return num * 3;
+            }
+
+            let mappedFilter = filterArr.map(tripledEven);
+            console.log(mappedFilter);
+
+            function total(total, currentItem) {
+                return total * currentItem;
+            }
+
+            let reducedFilter = mappedFilter.reduce(total);
+            console.log(reducedFilter);
+            
+        }
+        sumOfTripleEvens();
+    </script>
+<body>
+    
+</body>
+</html>

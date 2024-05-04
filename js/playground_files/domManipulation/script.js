@@ -42,3 +42,17 @@ document.body.appendChild(newDiv);
 newDiv.appendChild(insideDiv);
 
 newDiv.appendChild(pInDiv)
+
+// events
+
+const btn = document.querySelector("#btn");
+btn.onclick = () => alert("Hello World"); 
+
+const btnTwo = document.querySelector("#btnTwo");
+btnTwo.addEventListener("click", () => {
+    alert("Hello World");
+});
+
+btn.addEventListener("click", (e) => {
+    console.log(e)
+})
