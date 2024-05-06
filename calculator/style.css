@@ -1,0 +1,11 @@
+* {
+    background-color: black;
+}
+
+.calculator {
+    border: thick solid teal;
+    display: flex;
+    flex: 1;
+    width: 600px;
+    height: 800px;
+}
