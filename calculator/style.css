@@ -50,20 +50,19 @@ body {
     height: 10%;
     padding: 50px 50px;
     font-size: 30px;
+    background-color: black;
 }
-
 .numbers:hover {
     background-color: navy;
 }
 
 #allClear {
-    padding: 50px 100px;
+    padding: 50px 102px;
+    border-right: thin solid darkred;
 }
-
 #divideSign {
-    padding: 50px 58px;
+    padding: 50px 59px;
 }
-
 #subtractSign {
     padding: 50px 57px;
 }

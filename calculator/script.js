@@ -1,81 +1,161 @@
 // -----DOM--- //
 
-function enterNums(x, y) {
-    document.getElementById("answerBox").textContent = x;
-    
-} 
+let number1 = document.getElementById("n1");
+let number2 = document.getElementById("n2");
+let number3 = document.getElementById("n3");
+let number4 = document.getElementById("n4");
+let number5 = document.getElementById("n5");
+let number6 = document.getElementById("n6");
+let number7 = document.getElementById("n7");
+let number8 = document.getElementById("n8");
+let number9 = document.getElementById("n9");
+let number0 = document.getElementById("n0");
+let decimal = document.getElementById("decimal");
+let equalSign = document.getElementById("equals");
+let allClear = document.getElementById("allClear");
+let add = document.getElementById("addSign");
+let subtract = document.getElementById("subtractSign");
+let multiply = document.getElementById("multiplySign");
+let divide = document.getElementById("divideSign");
+let plusMinus = document.getElementById("plusMinus");
+let modulo = document.getElementById("modulo");
+let answerBox = document.getElementById("answerBox");
 
-document.getElementById("n1").addEventListener("click", () => {
-    enterNums("1");
+// -----eventListeners-------- //
+number1.addEventListener("click", () => {
+    enterNums("1")
 });
-document.getElementById("n2").addEventListener("click", () => {
+number2.addEventListener("click", () => {
     enterNums("2");
 });
-document.getElementById("n3").addEventListener("click", () => {
+number3.addEventListener("click", () => {
     enterNums("3");
 });
-document.getElementById("n4").addEventListener("click", () => {
+number4.addEventListener("click", () => {
     enterNums("4");
 });
-document.getElementById("n5").addEventListener("click", () => {
+number5.addEventListener("click", () => {
     enterNums("5");
 });
-document.getElementById("n6").addEventListener("click", () => {
+number6.addEventListener("click", () => {
     enterNums("6");
 });
-document.getElementById("n7").addEventListener("click", () => {
+number7.addEventListener("click", () => {
     enterNums("7");
 });
-document.getElementById("n8").addEventListener("click", () => {
+number8.addEventListener("click", () => {
     enterNums("8");
 });
-document.getElementById("n9").addEventListener("click", () => {
+number9.addEventListener("click", () => {
     enterNums("9");
 });
-document.getElementById("n0").addEventListener("click", () => {
+number0.addEventListener("click", () => {
     enterNums("0");
 });
-document.getElementById("decimal").addEventListener("click", () => {
+decimal.addEventListener("click", () => {
     enterNums(".");
 });
 
+// ----------equations events--------- //
+let addResult;
+let subtractResult;
+let multiplyResult;
+let divideResult;
+let moduloResult;
+
+let num1;
+add.addEventListener("click", () => {
+     addResult = parseFloat(answerBox.textContent) || 0;
+    answerBox.textContent = "";
+});
+
+let num3;
+subtract.addEventListener("click", () => {
+    subtractResult = parseFloat(answerBox.textContent) || 0;
+    answerBox.textContent = "";
+})
+
+let num4;
+multiply.addEventListener("click", () => {
+    multiplyResult = parseFloat(answerBox.textContent) || 0;
+    answerBox.textContent = "";
+})
+
+let num5;
+divide.addEventListener("click", () => {
+    divideResult = parseFloat(answerBox.textContent) || 0;
+    answerBox.textContent = "";
+})
+
+allClear.addEventListener("click", () => {
+    answerBox.textContent = "";
+
+    addResult = undefined;
+    subtractResult = undefined;
+    multiplyResult = undefined;
+    divideResult = undefined;
+});
+
+equalSign.addEventListener("click", () => {
+    let num2 = parseFloat(answerBox.textContent);
+
+    if (addResult !== undefined) {
+        answerBox.textContent = addResult + num2;
+    } else if (subtractResult !== undefined) {
+        answerBox.textContent = subtractResult - num2;
+    } else if (multiplyResult !== undefined) {
+        answerBox.textContent = multiplyResult * num2;
+    } else if (divideResult !== undefined) {
+        answerBox.textContent = divideResult / num2;
+    } 
+});
+
+plusMinus.addEventListener("click", () => {
+    let currentValue = parseFloat(answerBox.textContent);
+    if (!isNaN(currentValue)) {
+        answerBox.textContent = -currentValue;
+    }
+});
+
+modulo.addEventListener("click", () => {
+    moduloResult = parseFloat(answerBox.textContent) || 0;
+    answerBox.textContent = moduloResult / 100;
+})
 
 
-
-
-
-
-
-
-
-
-// ------Logic-------- //
-
-//operator functions
-function add(num1, num2) {
-    return num1 + num2;
-}
-function subtract(num1, num2) {
-    return num1 - num2;
-}
-function multiply(num1, num2) {
-    return num1 * num2;
-}
-function divide(num1, num2) {
-    return num1 / num2;
-}
-
-function operate(a, b, sign) {
-    if (sign == "+") {
-        return add(a, b)
-    } else if (sign == "-") {
-        return subtract(a, b)
-    } else if (sign == "*") {
-        return multiply(a, b)
-    } else if (sign == "/") {
-        return divide(a, b)
-    };
+// ------entering numbers into calculator-------- //
+function enterNums(x) {
+    if (x === "." && answerBox.textContent.includes(".")) {
+        return;
+    }
+    answerBox.textContent += x;
 };
 
+// -----keyboard support------//
+document.addEventListener("keydown", handleKeyDown);
 
+let keyActions = {
+    "+": () => add.click(),
+    "-": () => subtract.click(),
+    "*": () => multiply.click(),
+    "/": () => divide.click(),
+    "%": () => modulo.click(),
+    "Enter": () => equalSign.click(),
+    "Escape": () => allClear.click(),
+    "Backspace": () => {
+        answerBox.textContent = answerBox.textContent.slice(0, -1);
+    }
+};
+
+function handleKeyDown(event) {
+    let key = event.key;
+
+    if (!isNaN(key) || key === ".") {
+        enterNums(key);
+    }
+
+    if (keyActions.hasOwnProperty(key)) {
+        keyActions[key]();
+    }
+};
 
