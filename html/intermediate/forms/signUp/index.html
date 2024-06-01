@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign-Up Form</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+
+        <div class="flex-container">
+
+            <div class="img-container">
+                 <div class="picture">
+                <img class="leaf" src="/leaf.jpg" alt="green leafs">
+                 </div>
+                 <div class="logo"> 
+                    <img class="odin-logo" src="/odin-lined.png" alt="Odin-logo">
+                     <p>Odin</p>
+                </div>
+            </div>
+           
+            <div class="form-content">
+
+                <div id="information">This is not a real online service! You know you need something like this in your life to help you realise your deepest dreams. <strong>Sign up Now to get started.</strong>
+
+                <br><br>
+
+                You know you want to.
+                </div>
+
+                
+
+                <div class="main-form">
+                    
+                    <br>
+
+                    <form action="myServer" method="post">
+                            <u><h2 id="form-title">Let's Do This</h2></u>
+                        
+                        <ul>
+                            <div id="row1">
+                                 <li>
+                                <legend>First Name</legend>
+                                <label for="first-name"></label>
+                                <input type="text" id="first-name" placeholder="Harry"> 
+                            </li>
+
+                            <li>
+                                <legend>Last Name</legend>
+                                <label for="last-name"></label>
+                                <input type="text" id="last-name" placeholder="Smith"> 
+                            </li>
+                            </div>
+            
+                            <div id="row2">
+                                <li>
+                                <legend>Email</legend>
+                                <label for="email"></label>
+                                <input type="email" id="email" placeholder="example123@google.co.uk"> 
+                            </li>
+
+                            <li>
+                                <legend>Phone Number</legend>
+                                <label for="phone"></label>
+                                <input type="number" id="phone" placeholder="07813 329183"> 
+                            </li>
+                            </div>
+                            
+
+                            <div id="row3">
+                                <li>
+                                <legend>Enter Password</legend>
+                                <label for="password"></label>
+                                <input type="password" id="password" placeholder="pass12345"> 
+                            </li>
+
+                            <li>
+                                <legend>Confirm Password</legend>
+                                <label for="confirm-password"></label>
+                                <input type="password" id="confirm-password" placeholder="pass12345"> 
+                            </li>
+                            </div>
+                        </ul>
+                        <button class="create-account" type="submit">Create Account</button>
+                        <p id="log-in">Already have an account?<a href="https://youtu.be/dQw4w9WgXcQ?si=Krjc4toTSDn3vseA">Log In</a></p>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>   
+</body>
+</html>
