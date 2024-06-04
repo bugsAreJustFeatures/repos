@@ -1,0 +1,10 @@
+.container {
+    display: grid;
+    text-align: center;
+    gap: 10px;
+    grid-template: 50px / 500px;
+}
+
+.div {
+    border: thin solid red;
+}
