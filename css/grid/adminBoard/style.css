@@ -1,0 +1,55 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100vh;
+}
+
+ul, li {
+    list-style: none;
+    margin-top: 2.5rem;
+
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+}
+
+.rightSide {
+    display: grid;
+    grid-template-rows: 1fr 5fr;
+    height: 100vh;
+}
+
+.sidebar {
+    background-color: maroon;
+    color: white;
+    text-align: start;
+    justify-content: start;
+    grid-row: 1 / 7;
+    display: flex; 
+    flex-direction: column;
+    /* width: 16%; */
+    height: 100vh;
+}
+
+.dashboard {
+    margin-top: 2.5rem;
+    margin-left: 2.5rem;
+}
+
+.topSection {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+
+}
+
+.main {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+
