@@ -13,12 +13,12 @@ ul, li {
 
 .container {
     display: grid;
-    grid-template-columns: 1fr 6fr;
+    grid-template-columns: 1fr 5fr;
 }
 
 .rightSide {
     display: grid;
-    grid-template-rows: 1fr 5fr;
+    grid-template-rows: 1fr 7fr;
     height: 100vh;
 }
 
@@ -27,11 +27,10 @@ ul, li {
     color: white;
     text-align: start;
     justify-content: start;
-    grid-row: 1 / 7;
     display: flex; 
     flex-direction: column;
-    /* width: 16%; */
     height: 100vh;
+    padding-left: 2rem;
 }
 
 .dashboard {
@@ -41,15 +40,69 @@ ul, li {
 
 .topSection {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-
+    background-color: beige;
 }
+
+.searchBar {
+    border: thin solid black;
+    grid-column: 1 / 3;
+    width: 90%;
+    margin: 2rem 3rem;
+    border-radius: 3rem;
+}
+
+.searchIcon {
+    width: 18px;
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
+.bell {
+    width: 2rem;
+    justify-self: start;
+    align-self: center;
+    grid-area: 1 / 4 / 1 / 5;
+}
+
+.account {
+    grid-column: 4 / 5;
+    grid-row: 1 /1 ;
+    width: 3rem;
+    margin-right: 2rem;
+    justify-self: end;
+    align-self: center;
+}
+
+.name {
+    grid-column: 4 / 5;
+    grid-row: 1 /1 ;
+    font-size: 24px;
+    justify-self: center;
+    align-self: center;
+}
+
+.accountSecondary {
+    grid-column: 1;
+    grid-row: 2;
+    width: 7rem;
+    justify-self: start;
+    margin-left: 3rem;
+}
+
+.message {
+    grid-column: 1 / 3;
+    grid-row: 2;
+    align-self: center;
+    font-size: 32px ;
+    margin-left: 22%;
+}
+
 
 .main {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
 }
-
 
