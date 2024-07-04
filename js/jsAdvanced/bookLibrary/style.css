@@ -4,7 +4,6 @@ body {
     text-align: center;
     height: 100vh;
     overflow: scroll;
-    /* background-color: coral; */
     font-family: sans-serif;
 }
 
@@ -14,7 +13,6 @@ button {
 
 .topHalf {
     margin: 0 5rem;
-    /* border: thin solid red; */
 }
 
 .heading {
@@ -32,43 +30,6 @@ button {
     background-color: navy;
 }
 
-.bottomHalf {
-    /* border: thick solid black; */
-}
-
-.library {
-    /* border: thin solid blue; */
-    height: auto;
-    margin-top: 1rem;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(auto-fit minmax(160px, 30%) );
-}
-
-.book {
-    /* border: thin solid black; */
-    border-radius: 2rem;
-    height: 40rem;
-    width: 20rem;
-    margin: 1rem;
-    text-align: start;
-    padding-left: 1rem;
-    padding-top: 2rem;
-    background-color: lightblue;
-}
-
-.book > h2, h3 {
-    margin-bottom: 7.6rem;
-}
-
-.book > button {
-    margin-top: 7rem;
-    height: 3rem;
-    width: 7rem;
-    border-radius: 1rem;
-    background-color: rgb(255, 38, 0);
-    border: 0;
-}
 
 .readBtn:hover {
     background-color: green;
