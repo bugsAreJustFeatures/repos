@@ -1,4 +1,4 @@
-let bookShelf = document.getElementsByClassName("library");
+let library = document.getElementsByClassName("library");
 
 
 const myLibrary = []
@@ -12,12 +12,12 @@ function Book(title, author, pages) {
 function addBookToLibrary(title, author, pages) {
     const newBook = new Book(title, author, pages);
     myLibrary.push(newBook);
-    displayBook();
+    displayBook(title, author, pages);
 }
 
 // book cards are made from this DOM function
 
-function displayBook() {
+function displayBook(title, author, pages) {
 
     const bookCard = document.createElement("div");
         bookCard.classList.add("book")
@@ -31,21 +31,21 @@ function displayBook() {
         bookCard.style.background = "lightblue";
 
     const cardTitle = document.createElement("h2");
-        cardTitle.textContent = `Title: ${this.title}`;
+        cardTitle.textContent = `Title: ${title}`;
         cardTitle.style.textDecoration = "underline"
         cardTitle.style.textAlign = "start";
         cardTitle.style.marginBottom = "7.8rem"
     bookCard.appendChild(cardTitle);
 
     const cardAuthor = document.createElement("h3");
-        cardAuthor.textContent = `Author: ${this.author}`;
+        cardAuthor.textContent = `Author: ${author}`;
         cardAuthor.style.textDecoration = "underline";
         cardAuthor.style.textAlign = "start"
         cardAuthor.style.marginBottom = "7.8rem"
     bookCard.appendChild(cardAuthor);
 
     const cardPages = document.createElement("h3");
-        cardPages.textContent = `Pages: ${this.pages}`;
+        cardPages.textContent = `Pages: ${pages}`;
         cardPages.style.textDecoration = "underline"
         cardPages.style.textAlign = "start";
         cardPages.style.marginBottom = "7.8rem"
