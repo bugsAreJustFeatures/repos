@@ -32,8 +32,34 @@ button {
 }
 
 
+
+
+.book {
+    border-radius: 2rem;
+    height: 40rem;
+    width: 20rem;
+    margin: 1rem;
+    text-align: start;
+    padding-left: 1rem;
+    padding-top: 2rem;
+    background-color: lightblue;
+}
+
+.bookInfo {
+    text-decoration: underline;
+    text-align: start;
+    margin-bottom: 7.8rem;
+}
+
+.readBtn {
+    margin-top: 7rem;
+    height: 3rem;
+    width: 7rem;
+    border-radius: 1rem;
+    background-color: rgb(255, 38, 0);
+    border: 0;
+}
+
 .readBtn:hover {
     background-color: green;
 }
-
-.book
