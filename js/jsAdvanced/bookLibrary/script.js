@@ -1,4 +1,4 @@
-let library = document.getElementsByClassName("library");
+let library = document.getElementsByClassName("library")[0];
 
 
 const myLibrary = []
@@ -43,9 +43,18 @@ function displayBook(title, author, pages) {
     bookCard.appendChild(cardBtn);
 
 
-    document.body.appendChild(bookCard);
+    library.appendChild(bookCard);
 }
 
 
 
+addBookToLibrary("The Bible", "God", "1200");
+addBookToLibrary("The Bible", "God", "1200");
+addBookToLibrary("The Bible", "God", "1200");
+addBookToLibrary("The Bible", "God", "1200");
+addBookToLibrary("The Bible", "God", "1200");
+addBookToLibrary("The Bible", "God", "1200");
+addBookToLibrary("The Bible", "God", "1200");
+addBookToLibrary("The Bible", "God", "1200");
+addBookToLibrary("The Bible", "God", "1200");
 addBookToLibrary("The Bible", "God", "1200");
