@@ -9,4 +9,4 @@ You copy and paste the link into your search bar and add the url of your "index.
 
 For Example, 
 
-https://html-preview.github.io/?url=https://html-preview.github.io/?url=https://github.com/hxcrry/repos/blob/main/js/jsAdvanced/bookLibrary/index.html
+https://html-preview.github.io/?url=https://github.com/hxcrry/repos/blob/main/js/jsAdvanced/bookLibrary/index.html
