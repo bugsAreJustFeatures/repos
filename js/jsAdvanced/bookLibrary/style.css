@@ -9,7 +9,23 @@ body {
 }
 
 button {
+    cursor: pointer;
+}
+
+dialog[open]::backdrop {
+    background-color: darkgrey;
+    opacity: 0.7;
+}
+
+#addBtn, .readBtn {
     color: white;
+}
+
+.readBtn:hover {
+    color: black;
+}
+#addBtn:hover {
+    background-color: lightblue;
 }
 
 .topHalf {
@@ -20,15 +36,11 @@ button {
     font-size: 2rem;
 }
 
-.topHalf > button {
+.btn {
     width: 9rem;
     height: 4rem;
     border-radius: 1rem;
     background-color: black;
-}
-
-#addBtn:hover {
-    background-color: navy;
 }
 
 .library {
@@ -59,10 +71,102 @@ button {
     height: 3rem;
     width: 7rem;
     border-radius: 1rem;
-    background-color: rgb(255, 38, 0);
+    background-color: red;
     border: 0;
 }
 
 .readBtn:hover {
     background-color: green;
 }
+
+.removeBtn {
+    margin-top: 1rem;
+    margin-left: 5rem;
+    height: 3rem;
+    width: 7rem;
+    border-radius: 1rem;
+    background-color: black;
+    color: white;
+    border: 1px solid inherit;
+}
+
+.removeBtn:hover {
+    background-color: inherit;
+    color: black;
+}
+
+#bookDialog {
+    width: 40rem;
+    padding: 0;
+}
+
+.dialogHeader {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+    padding: 0 2rem;
+    margin: 0;
+}
+
+#bookForm {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    padding-top: 2rem;
+    padding-right: 6rem;
+}
+
+#bookForm > input {
+    margin: 2rem 0;
+    justify-self: start;
+    width: 20rem;
+    margin-left: 3rem;
+}
+
+#bookForm label {
+    justify-self: end;
+    align-self: center;
+}
+
+#formTitle {
+    grid-column: 2 / 4;
+    grid-row: 1;
+}
+
+#formAuthor {
+    grid-column: 2 / 4;
+    grid-row: 2;
+}
+
+#formPages {
+    grid-column: 2 / 4;
+    grid-row:  3;
+}
+
+#closeDialog {
+    font-size: 2rem;
+    background-color: inherit;
+    border: 0;
+    margin: 0;
+}
+
+#closeDialog:hover {
+    font-size: 2.5rem;
+}
+
+#formAddBook {
+    grid-column: 3;
+    background-color: black;
+    color: white;
+    border-radius: 2rem;
+    width: 5rem;
+    height: 3rem;
+    align-self: center;
+    justify-self: end;
+}
+
+#formAddBook:hover {
+    background-color: lightblue;
+    color: black;
+}
+

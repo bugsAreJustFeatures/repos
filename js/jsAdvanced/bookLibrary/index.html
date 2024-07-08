@@ -18,6 +18,23 @@
             <button class="btn" id="addBtn">
                 Add Book
             </button>
+
+             <dialog id="bookDialog"> 
+                <div class="dialogHeader">
+                    <h3>Please Enter Book Details</h3>
+                    <button type="cancel" formmethod="dialog" id="closeDialog">&times;</button>
+                </div>
+                <form id="bookForm">
+                    <label for="formTitle">Title:</label>
+                     <input type="text" id="formTitle" name="title" placeholder="Title" required>
+                     <label for="formAuthor">Author:</label>
+                    <input type="text" id="formAuthor" name="author" placeholder="Author" required>
+                    <label for="formPages">No. Of Pages:</label>
+                    <input type="text" id="formPages" name="pages" placeholder="Pages" required>
+
+                    <button type="submit" id="formAddBook">Add</button>
+                </form>
+            </dialog>
         </div>
 
         <div class="bottomHalf">
