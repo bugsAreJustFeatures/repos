@@ -4,6 +4,7 @@ body {
     overflow: hidden;
     height: 100vh;
     font-family:sans-serif;
+    
 }
 
 ul, li {
@@ -174,6 +175,7 @@ li > img {
     padding-left: 0.5rem;
     padding-top: 0.5rem;
     align-self: start;
+    overflow: scroll;
 }
 
 .moreOptions {
