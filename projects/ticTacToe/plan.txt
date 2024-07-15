@@ -1,0 +1,20 @@
+// ---part 1---- //
+1- get an array of 1-9
+2- get an empty array
+3- when square 1 gets clicked, number 1 will get pushed to the empty array (i will call it new array after this point)
+4- connect each square to each number in the new array (so square 1 = [1] = index [0]) 
+
+// ---part 2---- //
+5- give that square an X symbol (player1)
+6- remove number of square from original array 
+
+// ---part 3---- //
+7- give a square an O symbol (player2)
+8- remove the square number form original array
+9- make game winnable, drawable, and lossable (idk if these are words but i dont care)
+
+// ---part 4---- //
+9- add usernames to player 1 and 2
+
+
+"&times;" || "&#9900;"

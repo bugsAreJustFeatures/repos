@@ -1,0 +1,92 @@
+body {
+    margin: 0;
+    border: 0;
+}
+
+.game {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 10fr 1fr;
+    height: 100vh;
+}
+
+.gameHeader {
+    grid-column: 2;
+    text-align: center;
+    font-size: 5rem;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.gameHeader > p {
+    margin-top: 0;
+}
+
+.gameContent {
+    display: grid;
+    grid-column: 2;
+    grid-row: 2;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.gameSquare {
+    border: 1px solid black;
+    border-radius: 2rem;
+    margin: 0.5rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10rem;
+    padding: 0;
+    width: clamp(136px,189px 300px);
+    min-width: 100px;
+    min-height: 100px;
+}
+
+.gameSquare:hover {
+    background-color: lightgray;
+}
+
+#gameInfo {
+    grid-column: 3;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.players {
+    grid-column: 3;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.usernames {
+    margin: 1rem 5rem;
+    font-size: 2rem;
+}
+
+.usernames > input {
+    height: 3rem;
+    font-size: 1.5rem;
+    border-radius: 0.5rem;
+    padding: 0;
+    padding-left: 1rem;
+}
+
+#usernameBtn {
+    width: 8rem;
+    align-self: end;
+    margin-right: 5.25rem;
+    margin-top: 2rem;
+    border-radius: 0.5rem;
+}
+
+#usernameBtn:hover {
+    background-color: ;
+}
