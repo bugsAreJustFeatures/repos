@@ -28,26 +28,31 @@
                 <div class="gameSquare" id="square9"></div>
             </div>
 
-            <div id="gameInfo">
-                <p>Player 1 is &times;</p>
-                <p>Player 2 is &#9900;</p>
-            </div>
+            <div id="gameStatus"> </div>
 
             <div class="players">
+                <div id="inputMessage">Please Enter The Player Names Below</div>
                 <div class="usernames" id="user1">
-                        <label for="usernameOne">Player 1:</label>
-                        <input type="text" id="usernameOne">
+                        <label for="usernameOne">Player 1: &times;</label>
+                        <input type="text" id="usernameOneInput" placeholder="Enter Name">
                 </div>
 
                 <div class="usernames" id="user2"> 
-                        <label for="usernameTwo">Player 2:</label>
-                        <input type="text" id="usernameTwo">
+                        <label for="usernameTwo">Player 2: &#9900;</label>
+                        <input type="text" id="usernameTwoInput" placeholder="Enter Name">
                 </div>
 
-                <button class="btn" id="usernameBtn">
-                    <p>Play</p>
-                </button>
+                <button id="playBtn">Play</button>
+
             </div>
+
+                <dialog id="resetModal">
+                    <div id="modalHeader">
+                    </div>
+                    <form method="dialog">
+                        <button id="modalBtn">RESET</button>
+                    </form>
+                </dialog>
         </div>
     </div>
 </body>
