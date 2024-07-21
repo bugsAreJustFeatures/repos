@@ -43,7 +43,8 @@ function displayBook(title, author, pages) {
     const cardBtn = document.createElement("button");
         cardBtn.classList.add("readBtn")
         cardBtn.textContent = "Read";
-    cardBtn.addEventListener("click", () => {
+        
+        cardBtn.addEventListener("click", () => {
         if (cardBtn.style.backgroundColor === "red" || cardBtn.style.backgroundColor === "") {
             cardBtn.style.backgroundColor = "green";
         } else {
@@ -89,4 +90,6 @@ bookForm.addEventListener("submit", (event) => {
         bookDialog.close();
         bookForm.reset();
 })
+
+//im just tsting out if ive done the branching correctly on github and my laptop
 
