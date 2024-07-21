@@ -6,21 +6,28 @@ let bookForm = document.getElementById("bookForm")
 
 const myLibrary = []
 
-function Book(title, author, pages) {
-    this.title = title
-    this.author = author
-    this.pages = pages
+class Book { 
+    constructor(title, author, pages) {
+        this.title = title
+        this.author = author
+        this.pages = pages
+    }
 }
 
-function addBookToLibrary(title, author, pages) {
-    const newBook = new Book(title, author, pages);
-    myLibrary.push(newBook);
-    displayBook(title, author, pages);
+class AddBookToLibrary {
+    constructor(title, author, pages) {
+        const newBook = new Book(title, author, pages);
+        myLibrary.push(newBook);
+        const display = new DisplayBook(title, author, pages);
+        display;
+    }
+    
 }
 
 // book cards are made from this DOM function
 
-function displayBook(title, author, pages) {
+class DisplayBook {
+    constructor(title, author, pages) {
 
     const bookCard = document.createElement("div");
         bookCard.classList.add("book")
@@ -55,8 +62,8 @@ function displayBook(title, author, pages) {
     const removeBtn = document.createElement("button");
         removeBtn.classList.add("removeBtn")
         removeBtn.textContent = "Remove"
-    removeBtn.addEventListener("click", () => {
-        bookCard.remove();
+        removeBtn.addEventListener("click", () => {
+            bookCard.remove();
     })
     
 
@@ -67,6 +74,7 @@ function displayBook(title, author, pages) {
     bookCard.appendChild(cardBtn);
     bookCard.appendChild(removeBtn);
         library.appendChild(bookCard);
+}
 }
 
 
@@ -86,10 +94,11 @@ bookForm.addEventListener("submit", (event) => {
     const title = document.getElementById("formTitle").value;
     const author = document.getElementById("formAuthor").value;
     const pages = document.getElementById("formPages").value;
-        addBookToLibrary(title, author, pages);
+    const addBook = new AddBookToLibrary(title, author, pages);
+    addBook;
         bookDialog.close();
         bookForm.reset();
 })
 
-//im just tsting out if ive done the branching correctly on github and my laptop
+
 
