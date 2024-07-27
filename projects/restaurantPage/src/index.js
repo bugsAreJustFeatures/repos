@@ -1,1 +1,1 @@
-console.log("DEUS VULT")
+console.log("Hello World");
