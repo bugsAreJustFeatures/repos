@@ -10,17 +10,25 @@ nav {
     margin-top: 2rem;
     align-items: center;
     justify-content: flex-start;
+    border-bottom: 1px solid #D84727;
+    padding-bottom: 2rem;
 }
 
 .navBtn {
     width: 10rem;
     height: 4rem;
     margin-left: 6rem;
-    border-radius: 2rem;
+    border-radius: 1.25rem;
     border: 0;
     font-size: 1.5rem;
     background-color: #006D77;
     color: #E29578;
+}
+
+.navBtn:hover {
+    background-color: #E29578;
+    color: #006D77;
+    font-size: 1.75rem;
 }
 
 #navText {
@@ -28,6 +36,7 @@ nav {
     margin-left: auto;
     margin-right: 4rem;
     font-size: 6rem;
-    padding: 0;
+    margin-bottom: 1rem;
     color: #006D77;
+    text-decoration: underline;
 }
