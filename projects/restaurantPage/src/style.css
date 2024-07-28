@@ -1,3 +1,4 @@
+/* ----- THIS CSS IS FOR ALL PAGES (TEMPLATE CSS) -------- */
 html, body {
     margin: 0;
     padding: 0;
@@ -39,4 +40,32 @@ nav {
     margin-bottom: 1rem;
     color: #006D77;
     text-decoration: underline;
+}
+
+/* ------- Home Page CSS --------- */
+
+.homeContent {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 30rem;
+    margin: 8rem 8rem;
+    /* border: 1px solid #D84727; */
+}
+
+.homeInfo {
+    color: #006D77;
+    font-size: 1.6rem;
+    grid-column: 2;
+    border-left: 1px solid #D84727;
+    align-self: center;
+    padding: 0 0.5rem;
+}
+
+.restaurantImg {
+    width: 700px;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    align-self: center;
+    justify-self: center;
 }
