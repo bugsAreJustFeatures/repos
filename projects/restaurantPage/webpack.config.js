@@ -3,9 +3,12 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
     mode: "development",
-    entry: "./src/index.js",
+    entry: {
+      main: "./src/index.js",
+      styles: "./src/style.css",
+    },
     output: {
-        filename: "main.js",
+        filename: "[name].bundle.js",
         path: path.resolve(__dirname, "dist"),
     },
     plugins: [
@@ -15,4 +18,15 @@ module.exports = {
             template: "src/index.html",
         }),
     ],
+    module: {
+        rules: [
+            {
+              test: /\.css$/,
+              use: [
+                { loader: 'style-loader' },
+                { loader: 'css-loader' },
+              ],
+            },
+          ],
+    },
 };
