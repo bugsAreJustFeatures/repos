@@ -41,7 +41,7 @@ mainContent.appendChild(menuContent);
 function menuItemCreator(n) {
     for (let i = 0; i < n; i++) {
     let menuItem = document.createElement("div");
-    menuItem.innerHTML = "Description: This dish is a .... and includes .... with the optional sides of .... . We recommend you try .... with some .... and with some complimentary .... to wash it down."
+    menuItem.innerHTML = "Description: This dish is a .... and includes .... with the optional sides of .... . We recommend you try .... with some .... and with some complimentary .... to wash it down. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Contains: ... . This is also Vegetarian/vegan"
     menuItem.classList.add("menuItem");
     menuContent.appendChild(menuItem);
     let menuItemImg = document.createElement("img");
@@ -55,7 +55,7 @@ function menuItemCreator(n) {
 }
 }
 
-menuItemCreator(5)
+menuItemCreator(50)
 
 
 

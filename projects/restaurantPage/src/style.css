@@ -8,7 +8,7 @@ html, body {
 
 nav {
     display: flex;
-    margin-top: 2rem;
+    margin: 2rem 0;
     align-items: center;
     justify-content: flex-start;
     border-bottom: 1px solid #D84727;
@@ -61,7 +61,7 @@ nav {
 
 .homeInfo {
     color: #006D77;
-    font-size: 1.6rem;
+    font-size: 2rem;
     grid-column: 2;
     border-left: 1px solid #D84727;
     align-self: center;
@@ -90,11 +90,11 @@ nav {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     border: 1px solid #006D77;
-    margin: 1rem 2rem;
-    height: 25rem;
+    margin: 1.5rem;
+    height: 23rem;
     width: minmax(5rem, 10rem);
     overflow: hidden;
-    text-align: start;
+    text-align: center;
     padding-top: 0.5rem;
     padding-left: 0.5rem;
     font-size: 1.4rem;
@@ -102,11 +102,18 @@ nav {
 
 .menuItemImg, .menuItemSecondImg {
     grid-column: 2;
-    padding-top: 0;
     width: clamp(2rem, 10rem, 15rem);
     height: 10rem;
     align-self: start;
     margin-left: 1rem;
     border: 1px solid #006D77;
     font-size: 0.8rem;
+}
+
+.menuItemImg {
+    margin-top: 0rem;
+}
+
+.menuItemSecondImg {
+    margin-top: -8rem;
 }
