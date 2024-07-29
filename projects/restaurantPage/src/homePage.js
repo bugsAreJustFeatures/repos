@@ -7,6 +7,7 @@ const menuBtn = document.getElementById("menuBtn");
 const aboutBtn = document.getElementById("aboutBtn");
 const contactBtn = document.getElementById("contactBtn");
 const mainContent = document.getElementById("content");
+const title = document.getElementById("navText");
 
 //nav buttons events for pages
 homeBtn.addEventListener("click", () => {
@@ -23,6 +24,10 @@ aboutBtn.addEventListener("click", () => {
 
 contactBtn.addEventListener("click", () => {
     alert("Hey this is the contact btn that does not work yet")
+})
+
+title.addEventListener("click", () => {
+    alert("This should take you to the home page when clicked")
 })
 
 console.log("This is the home page"); // testing pages loading correctly
