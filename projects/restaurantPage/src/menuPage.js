@@ -46,16 +46,16 @@ function menuItemCreator(n) {
     menuContent.appendChild(menuItem);
     let menuItemImg = document.createElement("img");
     menuItemImg.classList.add("menuItemImg")
-    menuItemImg.alt = "Menu Item Image";
+    menuItemImg.src = "https://khni.kerry.com/wp-content/uploads/2019/02/Restaurant-meal.jpg";
     menuItem.appendChild(menuItemImg);
     let menuItemSecondImg = document.createElement("img");
     menuItemSecondImg.classList.add("menuItemSecondImg")
-    menuItemSecondImg.alt = "Second Menu Item Image";
+    menuItemSecondImg.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHjyu2ypcRkZch9vOTgj2HbCBGcUtChz-WYg&s";
     menuItem.appendChild(menuItemSecondImg);
 }
 }
 
-menuItemCreator(50)
+menuItemCreator(5)
 
 
 

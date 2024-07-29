@@ -95,15 +95,16 @@ nav {
     width: minmax(5rem, 10rem);
     overflow: hidden;
     text-align: center;
-    padding-top: 0.5rem;
+    padding-top: 1rem;
     padding-left: 0.5rem;
     font-size: 1.4rem;
+    background-color: #E29578;
 }
 
 .menuItemImg, .menuItemSecondImg {
     grid-column: 2;
     width: clamp(2rem, 10rem, 15rem);
-    height: 10rem;
+    height: 8rem;
     align-self: start;
     margin-left: 1rem;
     border: 1px solid #006D77;
@@ -116,4 +117,47 @@ nav {
 
 .menuItemSecondImg {
     margin-top: -8rem;
+}
+
+/* ------- About Page CSS --------- */
+
+.aboutContent {
+    margin: 2rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+}
+
+.aboutOne, .aboutTwo, .aboutThree {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.aboutOne {
+    grid-column: 1;
+}
+
+.aboutTwo {
+    grid-column: 2;
+}
+
+.aboutThree {
+    grid-column: 3;
+}
+
+#aboutImgOne, #aboutImgTwo, #aboutImgThree {
+    justify-self: center;
+}
+
+#aboutTextOne, #aboutTextTwo, #aboutTextThree {
+    grid-row: 2;
+    margin-top: 1rem;
+    font-size: 1.3rem;
+}
+
+.aboutImg {
+    width: 450px;
+    height: auto;
+    padding: 0;
+    margin: 0;
 }
