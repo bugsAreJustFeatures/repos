@@ -126,11 +126,13 @@ nav {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 1fr;
+    gap: 1rem;
 }
 
 .aboutOne, .aboutTwo, .aboutThree {
     display: grid;
     grid-template-rows: 1fr 1fr;
+    padding: 1.5rem;
 }
 
 .aboutOne {
@@ -139,10 +141,12 @@ nav {
 
 .aboutTwo {
     grid-column: 2;
+    border-left: 1px solid #D84727;
 }
 
 .aboutThree {
     grid-column: 3;
+    border-left: 1px solid #D84727;
 }
 
 #aboutImgOne, #aboutImgTwo, #aboutImgThree {
@@ -160,4 +164,38 @@ nav {
     height: auto;
     padding: 0;
     margin: 0;
+}
+
+
+/* ----Contact Page CSS---- */
+
+.contactContent {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    height: 30rem;
+    margin: 8rem 8rem;
+    /* border: 1px solid #D84727; */
+}
+
+.contactInfo {
+    color: #006D77;
+    font-size: 2rem;
+    grid-column: 2;
+    border-left: 1px solid #D84727;
+    align-self: center;
+    padding: 0 0.5rem;
+    height: 20rem;
+    text-align: center;
+}
+
+.contactImg {
+    width: 700px;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    grid-row: 1;
+    /* vertical-align: top; */
+    justify-self: center;
+    align-self:center   ;
 }
