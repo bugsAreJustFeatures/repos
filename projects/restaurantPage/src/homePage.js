@@ -1,40 +1,9 @@
 
-import "./style.css"; // importing the page styling 
-
-
-//linking dom to html elements
-const homeBtn = document.getElementById("homeBtn");
-const menuBtn = document.getElementById("menuBtn");
-const aboutBtn = document.getElementById("aboutBtn");
-const contactBtn = document.getElementById("contactBtn");
-const mainContent = document.getElementById("content");
-const title = document.getElementById("navText");
-
-//nav buttons events for pages
-homeBtn.addEventListener("click", () => {
-    alert("Hey this is the home btn that does not work yet")
-})
-
-menuBtn.addEventListener("click", () => {
-    alert("Hey this is the menu btn that does not work yet")
-})
-
-aboutBtn.addEventListener("click", () => {
-    alert("Hey this is the about btn that does not work yet")
-})
-
-contactBtn.addEventListener("click", () => {
-    alert("Hey this is the contact btn that does not work yet")
-})
-
-title.addEventListener("click", () => {
-    alert("This should take you to the home page when clicked")
-})
-
-console.log("This is the home page"); // testing pages loading correctly
-
-
-// ------- DOM Creation ------- //
+export function homePage() {
+    const mainContent = document.getElementById("content");
+    // ------- DOM Creation ------- //
+    pageTitle.innerHTML = "Home Page";
+    mainContent.innerHTML = "";
 
 const homeContent = document.createElement("div");
 homeContent.classList.add("homeContent");
@@ -52,3 +21,4 @@ homeContent.appendChild(homeInfoImg);
 
 
 homeContent.appendChild(homeInformation);
+}
