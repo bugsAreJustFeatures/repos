@@ -91,5 +91,3 @@ aboutThreeText.classList.add("aboutText");
 aboutThreeText.id = "aboutTextThree"
 aboutThreeText.innerHTML = "Looking ahead, we at Food Haven are excited about the future and have ambitious plans for the next few years. The aim is to expand te menu with new and seasonal offerings that continue to celebrate local ingredients and innovative cooking techniques. Additionally, we are exploring opportunities to open new locations, bringing the Food Haven experience to a broader audience while maintaining the intimate, personalized touch that their current patrons cherish. The team is also committed to enhancing our community involvement through local partnerships and sustainable practices, reinforcing their dedication to both their customers and the environment."
 aboutThree.appendChild(aboutThreeText);
-
-

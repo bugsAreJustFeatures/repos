@@ -1,3 +1,4 @@
+
 import "./style.css"; // importing the page styling 
 
 
@@ -56,6 +57,3 @@ function menuItemCreator(n) {
 }
 
 menuItemCreator(5)
-
-
-

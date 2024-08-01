@@ -1,3 +1,4 @@
+
 import "./style.css"; // importing the page styling 
 
 
@@ -45,6 +46,3 @@ const contactImg = document.createElement("img");
 contactImg.classList.add("contactImg")
 contactImg.src = "https://d.ibtimes.co.uk/en/full/1386743/google-maps-london-underground-logo.png?w=1600&h=1200&q=88&f=4e3b79ac62ed993b702a55d723c38ea5";
 contactContent.appendChild(contactImg);
-
-
-
