@@ -6,6 +6,31 @@
     <title>WeDo</title>
 </head>
 <body>
-    <p>This is my to-do app called WeDo.</p>
+
+   <div id="leftSide">
+        <div id="title">WeDo</div>
+        <button id="newTaskBtn" class="btn">
+            Create Task
+        </button>
+        <div id="taskContainer">This is where all the tasks are going to go, and will each be made in the DOM when the createBtn is clicked above. </div>
+   </div>
+
+   <div id="rightSide">
+        <div id="backgroundText">This will display a message when there is no task selected or made yet.</div>
+
+        <div id="mainContent">
+            <div id="topHalf">
+                <h3 id="notesHeader">My Notes</h3>
+                <button class="btn" id="newNoteBtn">Create Note</button>
+                <div id="noteContainer">This will house the notes made.</div>
+            </div>
+
+            <div id="bottomHalf">
+                <h3 id="checklistHeader">Checklist</h3>
+                <button class="btn" id="newChecklistBtn">Create Checklist</button>
+                <div id="checklistContainer">This will house the checklists made.</div>
+            </div>
+        </div>
+   </div>
 </body>
 </html>
