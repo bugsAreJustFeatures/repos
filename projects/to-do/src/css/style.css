@@ -11,8 +11,8 @@
 
 :root {
     --main: #0A474D;
-    --secondary: #b3efb2;
-    --contast: #78cdd7
+    --secondary: #2d82b7;
+    --contast: #78cdd7;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -25,6 +25,20 @@ html, body {
     border: 0;
     padding: 0;
     overflow: hidden;
+}
+
+.btn {
+    background-color: var(--contast);
+}
+
+#newNoteBtn, #newChecklistBtn {
+    background-color: var(--main);
+    color: white;
+}
+
+#newNoteBtn:hover, #newChecklistBtn:hover {
+    color: black;
+    background-color: var(--contast);
 }
 
 /* -----Inside page styling----- */
@@ -53,6 +67,7 @@ html, body {
 
 #topLeftSide {
     grid-row: 1;
+    border-bottom: 2px solid var(--secondary);
 }
 
 #bottomLeftSide {
@@ -63,7 +78,7 @@ html, body {
     /* border: 1px solid black; */
 }
 
-/* -----Top Left styling----- */
+/* -----Title, create task button styling----- */
 
 #title {
     font-size: clamp(3rem, 10vw, 8rem);
@@ -74,9 +89,10 @@ html, body {
 
 #newTaskBtn {
     background-color: var(--contast);
-    width: 10rem;
-    height: 5rem;
-    border-radius: 0.5rem;
+    width: 12rem;
+    height: clamp(2.5rem, 5rem, 7.5rem);
+    border-radius: 4rem;
+    border: 0;
     font-size: 1.5rem;
     margin: 1.8rem 0;
     color: black;
@@ -87,10 +103,58 @@ html, body {
     cursor: pointer;
 }
 
-#rightSide {
-    background-color: var(--secondary);
-    color: black;
+/* -----Task styling----- */
+
+.task {
+    margin-top: 1.5rem;
+    border: 2px solid var(--secondary);
+    border-radius: 1.25rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 5fr 1fr;
+}
+
+.taskName {
+    grid-column: 1;
+    grid-row: 2;
     display: flex;
     align-items: center;
-    justify-content: center
+    margin-left: 1.5rem;
+}
+
+.taskIcons {
+    grid-column: 3;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr)
+}
+
+#taskPriority {
+    background-color: lime;
+    border-radius: 50%;
+    grid-column: 1;
+}
+
+#taskEdit {
+    grid-column: 2;
+    grid-column: 2;
+}
+
+#taskDelete {
+    grid-column: 3;
+}
+
+#taskPriority, #taskEdit, #taskDelete {
+    margin-right: 0.8rem;
+    width: 2.5rem;
+    display: flex;
+}
+
+#taskPriorityImg, #taskEditImg, #taskDeleteImg {
+    width: 100%;
+    height: 100%;
+}
+
+#rightSide {
+    background-color: var(--secondary);
 }
