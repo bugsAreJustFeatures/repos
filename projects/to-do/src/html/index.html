@@ -16,9 +16,7 @@
             </div>
             
             <div id="bottomLeftSide">
-                 <div id="taskContainer">
-                    
-                 </div>
+                 <div id="taskContainer"></div>
             </div>
        </div>
     
@@ -41,6 +39,31 @@
             </div>
        </div>
     </div>
-   
+
+    <dialog id="taskDialog">
+        <div id="dialogHeader">Create Task</div>
+
+        <form id="dialogForm">
+            <label for="dialogTaskName">Task Name</label>
+            <input type="text" id="dialogTaskName" name="dialogTaskName" placeholder="Task Name" required autofocus>
+            
+            <label for="dialogTaskPriority">Priority Level</label>
+            <select name="dialogTaskPriority" id="dialogTaskPriority">
+                <option value="default">None</option>
+                <option>Low</option>
+                <option>Medium</option>
+                <option>High</option>
+            </select>
+
+            <div id="dialogFooter">
+
+                <button id="dialogConfirmBtn" class="btn">Confirm</button>
+
+                <button id="dialogCancelBtn" class="btn" type="button">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </dialog>
 </body>
 </html>

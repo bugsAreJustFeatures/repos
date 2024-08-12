@@ -15,7 +15,7 @@
     --contast: #78cdd7;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, label {
     font-family: "lato-bold";
     text-decoration: underline;
 }
@@ -29,6 +29,7 @@ html, body {
 
 .btn {
     background-color: var(--contast);
+    cursor: pointer;
 }
 
 #newNoteBtn, #newChecklistBtn {
@@ -100,6 +101,7 @@ html, body {
 
 #newTaskBtn:hover {
     background-color: var(--secondary);
+    color: white;
     cursor: pointer;
 }
 
@@ -113,6 +115,7 @@ html, body {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 5fr 1fr;
     font-family: "lato-bold";
+    height: 5rem;
 }
 
 .taskName {
@@ -127,12 +130,16 @@ html, body {
     grid-column: 3;
     grid-row: 2;
     display: grid;
-    grid-template-columns: repeat(3, 1fr)
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0.3rem;
 }
 
 .taskPriority {
     grid-column: 1;
-    /* background-color: white; */
+}
+
+.taskPriority:hover {
+    opacity: 0.7;
 }
 
 .taskEdit {
@@ -148,7 +155,7 @@ html, body {
 
 .taskPriority, .taskEdit, .taskDelete {
     margin-right: 0.8rem;
-    width: 2.5rem;
+    width: 3rem;
     display: flex;
     border-radius: 50%;
 }
@@ -164,6 +171,62 @@ html, body {
 .taskPriorityImg, .taskEditImg, .taskDeleteImg {
     width: 100%;
     height: 100%;
+}
+
+/* -----dialog styling----- */
+
+label {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+#taskDialog {
+    height: 20rem;
+    width: 40rem;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+    border: 5px solid var(--secondary);
+    background-color: var(--main);
+    color: white;
+}
+
+#dialogHeader {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding-bottom: 1.25rem;
+    font-size: 2.5rem;
+    font-family: "lato-bold";
+    text-decoration: underline;
+    border-bottom: 3px solid var(--secondary);
+}
+
+#dialogForm {
+    padding-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    margin: 0 20%;
+}
+
+#dialogConfirmBtn, #dialogCancelBtn {
+    margin-top: 2.5rem;
+    width: 6rem;
+    height: 2rem;
+    border-radius: 1rem;
+}
+
+#dialogConfirmBtn {
+    margin-right: 1.5rem;
+}
+
+#dialogCancelBtn {
+    margin-left: 1.5rem;
+}
+
+#dialogConfirmBtn:hover, #dialogCancelBtn:hover {
+    background-color: var(--secondary);
+    color: white;
 }
 
 .rightSide {
