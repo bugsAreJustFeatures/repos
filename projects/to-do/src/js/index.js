@@ -11,6 +11,8 @@ const editCancelBtn = document.getElementById("editCancelBtn")
 const taskNameInput = document.getElementById("dialogTaskName");  
 const editNameInput = document.getElementById("editTaskName");
 const taskPriorityInput = document.getElementById("dialogTaskPriority");
+const mainContent = document.getElementById("mainContent");
+const rightSideOverlay = document.getElementById("rightSideOverlay");
 
 let userName;
 let userPriority;
@@ -18,6 +20,7 @@ let taskNameElement;
 
 newTaskBtn.addEventListener("click", () => {
     dialog.showModal();
+    taskNameInput.value = "";
 });
 
 confirmBtn.addEventListener("click", (event) => {
@@ -59,6 +62,14 @@ function createTask() {
     let task = document.createElement("div");
     task.classList.add("task");
     taskContainer.appendChild(task);
+
+    task.addEventListener("click", function() {
+        rightSideOverlay.style.gridColumn = "";
+        rightSideOverlay.style.position = "static";
+        rightSideOverlay.style.innerHTML = "";
+        mainContent.style.backgroundColor = "white";
+        
+    })
 
     let taskName = document.createElement("div");
     taskName.classList.add("taskName");
@@ -104,6 +115,7 @@ function createTask() {
 
      taskEdit.addEventListener("click", function() {
         editDialog.showModal()
+        editNameInput.value = "";
         taskNameElement = this.closest(".task").querySelector(".taskName");
     })    
  

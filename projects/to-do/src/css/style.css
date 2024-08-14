@@ -121,6 +121,11 @@ html, body {
     grid-template-rows: 1fr 5fr 1fr;
     font-family: "lato-bold";
     height: 5rem;
+    cursor: pointer;
+}
+
+.task:hover {
+    background-color: var(--secondary);
 }
 
 .taskName {
@@ -235,6 +240,55 @@ dialog[open]::backdrop {
     margin-left: 1.5rem;
 }
 
-.rightSide {
-    background-color: var(--secondary);
+/* -----right side styling----- */
+
+#mainContent {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0.5rem 3rem;
+    background-color: darkgrey; 
+    color: black;
+    height: 100vh;
+    overflow: auto;
 }
+
+#rightSideOverlay {
+    grid-column: 1, 2;
+    position: relative;
+    left: 90%;
+    transform: translate(-50%, -50%);
+    top: 90%;
+    font-size: 3rem;
+    text-decoration: underline;
+    color: black;
+}
+
+#notesHeader, #checklistHeader {
+    font-size: 2.5rem;
+    margin-bottom: 0.25rem;
+}
+
+#newNoteBtn, #newChecklistBtn {
+    width: 10rem;
+    height: clamp(2.5rem, 3.5rem, 7.5rem);
+    border-radius: 3rem;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+#noteContainer, #checklistContainer {
+    text-align: start;
+    font-size: 1.25rem;
+}
+
+#leftHalf {
+    grid-column: 1;
+    background-color: white;
+    padding-right: 1rem;
+}
+
+#rightHalf {
+    grid-column: 2;
+    padding-left: 1rem;
+}
+
