@@ -3,32 +3,53 @@ import "../css/style.css";
 const taskContainer = document.getElementById("taskContainer");
 const newTaskBtn = document.getElementById("newTaskBtn");
 const dialog = document.getElementById("taskDialog");
+const editDialog = document.getElementById("editDialog")
 const confirmBtn = document.getElementById("dialogConfirmBtn");
+const editConfirmBtn = document.getElementById("editConfirmBtn");
 const cancelBtn = document.getElementById("dialogCancelBtn");
-const taskNameInput = document.getElementById("dialogTaskName");
+const editCancelBtn = document.getElementById("editCancelBtn")
+const taskNameInput = document.getElementById("dialogTaskName");  
+const editNameInput = document.getElementById("editTaskName");
 const taskPriorityInput = document.getElementById("dialogTaskPriority");
 
 let userName;
 let userPriority;
+let taskNameElement;
 
 newTaskBtn.addEventListener("click", () => {
-    dialog.style.display = "block";
     dialog.showModal();
 });
 
 confirmBtn.addEventListener("click", (event) => {
-    event.preventDefault()
+    event.preventDefault();
     dialog.close();
     createTask();
-    dialog.style.display = "none";
-    console.log("confirmBtnEvent  " + userName)
-    console.log("confirmBtnEvent  " + userPriority)
+})
+
+editConfirmBtn.addEventListener("click", (event) => {
+    event.preventDefault()
+    editDialog.close()
+    console.log(editNameInput.value)
+    
+    if (taskNameElement) {
+        let inputText = editNameInput.value;
+
+        if (inputText.length > 28) {
+            taskNameElement.innerHTML = inputText.substring(0, 28) + "...";
+        } else {
+            taskNameElement.innerHTML = inputText
+        }
+    }
 })
 
 cancelBtn.addEventListener("click", () => {
-    dialog.style.display = "none";
     dialog.close()
 })
+
+editCancelBtn.addEventListener("click", () => {
+    editDialog.close()
+})
+
 
 function createTask() {
 
@@ -43,6 +64,9 @@ function createTask() {
     let taskName = document.createElement("div");
     taskName.classList.add("taskName");
     taskName.innerHTML = userName;
+    if (userName.length > 28) {
+        taskName.innerHTML = (userName.substring(0, 28) + "...")
+    } 
     task.appendChild(taskName);
 
     let taskIcons = document.createElement("div");
@@ -61,14 +85,11 @@ function createTask() {
     taskPriorityImg.src = "http://127.0.0.1:5500/src/img/alert-circle-outline.png";
     taskPriorityImg.alt = "Task_Priority_Icon"
     taskPriority.style.backgroundColor = "white";
-
     taskPriority.appendChild(taskPriorityImg);
 
-    console.log("DOMevent  " + userName)
-    console.log("DOMevent " + userPriority)
-
+    // conditional for the priority colour when making task //
     if (userPriority === "default") {
-        taskPriority.style.backgroundColor == "blue"
+        taskPriority.style.backgroundColor == "white"
     } else if (userPriority === "Low") {
         taskPriority.style.backgroundColor = "lime"
     } else if (userPriority === "Medium") {
@@ -79,14 +100,20 @@ function createTask() {
 
      //-----edit-----//
      let taskEdit = document.createElement("div");
-     taskEdit.classList.add("taskEdit")
-     taskIcons.appendChild(taskEdit)
+     taskEdit.classList.add("taskEdit");
+     taskIcons.appendChild(taskEdit);
+
+     taskEdit.addEventListener("click", function() {
+        editDialog.showModal()
+        taskNameElement = this.closest(".task").querySelector(".taskName");
+    })    
  
      let taskEditImg = document.createElement("img");
      taskEditImg.classList.add("taskEditImg");
      taskEditImg.src = "http://127.0.0.1:5500/src/img/pencil-circle-outline.png";
      taskEditImg.alt = "Task_Edit_Icon"
      taskEdit.appendChild(taskEditImg);
+
 
       //-----delete-----//
       let taskDelete = document.createElement("div");
@@ -99,7 +126,7 @@ function createTask() {
       taskDeleteImg.alt = "Task_Delete_Icon"
       taskDelete.appendChild(taskDeleteImg);
 
-      //-----event for priority of tasks-----//
+      //-----event for icons-----//
 
       taskPriority.addEventListener("click", function() {
         if (this.style.backgroundColor == "white") {
@@ -112,9 +139,8 @@ function createTask() {
             this.style.backgroundColor = "white";
         }
     });
-}
 
-
+};
 
 
 

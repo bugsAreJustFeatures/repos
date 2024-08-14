@@ -41,11 +41,11 @@
     </div>
 
     <dialog id="taskDialog">
-        <div id="dialogHeader">Create Task</div>
+        <div class="dialogHeader">Create Task</div>
 
-        <form id="dialogForm">
+        <form class="dialogForm">
             <label for="dialogTaskName">Task Name</label>
-            <input type="text" id="dialogTaskName" name="dialogTaskName" placeholder="Task Name" required autofocus>
+            <input type="text" id="dialogTaskName" name="dialogTaskName" placeholder="Task Name">
             
             <label for="dialogTaskPriority">Priority Level</label>
             <select name="dialogTaskPriority" id="dialogTaskPriority">
@@ -60,6 +60,25 @@
                 <button id="dialogConfirmBtn" class="btn">Confirm</button>
 
                 <button id="dialogCancelBtn" class="btn" type="button">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </dialog>
+
+
+    <dialog id="editDialog">
+        <div class="dialogHeader">Edit Task</div>
+
+        <form class="dialogForm">
+            <label for="editTaskName">New Task Name</label>
+            <input type="text" id="editTaskName" name="editTaskName" placeholder="New Task Name">
+
+            <div id="dialogFooter">
+
+                <button id="editConfirmBtn" class="btn">Confirm</button>
+
+                <button id="editCancelBtn" class="btn" type="button">
                     Cancel
                 </button>
             </div>

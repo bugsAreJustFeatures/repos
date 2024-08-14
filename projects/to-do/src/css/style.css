@@ -32,6 +32,11 @@ html, body {
     cursor: pointer;
 }
 
+.btn:hover {
+    background-color: var(--secondary);
+    color: white;
+}
+
 #newNoteBtn, #newChecklistBtn {
     background-color: var(--main);
     color: white;
@@ -124,6 +129,7 @@ html, body {
     display: flex;
     align-items: center;
     margin-left: 1.5rem;
+    text-wrap: nowrap;
 }
 
 .taskIcons {
@@ -180,7 +186,7 @@ label {
     margin-bottom: 0.5rem;
 }
 
-#taskDialog {
+dialog[open] {
     height: 20rem;
     width: 40rem;
     display: flex;
@@ -191,7 +197,7 @@ label {
     color: white;
 }
 
-#dialogHeader {
+.dialogHeader {
     display: flex;
     justify-content: center;
     align-items: start;
@@ -202,14 +208,14 @@ label {
     border-bottom: 3px solid var(--secondary);
 }
 
-#dialogForm {
+.dialogForm {
     padding-top: 0.5rem;
     display: flex;
     flex-direction: column;
     margin: 0 20%;
 }
 
-#dialogConfirmBtn, #dialogCancelBtn {
+#dialogConfirmBtn, #editConfirmBtn, #dialogCancelBtn, #editCancelBtn {
     margin-top: 2.5rem;
     width: 6rem;
     height: 2rem;
@@ -220,13 +226,8 @@ label {
     margin-right: 1.5rem;
 }
 
-#dialogCancelBtn {
+.dialogCancelBtn {
     margin-left: 1.5rem;
-}
-
-#dialogConfirmBtn:hover, #dialogCancelBtn:hover {
-    background-color: var(--secondary);
-    color: white;
 }
 
 .rightSide {
