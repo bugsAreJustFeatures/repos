@@ -197,6 +197,11 @@ dialog[open] {
     color: white;
 }
 
+dialog[open]::backdrop {
+    opacity: 0.7;
+    background-color: black;
+}
+
 .dialogHeader {
     display: flex;
     justify-content: center;

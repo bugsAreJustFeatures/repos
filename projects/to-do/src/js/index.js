@@ -29,7 +29,6 @@ confirmBtn.addEventListener("click", (event) => {
 editConfirmBtn.addEventListener("click", (event) => {
     event.preventDefault()
     editDialog.close()
-    console.log(editNameInput.value)
     
     if (taskNameElement) {
         let inputText = editNameInput.value;
@@ -119,6 +118,10 @@ function createTask() {
       let taskDelete = document.createElement("div");
       taskDelete.classList.add("taskDelete")
       taskIcons.appendChild(taskDelete)
+
+      taskDelete.addEventListener("click", function() {
+        taskContainer.removeChild(task)
+      })
   
       let taskDeleteImg = document.createElement("img");
       taskDeleteImg.classList.add("taskEditImg");
