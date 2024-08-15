@@ -18,6 +18,8 @@ let userName;
 let userPriority;
 let taskNameElement;
 
+createTask()
+
 newTaskBtn.addEventListener("click", () => {
     dialog.showModal();
     taskNameInput.value = "";
@@ -120,11 +122,14 @@ function createTask() {
 
             if (itemText !== "") {
                 let list = document.createElement("li");
+                list.id = "list";
 
                 let checkbox = document.createElement("input");
+                checkbox.id = "checkbox";
                 checkbox.type = "checkbox";
 
-                let label = document.createElement("label")
+                let label = document.createElement("label");
+                label.id = "myLabel";
                 label.innerHTML = itemText;
 
                 list.appendChild(checkbox)

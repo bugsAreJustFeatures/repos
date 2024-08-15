@@ -247,10 +247,9 @@ dialog[open]::backdrop {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
     padding: 0.5rem 3rem;
-    background-color: darkgrey; 
     color: black;
     height: 100vh;
-    overflow: auto;
+    /* overflow: auto; */
 }
 
 #rightSideOverlay {
@@ -269,18 +268,11 @@ dialog[open]::backdrop {
     margin-bottom: 0.25rem;
 }
 
-#newChecklistBtn {
-    width: 10rem;
-    height: clamp(2.5rem, 3.5rem, 7.5rem);
-    border-radius: 3rem;
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-}
-
 #noteContainer, #checklistContainer {
     text-align: start;
     font-size: 1.25rem;
 }
+
 
 #leftHalf {
     grid-column: 1;
@@ -291,12 +283,15 @@ dialog[open]::backdrop {
 
 #note {
     width: 30vw;
+    min-width: 30vw;
     max-width: 30vw;
-    height: 50vh;
+    height: 80vh;
+    min-height: 80vh;
     max-height: 80vh;
+    resize: none;
     text-wrap: wrap;
-    padding-left: 0.25rem;
-    padding-top: 0.25rem;
+    padding-left: 0.5rem;
+    padding-top: 0.5rem;
     font-family: "lato";
     font-size: 1.5rem;
     margin-top: 2rem;
@@ -306,5 +301,43 @@ dialog[open]::backdrop {
     grid-column: 2;
     grid-row: 1;
     padding-left: 1rem;
+    width: 30vw;
+    max-width: 30vw;
+    text-wrap: wrap;
+    overflow: auto;
 }
 
+#checklistAdder {
+    margin-top: 2rem;
+}
+
+#checklistBtn {
+    margin-left: 1rem;
+    font-size: 1.25rem;
+    width: 5rem;
+    height: 3rem;
+}
+
+#checklistInput {
+    height: 2rem;
+    font-size: 1.5rem;
+}
+
+#list {
+    list-style: decimal;
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+}
+
+#checkbox {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 1rem;
+}
+
+#myLabel {
+    text-decoration: none;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+}
