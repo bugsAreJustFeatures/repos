@@ -64,11 +64,77 @@ function createTask() {
     taskContainer.appendChild(task);
 
     task.addEventListener("click", function() {
-        rightSideOverlay.style.gridColumn = "";
-        rightSideOverlay.style.position = "static";
-        rightSideOverlay.style.innerHTML = "";
+        rightSideOverlay.remove()
         mainContent.style.backgroundColor = "white";
         
+        // -----left-side-----//
+        let leftHalf = document.createElement("div");
+        leftHalf.id = "leftHalf";
+        mainContent.appendChild(leftHalf)
+
+        let notesHeader = document.createElement("h3")
+        notesHeader.id = "notesHeader";
+        notesHeader.innerHTML = "My Notes"
+        leftHalf.appendChild(notesHeader)
+
+        let noteContainer = document.createElement("div");
+        let note = document.createElement("textarea");
+        note.id = "note"
+        note.placeholder = "Add Notes Here"
+        noteContainer.appendChild(note)
+        leftHalf.appendChild(noteContainer)
+
+        //-----right-side-----//
+        let rightHalf = document.createElement("div");
+        rightHalf.id = "rightHalf";
+        mainContent.appendChild(rightHalf);
+
+        let checklistHeader = document.createElement("h3");
+        checklistHeader.id = "checklistHeader"
+        checklistHeader.innerHTML = "Checklist"
+        rightHalf.appendChild(checklistHeader);
+        
+        let checklistAdder = document.createElement("div");
+        checklistAdder.id = "checklistAdder";
+        rightHalf.appendChild(checklistAdder);
+
+        let checklistContainer = document.createElement("ul")
+        checklistContainer.id = "checklistContainer";
+        rightHalf.appendChild(checklistContainer);
+
+        let checklistInput = document.createElement("input");
+        checklistInput.id = "checklistInput";
+        checklistInput.placeholder = "Add Task Here"
+        checklistAdder.appendChild(checklistInput);
+
+        let checklistBtn = document.createElement("button");
+        checklistBtn.id = "checklistBtn";
+        checklistBtn.classList.add("btn");
+        checklistBtn.innerHTML = "Add";
+        checklistBtn.addEventListener("click", checklistAdd)
+        checklistAdder.appendChild(checklistBtn);
+
+        function checklistAdd() {
+            let item = document.getElementById("checklistInput");
+            let itemText = item.value.trim();
+
+            if (itemText !== "") {
+                let list = document.createElement("li");
+
+                let checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+
+                let label = document.createElement("label")
+                label.innerHTML = itemText;
+
+                list.appendChild(checkbox)
+                list.appendChild(label)
+
+                document.getElementById("checklistContainer").appendChild(list);
+
+                item.value = "";
+            }
+        }
     })
 
     let taskName = document.createElement("div");

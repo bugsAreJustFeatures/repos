@@ -245,6 +245,7 @@ dialog[open]::backdrop {
 #mainContent {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
     padding: 0.5rem 3rem;
     background-color: darkgrey; 
     color: black;
@@ -268,7 +269,7 @@ dialog[open]::backdrop {
     margin-bottom: 0.25rem;
 }
 
-#newNoteBtn, #newChecklistBtn {
+#newChecklistBtn {
     width: 10rem;
     height: clamp(2.5rem, 3.5rem, 7.5rem);
     border-radius: 3rem;
@@ -283,12 +284,27 @@ dialog[open]::backdrop {
 
 #leftHalf {
     grid-column: 1;
+    grid-row: 1;
     background-color: white;
     padding-right: 1rem;
 }
 
+#note {
+    width: 30vw;
+    max-width: 30vw;
+    height: 50vh;
+    max-height: 80vh;
+    text-wrap: wrap;
+    padding-left: 0.25rem;
+    padding-top: 0.25rem;
+    font-family: "lato";
+    font-size: 1.5rem;
+    margin-top: 2rem;
+}
+
 #rightHalf {
     grid-column: 2;
+    grid-row: 1;
     padding-left: 1rem;
 }
 
