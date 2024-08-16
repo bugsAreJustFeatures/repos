@@ -13,21 +13,24 @@ const editNameInput = document.getElementById("editTaskName");
 const taskPriorityInput = document.getElementById("dialogTaskPriority");
 const mainContent = document.getElementById("mainContent");
 const rightSideOverlay = document.getElementById("rightSideOverlay");
+const dialogForm = document.getElementById("dialogFormOne");
 
 let userName;
 let userPriority;
 let taskNameElement;
-
-createTask()
 
 newTaskBtn.addEventListener("click", () => {
     dialog.showModal();
     taskNameInput.value = "";
 });
 
-confirmBtn.addEventListener("click", (event) => {
-    event.preventDefault();
-    dialog.close();
+// confirmBtn.addEventListener("click", () => {
+    
+// })
+
+dialogForm.addEventListener("submit", function(event) {
+    event.preventDefault()
+    dialog.close()
     createTask();
 })
 
