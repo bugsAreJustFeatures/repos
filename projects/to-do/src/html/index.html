@@ -33,7 +33,7 @@
         <div class="dialogHeader">Create Task</div>
 
         <form class="dialogForm" id="dialogFormOne">
-            <label for="dialogTaskName">Task Name</label>
+            <label for="dialogTaskName" id="dialogTaskLabel">Task Name</label>
             <input type="text" id="dialogTaskName" name="dialogTaskName" placeholder="Task Name" required>
             
             <label for="dialogTaskPriority">Priority Level</label>
@@ -43,6 +43,9 @@
                 <option>Medium</option>
                 <option>High</option>
             </select>
+
+            <label for="dialogTaskDate">Choose Date</label>
+            <input type="date" id="dialogTaskDate" name="dialogTaskDate" required>
 
             <div id="dialogFooter">
 
@@ -62,6 +65,9 @@
         <form class="dialogForm">
             <label for="editTaskName">New Task Name</label>
             <input type="text" id="editTaskName" name="editTaskName" placeholder="New Task Name">
+
+            <label for="editTaskDate">Choose New Date</label>
+            <input type="date" id="editTaskDate" name="editTaskDate">
 
             <div id="dialogFooter">
 

@@ -14,6 +14,7 @@ const taskPriorityInput = document.getElementById("dialogTaskPriority");
 const mainContent = document.getElementById("mainContent");
 const rightSideOverlay = document.getElementById("rightSideOverlay");
 const dialogForm = document.getElementById("dialogFormOne");
+const dialogTaskDate = document.getElementById("dialogTaskDate");
 
 let userName;
 let userPriority;
@@ -23,10 +24,6 @@ newTaskBtn.addEventListener("click", () => {
     dialog.showModal();
     taskNameInput.value = "";
 });
-
-// confirmBtn.addEventListener("click", () => {
-    
-// })
 
 dialogForm.addEventListener("submit", function(event) {
     event.preventDefault()
@@ -57,7 +54,7 @@ editCancelBtn.addEventListener("click", () => {
     editDialog.close()
 })
 
-
+createTask()
 function createTask() {
 
     userName = String(taskNameInput.value);
@@ -92,25 +89,30 @@ function createTask() {
         //-----right-side-----//
         let rightHalf = document.createElement("div");
         rightHalf.id = "rightHalf";
+        rightHalf.appendChild(dateContainer);
         mainContent.appendChild(rightHalf);
+
+        let checklist = document.createElement("div");
+        checklist.id = "checklist";
+        rightHalf.appendChild(checklist)
 
         let checklistHeader = document.createElement("h3");
         checklistHeader.id = "checklistHeader"
         checklistHeader.innerHTML = "Checklist"
-        rightHalf.appendChild(checklistHeader);
+        checklist.appendChild(checklistHeader);
         
         let checklistAdder = document.createElement("div");
         checklistAdder.id = "checklistAdder";
-        rightHalf.appendChild(checklistAdder);
+        checklistHeader.appendChild(checklistAdder);
 
         let checklistContainer = document.createElement("ul")
         checklistContainer.id = "checklistContainer";
-        rightHalf.appendChild(checklistContainer);
+        checklist.appendChild(checklistContainer);
 
         let checklistInput = document.createElement("input");
         checklistInput.id = "checklistInput";
         checklistInput.placeholder = "Add Task Here"
-        checklistAdder.appendChild(checklistInput);
+        checklistHeader.appendChild(checklistInput);
 
         let checklistBtn = document.createElement("button");
         checklistBtn.id = "checklistBtn";
@@ -120,6 +122,7 @@ function createTask() {
         checklistAdder.appendChild(checklistBtn);
 
         function checklistAdd() {
+            
             let item = document.getElementById("checklistInput");
             let itemText = item.value.trim();
 
@@ -144,6 +147,14 @@ function createTask() {
             }
         }
     })
+
+    let dateContainer = document.createElement("div");
+    dateContainer.id = "dateContainer";
+    
+    let date = document.createElement("p");
+    date.id = "date"
+    date.innerHTML = dialogTaskDate.value;
+    dateContainer.appendChild(date)
 
     let taskName = document.createElement("div");
     taskName.classList.add("taskName");
@@ -230,8 +241,3 @@ function createTask() {
     });
 
 };
-
-
-
-
-
