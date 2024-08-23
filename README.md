@@ -10,3 +10,10 @@ You copy and paste the link into your search bar and add the url of your "index.
 For Example, 
 
 https://html-preview.github.io/?url=https://github.com/hxcrry/repos/blob/main/js/jsAdvanced/bookLibrary/index.html
+
+
+
+--------------------------------------------------------------------------------------------------
+
+
+Use this page from  <a href="https://www.theodinproject.com/lessons/foundations-revisiting-rock-paper-scissors">The Odin Project</a> when you have forgotten how to make, merge and delete git branches.
