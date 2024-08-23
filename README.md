@@ -1,9 +1,14 @@
 # repos
+
+
+
 Repos for The Odin Project
 
---
 
-Add this link (below) at the start of the page URL to preview the website via angithub page hosting link in your browser: 
+--------------------------------------------------------------------------------------------------
+
+
+Add this link (below) at the start of the page URL to preview the website via a github page hosting link in your browser: 
 
 "https://html-preview.github.io/?url="
 
@@ -12,7 +17,6 @@ You copy and paste the link into your search bar and add the url of your "index.
 For Example, 
 
 https://html-preview.github.io/?url=https://github.com/hxcrry/repos/blob/main/js/jsAdvanced/bookLibrary/index.html
-
 
 
 --------------------------------------------------------------------------------------------------
