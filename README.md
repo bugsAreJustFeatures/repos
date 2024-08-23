@@ -16,4 +16,4 @@ https://html-preview.github.io/?url=https://github.com/hxcrry/repos/blob/main/js
 --------------------------------------------------------------------------------------------------
 
 
-Use this page from  <a href="https://www.theodinproject.com/lessons/foundations-revisiting-rock-paper-scissors">The Odin Project</a> when you have forgotten how to make, merge and delete git branches.
+Use  <a href="https://www.theodinproject.com/lessons/foundations-revisiting-rock-paper-scissors" target="_blank">THIS</a> page from The Odin Project when you have forgotten how to make, merge and delete git branches.
