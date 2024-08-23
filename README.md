@@ -1,7 +1,9 @@
 # repos
 Repos for The Odin Project
 
-Use this to preview a website via a link in your browser
+--
+
+Add this link (below) at the start of the page URL to preview the website via angithub page hosting link in your browser: 
 
 "https://html-preview.github.io/?url="
 
