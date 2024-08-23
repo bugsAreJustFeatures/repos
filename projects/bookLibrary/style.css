@@ -26,6 +26,7 @@ dialog[open]::backdrop {
 }
 #addBtn:hover {
     background-color: lightblue;
+    color: black;
 }
 
 .topHalf {
