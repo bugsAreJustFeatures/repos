@@ -1,0 +1,47 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+}
+
+li, ul {
+    list-style: none;
+}
+
+form {
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 1fr 3fr 1fr;
+}
+
+li {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: center;
+    justify-self: center;
+    text-align: end;
+}
+
+ul {
+    margin: 3rem 0;
+}
+
+label {
+    margin-right: 3rem;
+    font-size: 28px;
+    text-wrap: nowrap;
+}
+
+input {
+    font-size: 22px;
+    margin-top: -0.5rem;
+}
+
+.formUl {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 5rem 0;
+}
