@@ -6,35 +6,37 @@
     <title>My Form</title>
     <link rel="shortcut icon" href="file-outline.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
     <form novalidate>
         <li>
             <ul class="formUl">
-                <label for="email" class="formLabel">Email: </label>
+                <label for="email" class="formLabel" id="emailLabel">Email: </label>
                 <input type="email" name="email" id="emailInput" >
             </ul>
 
             <ul class="formUl">
-                <label for="country" class="formLabel">Country: </label>
+                <label for="country" class="formLabel" id="countryLabel">Country: </label>
                 <input type="text" name="country" id="countryInput">
             </ul>
 
             <ul class="formUl">
-                <label for="postCode" class="formLabel">Post Code: </label>
+                <label for="postCode" class="formLabel" id="postCodeLabel">Post Code: </label>
                 <input type="text" name="postCode" id="postCodeInput">
             </ul>
 
             <ul class="formUl">
-                <label for="password" class="formLabel">Password: </label>
+                <label for="password" class="formLabel" id="passwordLabel">Password: </label>
                 <input type="password" name="password" id="passwordInput">
             </ul>
 
             <ul class="formUl">
-                <label for="passwordConfirmation" class="formLabel">Confirm Password: </label>
+                <label for="passwordConfirmation" class="formLabel" id="passwordConfirmationLabel">Confirm Password: </label>
                 <input type="password" name="passwordConfirmation" id="passwordConfirmationInput">
             </ul>
+
+            <button type="submit" id="submitBtn">Continue</button>
         </li>
     </form>
 </body>

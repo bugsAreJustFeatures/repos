@@ -35,9 +35,18 @@ label {
     text-wrap: nowrap;
 }
 
+label:hover {
+    text-decoration: underline;
+}
+
 input {
     font-size: 22px;
     margin-top: -0.5rem;
+    border-radius: 0.25rem;
+}
+
+input:focus {
+    border: 3px solid black;
 }
 
 .formUl {
@@ -45,3 +54,18 @@ input {
     grid-template-columns: 1fr 1fr;
     margin: 5rem 0;
 }
+
+#submitBtn {
+    background-color: crimson;
+    color: white;
+    width: 5rem;
+    height: 3rem;
+    font-size: 16px;
+}
+
+#submitBtn:hover {
+    background-color: lime;
+    color: black;
+    text-decoration: underline;
+}
+
