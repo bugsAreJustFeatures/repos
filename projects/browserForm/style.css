@@ -49,6 +49,10 @@ input:focus {
     border: 3px solid black;
 }
 
+input:invalid {
+    border: 1px solid red;
+}
+
 .formUl {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -68,4 +72,11 @@ input:focus {
     color: black;
     text-decoration: underline;
 }
+
+#countryInput {
+    font-size: 22px;
+    width: 300px;
+    height: ;
+}
+
 
