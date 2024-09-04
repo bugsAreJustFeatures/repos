@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Working With APIs</title>
+</head>
+<body>
+    <div id="div-1">
+        <button>Click Me for GIF</button>
+        <img src="#">
+        
+    </div>
+    
+    <script>
+        const img = document.querySelector("img");
+        img.style.display = "none";
+         function fetchGif() {
+            fetch("https://api.giphy.com/v1/gifs/translate?api_key=zhfed0ucUvSBvTTmq6N39BE80FHu8Jra&s=cats", {mode: "cors"})
+        .then( function(response) {
+            let jsonFile = response.json();
+            return jsonFile;
+        })
+        .then( function(response) {
+            img.src = response.data.images.original.url;
+        })
+        .catch ((e) => {
+            console.log(e)
+        })};
+        
+
+        let btn = document.querySelector("button");
+        btn.addEventListener("click", function() {
+            img.innerHTML = "";
+            fetchGif();
+            img.style.display = "block";
+        })
+    </script>
+    <style>
+        html {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+        };
+
+        #div-1 {
+            display: grid;
+            grid-template-columns: 1fr 5fr 1fr;
+            grid-template-rows: 1fr 1fr;
+        }
+
+        button {
+            grid-row: 1;
+            grid-column: 2;
+            display: grid;
+            margin-bottom: 3rem
+        };
+
+        img {
+            grid-row: 2;
+            grid-column: 2;
+            max-width: 30vw;
+            max-height: 30vh;
+        }
+    </style>
+</body>
+</html>
+
