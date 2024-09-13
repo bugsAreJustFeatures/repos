@@ -9,20 +9,31 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <button>Click me for weather</button>
+    
+    <div id="wrapper">
+        <form id="searchForm"></form>
+        <label for="locationInput">Enter Location: </label>
+        <input type="text" name="locationInput" id="locationInput">
 
-    <div id="weatherIcon">
-        <img src="#" alt="">
+        <button id="searchBtn">Click me for weather</button>
+    </form>
+
+    <button id="changeBtn">Change to °F</button>
+
+    <div id="information">
+        <p id="location"></p>
+        <p id="conditions"></p>
+        <p id="description"></p>
+        <p id="temp"></p>
+        <p id="UVIndex"></p>
+        <p id="feelsLike"></p>
+        <p id="precipitation"></p>
+        <p id="dew"></p>
+        <p id="humidity"></p>
     </div>
-    <p id="location"></p>
-    <p id="conditions"></p>
-    <p id="description"></p>
-    <p id="temp"></p>
-    <p id="feelsLike"></p>
-    <p id="precipitation"></p>
-    <p id="dew"></p>
-    <p id="humidity"></p>
-    <p id="UVIndex"></p>
+    </div>
+    
+
 
 </body>
 </html>
