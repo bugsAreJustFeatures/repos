@@ -19,6 +19,10 @@ let feelsLikeC;
 let feelsLikeF;
 let dewC;
 let dewF;
+let icon;
+let isCelsius = 1;
+let background = document.body.style.backgroundImage;
+
 
 searchBtn.addEventListener("click", function(event) {
     event.preventDefault()
@@ -37,6 +41,9 @@ searchBtn.addEventListener("click", function(event) {
     .then (
         (responseJSON) => {
             console.log(responseJSON)
+
+            //weather icon 
+            icon = responseJSON.currentConditions.icon
 
             //celsius
             tempC = responseJSON.currentConditions.temp;
@@ -65,6 +72,14 @@ searchBtn.addEventListener("click", function(event) {
             dew.innerHTML = "Dew Point: " + dewC + "°C";
 
             humidity.innerHTML = "Humidity: " + responseJSON.currentConditions.humidity + "%";
+
+            // // if statement for background depending on the weather conditions
+            // if (icon = "snow") {
+            //     background.src = "snowy-gif.webp"
+            // } else if (icon === "partly-cloudy-day") {
+            //     // background.src = "./stormy-gif.webp"
+            //     document.body.style.backgroundColor = "black"
+            // }
         }
     )
     .then (
@@ -75,25 +90,24 @@ searchBtn.addEventListener("click", function(event) {
     })
 });
 
-// changeBtn.addEventListener("click", function() {
+changeBtn.addEventListener("click", function(event) {
+    event.preventDefault()
+    isCelsius++;
 
-//     let isCelsius;
-//     isCelsius = 0;
-
-//     if (isCelsius / 2)
-
-//     if (isCelsius) {
-//         //change to farenheit
-//         temp.innerHTML = "Temperature: " + tempF.toFixed(2) + "°F";
-//         isCelsius += 2;
-//         changeBtn.innerHTML = "Change to °C";
-//     } else {
-//         temp.innerHTML = "Temperature: " + tempC.toFixed(2) + "°C";
-//         isCelsius += 1;
-//         changeBtn.innerHTML = "Change to °F";
-//     };
-// })
-
+    if (isCelsius % 2 === 0) {
+         //even and true so change to farenheit
+        temp.innerHTML = "Temperature: " + tempF.toFixed(1) + "°F";
+        feelsLike.innerHTML = "Feels Like: " + feelsLikeF.toFixed(1) + "°F"
+        dew.innerHTML = "Dew Point: " + dewF.toFixed(1) + "°F"
+        changeBtn.innerHTML = "°F";
+    } else {
+        //odd and false so change to celsius
+        temp.innerHTML = "Temperature: " + tempC.toFixed(1) + "°C";
+        feelsLike.innerHTML = "Feels Like: " + feelsLikeC.toFixed(1) + "°C"
+        dew.innerHTML = "Dew Point: " + dewC.toFixed(1) + "°C"
+        changeBtn.innerHTML = "°C";
+    };
+})
 
 
 

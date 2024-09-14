@@ -11,29 +11,27 @@
 <body>
     
     <div id="wrapper">
-        <form id="searchForm"></form>
-        <label for="locationInput">Enter Location: </label>
-        <input type="text" name="locationInput" id="locationInput">
+        <form id="searchForm">
+            <input type="text" name="locationInput" id="locationInput" placeholder="Enter Location Here">
+            <button id="searchBtn">Search</button>
 
-        <button id="searchBtn">Click me for weather</button>
-    </form>
+        </form>
+        <button id="changeBtn">°C</button>
 
-    <button id="changeBtn">Change to °F</button>
+        
 
-    <div id="information">
-        <p id="location"></p>
-        <p id="conditions"></p>
-        <p id="description"></p>
-        <p id="temp"></p>
-        <p id="UVIndex"></p>
-        <p id="feelsLike"></p>
-        <p id="precipitation"></p>
-        <p id="dew"></p>
-        <p id="humidity"></p>
+        <div id="information">
+            <p class="infoSectors" id="location"></p>
+            <p class="infoSectors" id="conditions"></p>
+            <p class="infoSectors" id="description"></p>
+            <p class="infoSectors" id="temp"></p>
+            <p class="infoSectors" id="UVIndex"></p>
+            <p class="infoSectors" id="feelsLike"></p>
+            <p class="infoSectors" id="precipitation"></p>
+            <p class="infoSectors" id="dew"></p>
+            <p class="infoSectors" id="humidity"></p>
+        </div>
     </div>
-    </div>
-    
-
 
 </body>
 </html>
