@@ -87,11 +87,11 @@ searchBtn.addEventListener("click", function(event) {
 
             precipProb.innerHTML = responseJSON.currentConditions.precipprob + "%";
 
-            // if (responseJSON.currentConditions.preciptype == null) {
-            //     precipType.innerHTML = "None"
-            // } else {
-            //     precipType.innerHTML = responseJSON.currentConditions.preciptype;
-            // }
+            if (responseJSON.currentConditions.preciptype == null) {
+                precipType.innerHTML = "None"
+            } else {
+                precipType.innerHTML = responseJSON.currentConditions.preciptype;
+            }
 
             //----------- !!!!!! this causes error because there is no precip so preciptype = null, need to find a way of making it say None if there is no precip !!!!!!!!!! -----------// also need to add button in top right corner to make days change
             
