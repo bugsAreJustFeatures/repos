@@ -21,6 +21,10 @@ const visibility = document.getElementById("visibility");
 const windGust = document.getElementById("windGust");
 const windSpeed = document.getElementById("windSpeed");
 const windDirection = document.getElementById("windDirection");
+const rightArrow = document.getElementById("rightArrow");
+const leftArrow = document.getElementById("leftArrow");
+const date = document.getElementById("date");
+const wrapper = document.getElementById("wrapper");
 
 let userLocation;
 let tempC;
@@ -30,14 +34,13 @@ let feelsLikeF;
 let dewC;
 let dewF;
 let icon;
+let dateNum = 0;
 let isCelsius = 1;
-let background = document.body.style.backgroundImage;
+
+function dataFetch() {
 
 
-searchBtn.addEventListener("click", function(event) {
-    event.preventDefault()
-
-    if (locationInput.value == "") {
+    if (locationInput.value === "") {
          userLocation = "London";
     } else {
         userLocation = locationInput.value;
@@ -50,73 +53,75 @@ searchBtn.addEventListener("click", function(event) {
         })
     .then (
         (responseJSON) => {
+
+            leftArrow.innerHTML = " < ";
+            rightArrow.innerHTML = " > ";
+            
             console.log(responseJSON)
 
             //weather icon 
-            icon = responseJSON.currentConditions.icon
+            icon = responseJSON.days[dateNum].icon;
 
             //celsius
-            tempC = responseJSON.currentConditions.temp;
-            feelsLikeC = responseJSON.currentConditions.feelslike;
-            dewC = responseJSON.currentConditions.dew;
+            tempC = responseJSON.days[dateNum].temp;
+            feelsLikeC = responseJSON.days[dateNum].feelslike;
+            dewC = responseJSON.days[dateNum].dew;
 
             //farenheit
             tempF = (tempC * 9/5) + 32;
             feelsLikeF = (feelsLikeC * 9/5 + 32);
             dewF = (dewC * 9/5) + 32;
             
+            date.innerHTML = responseJSON.days[dateNum].datetime + " (All times shown are local)";
+
             searchLocation.innerHTML = responseJSON.resolvedAddress;
 
-            conditions.innerHTML = responseJSON.currentConditions.conditions;
+            conditions.innerHTML = responseJSON.days[dateNum].conditions;
 
-            description.innerHTML = responseJSON.description;
+            description.innerHTML = responseJSON.days[dateNum].description;
 
             temp.innerHTML = tempC + "°C";
 
-            UVIndex.innerHTML = responseJSON.currentConditions.uvindex;
+            UVIndex.innerHTML = responseJSON.days[dateNum].uvindex;
 
             feelsLike.innerHTML = feelsLikeC + "°C";
 
-            precipitation.innerHTML = responseJSON.currentConditions.precip + " mm"
+            precipitation.innerHTML = responseJSON.days[dateNum].precip + " mm"
 
             dew.innerHTML = dewC + "°C";
 
-            humidity.innerHTML = responseJSON.currentConditions.humidity + "%";
+            humidity.innerHTML = responseJSON.days[dateNum].humidity + "%";
 
-            cloudCover.innerHTML = responseJSON.currentConditions.cloudcover + "%";
+            cloudCover.innerHTML = responseJSON.days[dateNum].cloudcover + "%";
 
-            precipProb.innerHTML = responseJSON.currentConditions.precipprob + "%";
+            precipProb.innerHTML = responseJSON.days[dateNum].precipprob + "%";
 
-            if (responseJSON.currentConditions.preciptype == null) {
+            if (responseJSON.days[dateNum].preciptype == null) {
                 precipType.innerHTML = "None"
             } else {
-                precipType.innerHTML = responseJSON.currentConditions.preciptype;
+                precipType.innerHTML = responseJSON.days[dateNum].preciptype;
             }
-
-            //----------- !!!!!! this causes error because there is no precip so preciptype = null, need to find a way of making it say None if there is no precip !!!!!!!!!! -----------// also need to add button in top right corner to make days change
             
+            pressure.innerHTML = responseJSON.days[dateNum].pressure + "hPa";
 
-            pressure.innerHTML = responseJSON.currentConditions.pressure + "hPa";
+            sunrise.innerHTML = responseJSON.days[dateNum].sunrise;
 
-            sunrise.innerHTML = responseJSON.currentConditions.sunrise + " (local time)";
+            sunset.innerHTML = responseJSON.days[dateNum].sunset;
 
-            sunset.innerHTML = responseJSON.currentConditions.sunset + " (local time)";
+            visibility.innerHTML = responseJSON.days[dateNum].visibility + " miles";
 
-            visibility.innerHTML = responseJSON.currentConditions.visibility + " miles";
+            windGust.innerHTML = responseJSON.days[dateNum].windgust + " mph";
 
-            windGust.innerHTML = responseJSON.currentConditions.windgust + " mph";
+            windSpeed.innerHTML = responseJSON.days[dateNum].windspeed + " mph";
 
-            windSpeed.innerHTML = responseJSON.currentConditions.windspeed + " mph";
-
-            windDirection.innerHTML = responseJSON.currentConditions.winddir + "°";
+            windDirection.innerHTML = responseJSON.days[dateNum].winddir + "°";
 
             // // if statement for background depending on the weather conditions
-            // if (icon = "snow") {
-            //     background.src = "snowy-gif.webp"
-            // } else if (icon === "partly-cloudy-day") {
-            //     // background.src = "./stormy-gif.webp"
-            //     document.body.style.backgroundColor = "black"
-            // }
+            if (icon === "partly-cloudy-day") {
+                // document.body.style.backgroundImage = "url('snowy-gif.webp')";
+                document.body.style.backgroundRepeat = "no-repeat";
+                document.body.style.backgroundSize = "cover";
+            };
         }
     )
     .then (
@@ -125,6 +130,12 @@ searchBtn.addEventListener("click", function(event) {
     .catch ((err) => {
         console.log(err)
     })
+}
+
+
+searchBtn.addEventListener("click", function(event) {
+    event.preventDefault();
+    dataFetch();
 });
 
 changeBtn.addEventListener("click", function(event) {
@@ -146,5 +157,26 @@ changeBtn.addEventListener("click", function(event) {
     };
 })
 
+leftArrow.addEventListener("click", function() {
+    if (dateNum < 1) {
+        return;
+    } else {
+        dateNum--;
+        dataFetch();
+    }
 
+})
+
+rightArrow.addEventListener("click", function() {
+    // console.log(dateNum)
+    if (dateNum === 14) {
+        dateNum = 0;
+        dataFetch();
+    } else {
+        dateNum++;
+        dataFetch();
+    }
+})
+
+dataFetch();
 
