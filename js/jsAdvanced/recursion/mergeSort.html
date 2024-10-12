@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge Sort Algorithm</title>
+</head>
+<body>
+    
+    <script>
+        let orderedArr = [];
+        let leftHalf;
+        let rightHalf;
+
+        function mergeSort(arr) {
+            if (arr.length <= 1) {
+                return "Base case Reached = " + orderedArr.concat(arr)
+            } else {
+                if (arr.length) {
+                    // console.log("arr at start of loop " + arr)
+
+                    //get half of length and then rounds down (Math.floor) in case of odd number
+                    let halfLength = Math.floor(arr.length / 2); 
+                    //left half of array
+                    leftHalf = arr.slice(0, halfLength);
+                    console.log("left half " + leftHalf);
+                    //right half of array
+                    rightHalf = arr.slice(halfLength, arr.length);
+                    console.log("right half " + rightHalf);
+
+                        if (leftHalf[0] < rightHalf[0]) {
+                            orderedArr.unshift(leftHalf.shift());
+                        } else {
+                            orderedArr.unshift(rightHalf.shift());
+                        }
+                    console.log("Left half before concat " + leftHalf)
+                    let newArr = leftHalf.concat(rightHalf)
+                    return mergeSort(newArr)
+                }
+                return "merged " + orderedArr
+            }
+        }
+        console.log(mergeSort([3, 2, 1, 13, 8, 5, 0, 1]))
+    </script>
+
+</body>
+</html> 

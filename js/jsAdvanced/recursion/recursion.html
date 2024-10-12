@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recursion</title>
+</head>
+<body>
+    
+<script>
+
+    // function sumRange(n) {
+    //     if (n <= 1) {
+    //         return 1;
+    //     } else {
+    //         return n + sumRange(n - 1)
+    //     }
+    // }
+    // console.log("SumRange : " + sumRange(3));
+
+    // function power(n, total) {
+    //     if (total == 0) {
+    //         return 1;
+    //     } else {
+    //         return n * power(n, total - 1)
+    //     }
+    // }
+    // console.log("Power : " + power( 2, 4));
+
+    // function factorial(n) {
+    //     if (n == 1) {
+    //         return 1;
+    //     } else {
+    //        return n * factorial(n - 1)
+    //     }
+
+    // }
+    // console.log("Factorial : " + factorial(4));
+
+    
+    // function all(arr, cb) {
+    //     if (arr.length == 0) {
+    //         return true;
+    //     } else {
+    //         let check = cb(arr[0]);
+    //         if (check) {
+    //             let newArr = arr.slice(1);
+    //             return all(newArr, cb);
+    //         } else {
+    //             return false
+    //         }         
+    //     }
+    // }
+    // let allAreLessThanSeven = all([1, 2, 9], (n) => {return n < 7});
+    // console.log("All : " + allAreLessThanSeven);
+
+    // function productOfArray(arr) {
+
+    //     if (arr.length == 0) {
+    //         return 1
+    //     } else {
+    //         return arr.shift() * productOfArray(arr)
+    //     }
+    // }
+    // let six = productOfArray([1, 2, 3])
+    // console.log("Products of array : " + six)
+
+//     let nestedObject = {
+//     data: {
+//         info: {
+//             stuff: {
+//                 thing: {
+//                     moreStuff: {
+//                         magicNumber: 44,
+//                         something: "foo2"
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// let hasIt = contains(nestedObject, 44); // true
+// let doesntHaveIt = contains(nestedObject, "foo2"); // false
+
+// function contains(obj, value) {
+
+//     for (let key in obj) {
+//         if (typeof obj[key] === "object") {
+//             return contains(obj[key], value)
+//         } else if (obj[key] === value) {
+//             return true
+//         } else return false
+//     }
+// }
+// console.log("(should be true) Contains : " + hasIt)
+// console.log("(should be false) Contains : " + doesntHaveIt)
+
+
+</script>
+
+</body>
+</html>

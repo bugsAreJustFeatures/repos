@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fibinacci Done by Iteration</title>
+</head>
+<body>
+    <script>
+                let arr = [];
+                
+
+        // function fibs(n) {
+        //     if (n <= 2) {
+        //         return n
+        //     } else {
+        //         let previousPreviousNum;
+        //         let previousNum = 0;
+        //         let currentNum = 1
+        //         arr.push(previousNum, currentNum)
+        //         for (let i = 1; i < n; i++) {
+                    
+        //             previousPreviousNum = previousNum;
+        //             previousNum = currentNum;
+        //             currentNum = previousPreviousNum + previousNum 
+                    
+        //             arr.push(currentNum);
+        //         }
+        //         return arr
+        //     }
+        // };
+        // console.log(fibs(8))
+
+        let result;
+        function fibsRec(n) {
+            if (n < 2) {
+                return n;
+            };
+            if (n < arr.length) {
+                return arr[n]
+            };
+            {
+                result = (fibsRec(n - 2) + fibsRec(n - 1));
+                arr.push(result)
+                return result
+            }
+        }
+        console.log(fibsRec(8))
+        console.log(arr.slice(2))
+    
+    </script>
+</body>
+</html>
