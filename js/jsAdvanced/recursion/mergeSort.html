@@ -8,13 +8,13 @@
 <body>
     
     <script>
-        let orderedArr = [];
-        let leftHalf;
-        let rightHalf;
+
 
         function mergeSort(arr) {
+            let leftHalf;
+            let rightHalf;
             if (arr.length <= 1) {
-                return "Base case Reached = " + orderedArr.concat(arr)
+                return arr
             } else {
                 if (arr.length) {
                     // console.log("arr at start of loop " + arr)
@@ -23,23 +23,32 @@
                     let halfLength = Math.floor(arr.length / 2); 
                     //left half of array
                     leftHalf = arr.slice(0, halfLength);
-                    console.log("left half " + leftHalf);
                     //right half of array
                     rightHalf = arr.slice(halfLength, arr.length);
-                    console.log("right half " + rightHalf);
 
-                        if (leftHalf[0] < rightHalf[0]) {
-                            orderedArr.unshift(leftHalf.shift());
-                        } else {
-                            orderedArr.unshift(rightHalf.shift());
-                        }
-                    console.log("Left half before concat " + leftHalf)
-                    let newArr = leftHalf.concat(rightHalf)
-                    return mergeSort(newArr)
+                    let sortedLeft = mergeSort(leftHalf);
+                    let sortedRight = mergeSort(rightHalf)
+
+                    return merge(sortedLeft, sortedRight)
                 }
-                return "merged " + orderedArr
             }
         }
+
+        function merge(left, right) {
+            let orderedArr = [];
+            
+            while (left.length > 0 && right.length > 0) {
+
+                if (left[0] < right[0]) {
+                    orderedArr.push(left.shift())
+                } else {
+                    orderedArr.push(right.shift())
+                }
+            }
+
+            return orderedArr.concat(left).concat(right)
+        }
+
         console.log(mergeSort([3, 2, 1, 13, 8, 5, 0, 1]))
     </script>
 

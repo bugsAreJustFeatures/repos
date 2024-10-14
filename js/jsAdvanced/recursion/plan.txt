@@ -2,35 +2,8 @@ merge sort plan
 
 1. split array in half
 2. if new array can be split
-  2a. loop until array cannot be split anymore
-  2b. then loop through step 2a for both left and right side
+  2a. loop until array cannot be split anymore (length = 1)
 3. compare first element in left and right arrays
-4. remove the smallest element and push into a new array 
+4. remove the smallest element and push into a new array (merge)
 5. loop through steps 3 and 4 until no elements left to sort.
-
-steps for whole function 
-
-- arr.length = 8
-- let leftHalf = [3, 2, 1, 13]
-- return mergeSort([3, 2, 1, 13]) // goes to else statement
-
-- arr.length = 4
-- let leftHalf = [3, 2]
-- return margeSort([3, 2]) // goes to else statement
-
-- arr.length = 2
-- let leftHalf = [3]
-- return mergeSort([3]) // exits via base case
-
-steps for comparing arrays
-
-if leftHalf[0] < rightHalf[0] {
-  orderedArr.push(leftHalf[0]);
-  remove leftHalf[0] from leftHalf array
-} else if (leftHalf[0] > rightHalf[0]) {
-  orderedArr.push(rightHalf[0]);
-  remove rightHalf[0] from rightHalf array
-}
-
-new steps for function 
 
