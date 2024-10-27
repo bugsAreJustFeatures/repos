@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Euler Question</title>
+</head>
+<body>
+    
+    <script>
+        // let arr = [];
+        // let sum = 0;
+
+        // function probOne(n) {
+        //     n = n - 1;
+        //     if (n < 3) {
+        //         return " Sum = " + sum
+        //     } else {
+        //         if (n % 3 == 0 || n % 5 == 0) {
+        //             arr.push(n);
+        //             sum = sum + n;
+        //             return probOne(n)
+        //         } else {
+        //             return probOne(n)
+        //         }
+        //     }
+        // }
+
+        // console.log(probOne(10000))
+
+        
+        // let total;
+
+        // function probTwo(previous, current, total) {
+        //     if (total > 4000000) {
+        //         return total;
+        //     } else if (current % 2 == 0) {
+        //         total += current;
+        //     };
+
+        //     return probTwo(current, current + previous, total)
+
+        // }
+        // console.log(probTwo(1, 2, 0))
+
+        let arr = [];
+        let i = 2;
+        function probThree(integer) {
+            //base case for returning integer if its <=1 since <=1 cannot be prime
+            if (integer < 2) {
+                return arr 
+            } else {
+                //returns arr if i > integer
+                if (integer % i == 0) {
+                    checkDupe(i);
+                    arr.push(i);
+                    return probThree(integer / i);
+                } else {
+                    i++;
+                    return probThree(integer);
+                }
+            }
+        }
+
+        function checkDupe(n) {
+            if (arr.includes(n)) {
+                let index = arr.indexOf(n)
+                arr.splice(index, 1)
+            }
+        }
+        console.log(probThree(12))
+        
+
+    </script>
+
+</body>
+</html>

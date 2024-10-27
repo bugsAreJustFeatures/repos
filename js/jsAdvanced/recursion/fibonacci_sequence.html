@@ -35,18 +35,16 @@
         function fibsRec(n) {
             if (n < 2) {
                 return n;
-            };
-            if (n < arr.length) {
+            } else if (n < arr.length) {
                 return arr[n]
             };
-            {
+            
                 result = (fibsRec(n - 2) + fibsRec(n - 1));
                 arr.push(result)
                 return result
-            }
+            
         }
-        console.log(fibsRec(8))
-        console.log(arr.slice(2))
+        console.log(fibsRec(34))
     
     </script>
 </body>
