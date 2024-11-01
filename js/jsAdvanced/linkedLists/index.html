@@ -24,18 +24,30 @@
                 
             }
             append(value) {
-                    let newNode = new Node(value);
+                let newNode = new Node(value);
+                if (this.head === null) { //if list is empty
+                    this.head = newNode;
+                    this.tail = newNode;
+                } else { // list is not empty
+                    this.tail.nextNode = newNode;
+                    this.tail = newNode;
+                };
+                this.length++;
+                return newNode;
+            }
+            prepend(value) {
+                let newPrepend = new Node(value);
 
-                    if (this.head === null) { //if list is empty
-                        this.head = newNode;
-                        this.tail = newNode;
-                    } else { // list is not empty
-                        this.tail.nextNode = newNode;
-                        this.tail = newNode;
-                    };
-                    this.length++;
-                    return newNode;
+                if (this.head === null) {//list is empty
+                    this.head = newPrepend;
+                    this.tail = newPrepend;
+                } else {//list is not empty
+                    newPrepend.nextNode = this.head;
+                    this.head = newPrepend;
                 }
+                this.length++;
+                return newPrepend;
+            }
             
         }
 
@@ -46,6 +58,8 @@
         console.log(l.append("node2"))
         console.log(l.append("node3"))
         console.log(l.append("node4"))
+        console.log(l.prepend("node0"))
+        
 
     </script>
 
