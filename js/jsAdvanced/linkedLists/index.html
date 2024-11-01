@@ -13,23 +13,39 @@
             constructor(value = null, nextNode = null) {
                 this.value = value;
                 this.nextNode = nextNode;
-
-                
             }
         }
-
-        const myNode = new Node("2002", "node2");
-        console.log(myNode)
-
+        
         class LinkedList {
-            constructor(newNode) {
-                let head = null;
-                let tail = null;
-                let length = 0;
-
+            constructor() {
+                this.head = null;
+                this.tail = null;
+                this.length = 0;
                 
             }
+            append(value) {
+                    let newNode = new Node(value);
+
+                    if (this.head === null) { //if list is empty
+                        this.head = newNode;
+                        this.tail = newNode;
+                    } else { // list is not empty
+                        this.tail.nextNode = newNode;
+                        this.tail = newNode;
+                    };
+                    this.length++;
+                    return newNode;
+                }
+            
         }
+
+
+        const l = new LinkedList();
+
+        console.log(l.append("node1"))
+        console.log(l.append("node2"))
+        console.log(l.append("node3"))
+        console.log(l.append("node4"))
 
     </script>
 
