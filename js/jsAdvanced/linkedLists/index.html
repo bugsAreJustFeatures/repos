@@ -74,7 +74,7 @@
             }
             pop() {
                 const beforeTail = this.at(this.length - 2);
-                beforeTail.nextNode = null;
+                beforeTail.nextNode = this.at(this.length - 1)
                 this.length--;
             }
             contains(input) {
@@ -104,11 +104,19 @@
                 return false + ", you're value was not found";
             }
             toString() {
-                
+                let currentString = this.head;
+                let stringList = "";
+                for (let i = 0; i < this.length; i++) {
+                    stringList += `(${currentString.value})`;//value added to list
+                    stringList += " -> ";
+                    currentString = currentString.nextNode
+                }
+                return stringList + " null";
             }
             
         }
         const l = new LinkedList();
+
         console.log(l.append("node1"))
         console.log(l.append("node2"))
         console.log(l.append("node3"))
@@ -119,14 +127,7 @@
         console.log(l.append("node8"))
         console.log(l.append("node9"))
         console.log(l.append("node10"))
-        console.log(l.append("node11"))
-        console.log(l.append("node12"))
-        console.log(l.append("node13"))
-        console.log(l.append("node14"))
-        console.log(l.append("node15"))
-        console.log(l.append("node16"))
-        console.log(l.append("node17"))
-        console.log(l.append("node18"))
+
         console.log(l.size())
         console.log(l.headNode())
         console.log(l.tailNode())
@@ -134,8 +135,9 @@
         // console.log(l.pop())
         console.log(l.size())
         console.log(l.contains("node100"))
-        console.log(l.find("node19"))
+        console.log(l.find("node10"))
         console.log(l.size())
+        console.log(l.toString())
     </script>
 
 </body>
