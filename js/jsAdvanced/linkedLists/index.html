@@ -113,6 +113,12 @@
                 }
                 return stringList + " null";
             }
+            insertAt(value, index) {
+                let insertNode = new Node(value);
+                insertNode.nextNode = this.at(index + 1);
+                let beforeValue = this.at(index - 1);
+                beforeValue.nextNode = insertNode;
+            }
             
         }
         const l = new LinkedList();
@@ -137,7 +143,9 @@
         console.log(l.contains("node100"))
         console.log(l.find("node10"))
         console.log(l.size())
+        console.log(l.insertAt("node8.5", 8))
         console.log(l.toString())
+
     </script>
 
 </body>
