@@ -111,13 +111,22 @@
                     stringList += " -> ";
                     currentString = currentString.nextNode
                 }
-                return stringList + " null";
+                return stringList + "null";
             }
             insertAt(value, index) {
-                let insertNode = new Node(value);
-                insertNode.nextNode = this.at(index + 1);
-                let beforeValue = this.at(index - 1);
-                beforeValue.nextNode = insertNode;
+                let insertedNode = new Node(value);
+                let nodeBeforeInsertion = this.at(index - 1);
+
+                if (index === 1) {
+                    this.prepend(value);
+                } else if (index === this.length + 1) {
+                    this.append(value);
+                } else {
+                    insertedNode.nextNode = nodeBeforeInsertion.nextNode;
+                    nodeBeforeInsertion.nextNode = insertedNode;
+                    this.length++;
+                }
+                
             }
             
         }
@@ -134,17 +143,21 @@
         console.log(l.append("node9"))
         console.log(l.append("node10"))
 
-        console.log(l.size())
-        console.log(l.headNode())
-        console.log(l.tailNode())
-        console.log(l.at(16))
+        // console.log("Size, " + l.size())
+        // console.log("Head Node, " + l.headNode())
+        // console.log("Tail Node, " + l.tailNode())
         // console.log(l.pop())
-        console.log(l.size())
-        console.log(l.contains("node100"))
-        console.log(l.find("node10"))
-        console.log(l.size())
-        console.log(l.insertAt("node8.5", 8))
-        console.log(l.toString())
+        // console.log("Size, " + l.size())
+        // console.log("Contains, " + l.contains("node100"))
+        // console.log("Find, " + l.find("node10"))
+        // console.log("Size, " + l.size())
+        // console.log("To String, " + l.toString())
+        console.log("Insert At, " + l.insertAt("node11", 11))
+        console.log("To String, " + l.toString())
+        console.log("Size, " + l.size())
+        console.log(l.at(10))
+
+
 
     </script>
 
