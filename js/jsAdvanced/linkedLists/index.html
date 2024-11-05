@@ -126,7 +126,17 @@
                     nodeBeforeInsertion.nextNode = insertedNode;
                     this.length++;
                 }
-                
+                return "Inserted " + value + " at the index " + index;
+            }
+            removeAt(index) {
+                if (index === 1) {
+                    this.head = this.at(2);
+                    this.length--;
+                } else if (index === this.length) {
+                    let nodeBeforeTail = this.at(length - 1);
+                    this.tail = nodeBeforeTail;
+                    this.length--;
+                }
             }
             
         }
@@ -143,19 +153,19 @@
         console.log(l.append("node9"))
         console.log(l.append("node10"))
 
+        // console.log("Insert At, " + l.insertAt("node11", 11))
         // console.log("Size, " + l.size())
-        // console.log("Head Node, " + l.headNode())
-        // console.log("Tail Node, " + l.tailNode())
-        // console.log(l.pop())
-        // console.log("Size, " + l.size())
-        // console.log("Contains, " + l.contains("node100"))
-        // console.log("Find, " + l.find("node10"))
-        // console.log("Size, " + l.size())
+        // console.log(l.removeAt(11))
         // console.log("To String, " + l.toString())
-        console.log("Insert At, " + l.insertAt("node11", 11))
-        console.log("To String, " + l.toString())
-        console.log("Size, " + l.size())
-        console.log(l.at(10))
+        // console.log("Size, " + l.size())
+        // console.log(l.at(10))
+
+
+
+        
+
+        
+
 
 
 
