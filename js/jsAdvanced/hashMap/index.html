@@ -14,6 +14,8 @@
             constructor(loadFactor = 0.75, capacity = 10) {
                 this.loadFactor = loadFactor;
                 this.capacity = capacity;
+                this.length = 0;
+                
             }
 
             hash(key) {
@@ -28,17 +30,22 @@
             return hashCode % this.capacity;
             }
 
-            set(key, value) {
-                let hashedKey = this.hash(key); // e.g. 1234
+            set(key, value = "No value added") {
+                let hashedKey = this.hash(key); // e.g. 8
 
+                let newBucket = {[hashedKey]: {Key: key, value}};
 
+                console.log("Hashed Key:", hashedKey); // Check hashedKey
+                console.log("New Bucket:", newBucket); // Log the bucket
 
             }
 
         }
 
-        const harry = new HashMap();
-        console.log(harry.hash("Harry"))
+        const h = new HashMap();
+        h.set("Harry", 17)
+        h.set("qs", 18)
+        
 
     </script>
 
