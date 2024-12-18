@@ -15,7 +15,7 @@
                 this.loadFactor = loadFactor;
                 this.capacity = capacity;
                 this.length = 0;
-                
+                this.buckets = Array(this.capacity).fill(null); // this.buckets = [null, null, null]   (this would be the result if capacity was 3)
             }
 
             hash(key) {
@@ -30,24 +30,41 @@
             return hashCode % this.capacity;
             }
 
-            set(key, value = "No value added") {
-                let hashedKey = this.hash(key); // e.g. 8
+            increaseSizeChecker() {
+                if (this.length >= this.capacity) {
+                    this.capacity *= 2;
+                };
+            }
 
-                let newBucket = {[hashedKey]: {Key: key, value}};
+            set(key, value = "No value") {
+                this.increaseSizeChecker();
 
-                console.log("Hashed Key:", hashedKey); // Check hashedKey
-                console.log("New Bucket:", newBucket); // Log the bucket
+                let index = this.hash(key); // e.g. 8
+                console.log("Hash Value: " + index)
 
+                console.log("Capacity:", this.capacity); 
+                console.log("Length:", this.length); 
+
+                if (!this.buckets[index]) {
+                    this.buckets[index] = [];
+                    this.buckets[index].push({key, value});// creates an array in the index and then inserts the new key-value pair    
+                } else {
+                    this.buckets[index].push({key, value});// inserts the new key-value pair                
+                }
+                this.length++;
+                console.log(this.buckets)
             }
 
         }
 
         const h = new HashMap();
-        h.set("Harry", 17)
-        h.set("qs", 18)
-        
+        h.set("a")
+        h.set("b")
+        h.set("c")
+        h.set("d")
+        h.set("e")
 
     </script>
 
 </body>
-</html>
+</html> 
