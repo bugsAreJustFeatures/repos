@@ -57,11 +57,21 @@
                 let bucket = this.buckets[index];
 
                 for (let i = 0; i < bucket.length; i++) {
+                    if (!key == bucket[i].key) {
+                        return "There is no key with, " + key
+                    } 
+                } 
+
+                for (let i = 0; i < bucket.length; i++) { // for loop to check for value of key
                     if (key == bucket[i].key) {
                         return bucket[i].value
                     }
                 } 
-                return "No Value assigned to key"
+                return "No Value assigned to key, " + key;
+            }
+
+            has(key) {
+                let index = this.hash(key);
             }
         }
 
