@@ -30,20 +30,16 @@
             return hashCode % this.capacity;
             }
 
-            increaseSizeChecker() {
+            sizeChecker() {
                 if (this.length >= this.capacity) {
                     this.capacity *= 2;
                 };
             }
 
             set(key, value = "No value") {
-                this.increaseSizeChecker();
+                this.sizeChecker();
 
                 let index = this.hash(key); // e.g. 8
-                console.log("Hash Value: " + index)
-
-                console.log("Capacity:", this.capacity); 
-                console.log("Length:", this.length); 
 
                 if (!this.buckets[index]) {
                     this.buckets[index] = [];
@@ -55,15 +51,28 @@
                 console.log(this.buckets)
             }
 
+            get(key) {
+                let index = this.hash(key);
+
+                let bucket = this.buckets[index];
+
+                for (let i = 0; i < bucket.length; i++) {
+                    if (key == bucket[i].key) {
+                        return bucket[i].value
+                    }
+                } 
+                return "No Value assigned to key"
+            }
         }
 
         const h = new HashMap();
-        h.set("a")
-        h.set("b")
-        h.set("c")
-        h.set("d")
-        h.set("e")
+        h.set("Harry", 17)
+        h.set("Harry1", 18)
+        h.set("Harry2", 19)
+        h.set("Harry3", 20)
+        h.set("Liam", 16)
 
+        console.log(h.get("Liam"))
     </script>
 
 </body>
