@@ -36,7 +36,7 @@
                 };
             }
 
-            set(key, value = "No value") {
+            set(key, value) {
                 this.sizeChecker();
 
                 let index = this.hash(key); // e.g. 8
@@ -52,21 +52,20 @@
             }
 
             get(key) {
-                let index = this.hash(key);
+                let index = this.hash(key); 
 
-                let bucket = this.buckets[index];
+                let bucketAtIndex = this.buckets[index];
 
-                for (let i = 0; i < bucket.length; i++) {
-                    if (!key == bucket[i].key) {
-                        return "There is no key with, " + key
-                    } 
-                } 
+                if (this.buckets[index] === null) { // if bucket is empty (therefor === null)
+                    return "There is no key called, " + key + " so no value has been found."
+                };
 
-                for (let i = 0; i < bucket.length; i++) { // for loop to check for value of key
-                    if (key == bucket[i].key) {
-                        return bucket[i].value
+                for (let i = 0; i < bucketAtIndex.length; i++) { // for loop to check for value of key, and return it or not -------error on this line, should not return undefined---------
+                    if (key == bucketAtIndex[i].key) {
+                        return key + " has the value, " + bucketAtIndex[i].value
                     }
                 } 
+                console.log("I made it")
                 return "No Value assigned to key, " + key;
             }
 
@@ -76,13 +75,13 @@
         }
 
         const h = new HashMap();
-        h.set("Harry", 17)
-        h.set("Harry1", 18)
-        h.set("Harry2", 19)
-        h.set("Harry3", 20)
-        h.set("Liam", 16)
+        h.set("Harry")
+        // h.set("Harry1", 18)
+        // h.set("Harry2", 19)
+        // h.set("Harry3", 20)
+        // h.set("Liam", 16)
 
-        console.log(h.get("Liam"))
+        console.log(h.get("Harry"))
     </script>
 
 </body>
