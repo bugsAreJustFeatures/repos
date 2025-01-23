@@ -31,9 +31,9 @@
             }
 
             sizeChecker() {
-                if (this.length >= this.capacity) {
-                    this.capacity *= 2;
-                };
+                if (this.loadFactor <= (this.length / this.capacity)) {
+                    return this.capacity *= 2;
+                }
             }
 
             set(key, value) {
@@ -48,7 +48,7 @@
                     this.buckets[index].push({key, value});// inserts the new key-value pair                
                 }
                 this.length++;
-                console.log(this.buckets)
+                return this.buckets
             }
 
             get(key) {
@@ -57,12 +57,12 @@
                 let bucketAtIndex = this.buckets[index];
 
                 if (this.buckets[index] === null) { // if bucket is empty (therefor === null)
-                    return "There is no key called, " + key + " so no value has been found."
+                    return "There is no key called, " + key + " so no value can been found. Please ensure you have entered the value correctly."
                 };
 
                 for (let i = 0; i < bucketAtIndex.length; i++) { // for loop to check for value of key, and return it or not -------error on this line, should not return undefined---------
                     if (key == bucketAtIndex[i].key) {
-                        return key + " has the value, " + bucketAtIndex[i].value
+                        return key + " : " + bucketAtIndex[i].value
                     }
                 } 
                 console.log("I made it")
@@ -71,17 +71,31 @@
 
             has(key) {
                 let index = this.hash(key);
+                
+                let bucketAtIndex = this.buckets[index];
+
+                if (this.buckets[index] === null) { // if bucket is empty (therefor === null)
+                    return key + " does not exist.";
+                }
+
+                for (let i = 0; i < bucketAtIndex.length; i++) {
+
+                    if (key === bucketAtIndex[i].key) {
+                        return key + " exists";
+                    }
+                }    
+                return key + " does not exist.";
             }
         }
 
         const h = new HashMap();
-        h.set("Harry")
-        // h.set("Harry1", 18)
+
+        // console.log(h.set("Harry", 18))
         // h.set("Harry2", 19)
         // h.set("Harry3", 20)
         // h.set("Liam", 16)
 
-        console.log(h.get("Harry"))
+        console.log(h.has("Harry"))
     </script>
 
 </body>
