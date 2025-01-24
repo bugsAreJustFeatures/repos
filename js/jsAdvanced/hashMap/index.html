@@ -87,13 +87,52 @@
                 return key + " does not exist.";
             }
 
-            remove(key) {}
+            remove(key) {
+                let index = this.hash(key);
 
-            length() {}
+                let bucketAtIndex = this.buckets[index];
 
-            clear() {}
+                if (this.buckets[index] === null) { // if bucket is empty (therefor === null)
+                    return key + " does not exist, so no key removed.";
+                }
 
-            keys() {}
+                for (let i = 0; i < bucketAtIndex.length; i++) {
+
+                    if (key == bucketAtIndex[i].key) {
+                        bucketAtIndex.splice(i, 1);
+                        this.length--;
+                        return key + " has now been removed."
+                    };
+                }    
+                return key + " does not exist, so no key has been removed.";
+
+            }
+
+            length() {
+                return this.length;
+            }
+
+            clear() {
+                this.length = 0;
+                this.buckets.length = 0;
+                this.capacity = 10;
+                this.loadFactor = 0.75;
+                this.buckets = Array(this.capacity).fill(null);
+            }
+
+            keys() {
+                let arr = [];
+                let arrNum = 0;
+
+                for (let i = 0; i < this.length; i++) {
+
+                    if (this.buckets[i]) {
+                        arr.push(this.buckets[i].key)
+                        console.log(arrNum++);
+                    };
+                } 
+                return arr;
+            }
 
             values() {}
 
@@ -102,12 +141,17 @@
 
         const h = new HashMap();
 
-        // console.log(h.set("Harry", 18))
-        // h.set("Harry2", 19)
-        // h.set("Harry3", 20)
-        // h.set("Liam", 16)
+        h.set("Harry", 18)
+        h.set("Harry2", 19)
+        h.set("Harry3", 20)
+        h.set("Liam", 16)
+        // console.log(h.buckets)
+        // console.log(h.remove("Harry"))
+        // h.clear()
+        console.log(h.buckets)
+        console.log(h.keys())
 
-        console.log(h.has("Harry"))
+
     </script>
 
 </body>
