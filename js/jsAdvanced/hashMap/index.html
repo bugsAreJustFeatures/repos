@@ -126,7 +126,6 @@
 
                 for (let i = 0; i < this.buckets.length; i++) {
                     let bucketAtIndex = this.buckets[i];
-                    console.log("HI")
 
                     if (!bucketAtIndex) {
                         continue;
@@ -139,9 +138,41 @@
                 return arr;
             }
 
-            values() {}
+            values() {
+                let arr = [];
+                let arrNum = 0;
 
-            entries() {}
+                for (let i = 0; i < this.buckets.length; i++) {
+                    let bucketAtIndex = this.buckets[i];
+
+                    if (!bucketAtIndex) {
+                        continue;
+                    } else {
+                        for (let j = 0; j < bucketAtIndex.length; j++) {
+                            arr.push(bucketAtIndex[j].value)
+                        }
+                    }
+                } 
+                return arr;
+            }
+
+            entries() {
+                let arr = [];
+                let arrNum = 0;
+
+                for (let i = 0; i < this.buckets.length; i++) {
+                    let bucketAtIndex = this.buckets[i];
+
+                    if (!bucketAtIndex) {
+                        continue;
+                    } else {
+                        for (let j = 0; j < bucketAtIndex.length; j++) {
+                            arr.push(bucketAtIndex[j].key + " : " + bucketAtIndex[j].value)
+                        }
+                    }
+                } 
+                return arr;
+            }
         }
 
         const h = new HashMap();
@@ -154,7 +185,7 @@
         // console.log(h.remove("Harry"))
         // h.clear()
         console.log(h.buckets)
-        console.log(h.keys())
+        console.log(h.entries())
 
 
     </script>
