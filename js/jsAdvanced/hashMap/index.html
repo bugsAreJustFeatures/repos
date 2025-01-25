@@ -124,12 +124,17 @@
                 let arr = [];
                 let arrNum = 0;
 
-                for (let i = 0; i < this.length; i++) {
+                for (let i = 0; i < this.buckets.length; i++) {
+                    let bucketAtIndex = this.buckets[i];
+                    console.log("HI")
 
-                    if (this.buckets[i]) {
-                        arr.push(this.buckets[i].key)
-                        console.log(arrNum++);
-                    };
+                    if (!bucketAtIndex) {
+                        continue;
+                    } else {
+                        for (let j = 0; j < bucketAtIndex.length; j++) {
+                            arr.push(bucketAtIndex[j].key)
+                        }
+                    }
                 } 
                 return arr;
             }
