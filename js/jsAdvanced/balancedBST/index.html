@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balanced BST</title>
+</head>
+<body>
+    
+    <script>
+
+        class node {
+            constructor(data, left = null, right = null) {
+                this.data = data;
+                this.left = left;
+                this.right = right;
+            }
+        } 
+
+        class tree {
+            constructor(arr, root) {
+                this.arr = arr;
+                this.root = root;
+            }
+        }
+
+        
+        
+        function buildTree(arr) {
+            
+
+            // 1. take the arr in, sort it (merge sort) and delete dupes
+            // 2. recusively go through each sorted element via binary search, 
+            // so split array up into half until you are at 1 element, 
+            // but each time it splits check if each element is smaller or larger, 
+            // then move them left if smaller, right is larger
+            // 3. 
+        }
+
+
+        // --------Helper functions, of merging (merge sort) and deleting dupes in arrays------//
+        function mergeSort(arr) {
+            let leftHalf;
+            let rightHalf;
+
+            //use mergesort to sort and order array
+            if (arr.length <= 1) {
+                return arr 
+            } else {
+                //find mid point
+                let halfLength = Math.floor(arr.length / 2);
+                // split array up into left and right
+                leftHalf = arr.slice(0, halfLength);
+                rightHalf = arr.slice(halfLength, arr.length);
+
+                let sortedLeft = mergeSort(leftHalf);
+                let sortedRight = mergeSort(rightHalf);
+
+                return merge(sortedLeft, sortedRight);
+            }
+
+            function merge(left, right) {
+                let orderedArr = [];
+
+                while (left.length > 0 && right.length > 0) {
+                    if (left[0] < right[0]) {
+                        orderedArr.push(left.shift());
+                    } else {
+                        orderedArr.push(right.shift());
+                    }
+                }
+                //added this into original mergesort function, to delete dupes.
+
+                /////// ----- returns nubers if there is only dupes, need to fix -----////
+                for (let i = 0; i < orderedArr.length; i++) {
+                    let next = orderedArr[i++];
+                    if (orderedArr[i] == next) {
+                        next++;
+                        orderedArr.splice(i);
+                    } else {
+                        next++;
+                    }
+                } 
+                return orderedArr.concat(left).concat(right);
+            }
+        }
+        console.log(mergeSort([9,9,9,9,9,9,9,9,9]))
+
+    </script>
+
+</body>
+</html>

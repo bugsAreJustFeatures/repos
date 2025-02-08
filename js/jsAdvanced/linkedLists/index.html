@@ -107,7 +107,7 @@
                 let currentString = this.head;
                 let stringList = "";
                 for (let i = 0; i < this.length; i++) {
-                    stringList += `(${currentString.value})`;//value added to list
+                    stringList += `( ${currentString.value} )`;//value added to list
                     stringList += " -> ";
                     currentString = currentString.nextNode
                 }
@@ -140,18 +140,15 @@
             }
             
         }
-        const l = new LinkedList();
+        const list = new LinkedList();
 
-        console.log(l.append("node1"))
-        console.log(l.append("node2"))
-        console.log(l.append("node3"))
-        console.log(l.append("node4"))
-        console.log(l.append("node5"))
-        console.log(l.append("node6"))
-        console.log(l.append("node7"))
-        console.log(l.append("node8"))
-        console.log(l.append("node9"))
-        console.log(l.append("node10"))
+list.append("dog");
+list.append("cat");
+list.append("parrot");
+list.append("hamster");
+list.append("snake");
+list.append("turtle");
+console.log(list.toString());
 
         // console.log("Insert At, " + l.insertAt("node11", 11))
         // console.log("Size, " + l.size())

@@ -16,21 +16,18 @@
             if (arr.length <= 1) {
                 return arr
             } else {
-                if (arr.length) {
-                    // console.log("arr at start of loop " + arr)
-
                     //get half of length and then rounds down (Math.floor) in case of odd number
-                    let halfLength = Math.floor(arr.length / 2); 
-                    //left half of array
+                    let halfLength = Math.floor(arr.length / 2);
+
+                    //left and right half of array
                     leftHalf = arr.slice(0, halfLength);
-                    //right half of array
                     rightHalf = arr.slice(halfLength, arr.length);
 
                     let sortedLeft = mergeSort(leftHalf);
                     let sortedRight = mergeSort(rightHalf)
 
                     return merge(sortedLeft, sortedRight)
-                }
+                
             }
         }
 
@@ -49,7 +46,7 @@
             return orderedArr.concat(left).concat(right)
         }
 
-        console.log(mergeSort([3, 2, 1, 13, 8, 5, 0, 1]))
+        console.log(mergeSort([3, 2, 1, 13, 8, 5, 0]))
     </script>
 
 </body>
