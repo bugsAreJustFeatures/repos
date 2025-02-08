@@ -29,7 +29,7 @@
         function buildTree(arr) {
             
 
-            // 1. take the arr in, sort it (merge sort) and delete dupes
+            // 1. take the arr in, sort it (merge sort) and delete dupes ---DONE----
             // 2. recusively go through each sorted element via binary search, 
             // so split array up into half until you are at 1 element, 
             // but each time it splits check if each element is smaller or larger, 
@@ -38,7 +38,7 @@
         }
 
 
-        // --------Helper functions, of merging (merge sort) and deleting dupes in arrays------//
+        // --------Helper functions of merging (merge sort) and deleting dupes in arrays------//
         function mergeSort(arr) {
             let leftHalf;
             let rightHalf;
@@ -69,22 +69,24 @@
                         orderedArr.push(right.shift());
                     }
                 }
-                //added this into original mergesort function, to delete dupes.
-
-                /////// ----- returns nubers if there is only dupes, need to fix -----////
-                for (let i = 0; i < orderedArr.length; i++) {
-                    let next = orderedArr[i++];
-                    if (orderedArr[i] == next) {
-                        next++;
-                        orderedArr.splice(i);
-                    } else {
-                        next++;
-                    }
-                } 
-                return orderedArr.concat(left).concat(right);
+                return removeDupes(orderedArr.concat(left).concat(right))
+                }
             }
-        }
-        console.log(mergeSort([9,9,9,9,9,9,9,9,9]))
+            function removeDupes(arr) {
+                let result = [];
+                let last;
+
+                for (let i = 0; i < arr.length; i++) {
+                    if (arr[i] !== last) {
+                        result.push(arr[i]);
+                        last = arr[i];
+                    }
+                }
+                return result;
+            }
+            // console.log(mergeSort([0,9,9,8,8,7,7,7,7,7,6,5,5,5,5,5,5,4,4]))
+
+
 
     </script>
 
