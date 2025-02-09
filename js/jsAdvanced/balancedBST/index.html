@@ -24,20 +24,44 @@
             }
         }
 
-        
-        
-        function buildTree(arr) {
-            
-
-            // 1. take the arr in, sort it (merge sort) and delete dupes ---DONE----
+         // 1. take the arr in, sort it (merge sort) and delete dupes ---DONE----
             // 2. recusively go through each sorted element via binary search, 
             // so split array up into half until you are at 1 element, 
             // but each time it splits check if each element is smaller or larger, 
             // then move them left if smaller, right is larger
             // 3. 
+
+        function buildTree(arr) {
+
+            // put original array (arr) in order via mergeSort function.
+            let sortedArr = mergeSort(arr); 
+
+            // variable for sections of tree
+            let tree = [];
+
+            let start = sortedArr[0]; 
+            console.log("start : " + start)
+
+            let end = sortedArr[sortedArr.length - 1]; 
+            console.log("end : " + end)
+
+            let findMid = Math.floor(sortedArr.length / 2); 
+            let mid = sortedArr[findMid]
+            console.log("mid : " + mid) 
+
+            let leftHalfSortedArr = sortedArr.slice(0, mid - 1);
+            let rightHalfSortedArr = sortedArr.slice(mid + 1, end)
+
+            if (sortedArr.length < 1) {
+                return tree;
+            } else {
+                // let leftSide = buildTree(leftHalfSortedArr);
+                // let rightSide = buildTree(rightHalfSortedArr);
+
+                tree.push(mid);
+            }
+            return tree;
         }
-
-
         // --------Helper functions of merging (merge sort) and deleting dupes in arrays------//
         function mergeSort(arr) {
             let leftHalf;
@@ -58,8 +82,9 @@
 
                 return merge(sortedLeft, sortedRight);
             }
+        }
 
-            function merge(left, right) {
+        function merge(left, right) {
                 let orderedArr = [];
 
                 while (left.length > 0 && right.length > 0) {
@@ -69,10 +94,10 @@
                         orderedArr.push(right.shift());
                     }
                 }
-                return removeDupes(orderedArr.concat(left).concat(right))
+                return orderedArr.concat(left).concat(right);
                 }
-            }
-            function removeDupes(arr) {
+        
+        function removeDupes(arr) {
                 let result = [];
                 let last;
 
@@ -84,8 +109,8 @@
                 }
                 return result;
             }
-            // console.log(mergeSort([0,9,9,8,8,7,7,7,7,7,6,5,5,5,5,5,5,4,4]))
-
+        // console.log(mergeSort([10, 8, 6, 4, 2, 1, 0]))
+        console.log(buildTree([10, 8, 6]))
 
 
     </script>
