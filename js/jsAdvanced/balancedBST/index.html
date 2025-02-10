@@ -34,33 +34,25 @@
             let treeArray = [];
             
         function buildTree(arr) {
-            console.log("-----START------")
 
             let leftTree;
             let rightTree;
-            // put original array (arr) in order via mergeSort function.
-            let sortedArr = mergeSort(arr);
-            // console.log("SortedArr : " + sortedArr) 
-            //first element in array after being sorted
-            let start = sortedArr[0]; 
+            let sortedArr = mergeSort(arr);  // put original array (arr) in order via mergeSort function.
+            // console.log("SortedArr : " + sortedArr)
+            let start = sortedArr[0];  //first element in array after being sorted
             // console.log("start : " + start)
-            //last element in array after being sorted
-            let end = sortedArr[sortedArr.length - 1]; 
+            let end = sortedArr[sortedArr.length - 1];  //last element in array after being sorted
             // console.log("end : " + end)
-            //mid element in array after being sorted, have to findMid to use as an index within the array
-            let findMid = Math.floor(sortedArr.length / 2); 
+            let findMid = Math.floor((sortedArr.length - 1) / 2); //mid element in array after being sorted, have to findMid to use as an index within the array
             let mid = sortedArr[findMid]
-            // console.log("mid : " + mid) 
-            //puts lefthalf of sorted arr into its own one, this can be seen as the "left" tree, used findMid because that gives the index and mid gives the actual value
-            let leftHalfSortedArr = sortedArr.slice(0, findMid);
-            // console.log("leftHalfSortedArr : " + leftHalfSortedArr)
-            //same thing as above but this time with the "right" tree
-            let rightHalfSortedArr = sortedArr.slice(findMid + 1, end)
-            // console.log("rightHalfSortedArr : " + rightHalfSortedArr)
-
             treeArray.push(mid);
 
-            
+            // console.log("mid : " + mid) 
+            let leftHalfSortedArr = sortedArr.slice(0, findMid);//puts lefthalf of sorted arr into its own one, this can be seen as the "left" tree, used findMid because that gives the index and mid gives the actual value
+            // console.log("leftHalfSortedArr : " + leftHalfSortedArr)
+            let rightHalfSortedArr = sortedArr.slice(findMid + 1, end)//same thing as above but this time with the "right" tree
+            // console.log("rightHalfSortedArr : " + rightHalfSortedArr)
+
             if (sortedArr.length < 1) {
                 return;
              } else {
