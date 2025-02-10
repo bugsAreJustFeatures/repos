@@ -18,7 +18,7 @@
         } 
 
         class tree {
-            constructor(arr, root) {
+            constructor(arr, root = buildTree()) {
                 this.arr = arr;
                 this.root = root;
             }
@@ -31,36 +31,46 @@
             // then move them left if smaller, right is larger
             // 3. 
 
+            let treeArray = [];
+            
         function buildTree(arr) {
+            console.log("-----START------")
 
+            let leftTree;
+            let rightTree;
             // put original array (arr) in order via mergeSort function.
-            let sortedArr = mergeSort(arr); 
-
-            // variable for sections of tree
-            let tree = [];
-
+            let sortedArr = mergeSort(arr);
+            // console.log("SortedArr : " + sortedArr) 
+            //first element in array after being sorted
             let start = sortedArr[0]; 
-            console.log("start : " + start)
-
+            // console.log("start : " + start)
+            //last element in array after being sorted
             let end = sortedArr[sortedArr.length - 1]; 
-            console.log("end : " + end)
-
+            // console.log("end : " + end)
+            //mid element in array after being sorted, have to findMid to use as an index within the array
             let findMid = Math.floor(sortedArr.length / 2); 
             let mid = sortedArr[findMid]
-            console.log("mid : " + mid) 
+            // console.log("mid : " + mid) 
+            //puts lefthalf of sorted arr into its own one, this can be seen as the "left" tree, used findMid because that gives the index and mid gives the actual value
+            let leftHalfSortedArr = sortedArr.slice(0, findMid);
+            // console.log("leftHalfSortedArr : " + leftHalfSortedArr)
+            //same thing as above but this time with the "right" tree
+            let rightHalfSortedArr = sortedArr.slice(findMid + 1, end)
+            // console.log("rightHalfSortedArr : " + rightHalfSortedArr)
 
-            let leftHalfSortedArr = sortedArr.slice(0, mid - 1);
-            let rightHalfSortedArr = sortedArr.slice(mid + 1, end)
+            treeArray.push(mid);
 
+            
             if (sortedArr.length < 1) {
-                return tree;
-            } else {
-                // let leftSide = buildTree(leftHalfSortedArr);
-                // let rightSide = buildTree(rightHalfSortedArr);
-
-                tree.push(mid);
+                return;
+             } else {
+                leftTree = buildTree(leftHalfSortedArr);
+                rightTree = buildTree(rightHalfSortedArr);
             }
-            return tree;
+            return treeArray;
+            // return treeArray[0];
+
+
         }
         // --------Helper functions of merging (merge sort) and deleting dupes in arrays------//
         function mergeSort(arr) {
@@ -75,7 +85,9 @@
                 let halfLength = Math.floor(arr.length / 2);
                 // split array up into left and right
                 leftHalf = arr.slice(0, halfLength);
+                // console.log("left : " + leftHalf)
                 rightHalf = arr.slice(halfLength, arr.length);
+                // console.log("right : " + rightHalf)
 
                 let sortedLeft = mergeSort(leftHalf);
                 let sortedRight = mergeSort(rightHalf);
@@ -110,7 +122,7 @@
                 return result;
             }
         // console.log(mergeSort([10, 8, 6, 4, 2, 1, 0]))
-        console.log(buildTree([10, 8, 6]))
+        console.log(buildTree([1, 2, 3, 4, 5, 6, 7, 8, 9])) // 3, 4, 5, 6, 7, 8, 10
 
 
     </script>
