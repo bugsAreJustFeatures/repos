@@ -49,9 +49,8 @@
                     //node classes are created here 
 
                     let newNode = new Node(this.treeArray[0]); 
-                    this.copyArray.unshift(this.treeArray[0])
+                    this.copyArray.unshift(newNode) // stores tree nodes as array
                     this.treeArray.splice(0,1)
-                    // console.log(this.treeArray)
                     
                     if (newNode.data > this.treeArray[0]) {
                         newNode.left = this.treeArray[0];
@@ -63,8 +62,9 @@
                         parentNode = newNode
                         this.length++;
                     }
-                    // console.log(copyArray)
-                    console.log(newNode)
+                    console.log(this.copyArray)
+                    // console.log(this.treeArray)
+                    // console.log(newNode)
 
 
                     // if (newNode.data > this.treeArray[0]) {// 5 < 2
