@@ -19,78 +19,28 @@
 
         class Tree {
             constructor(arr) {
-                this.arr = arr;
-                this.root;
-                this.treeArray = []
-                this.copyArray = [];
-                this.length;
+                this.root = this.buildTree(arr);
+                this.treeArray = [];
             }
 
             buildTree(arr) { 
-                let leftTree;
-                let rightTree;
                 let sortedArr = mergeSort(arr)
-                let parentNode;
+                let length = sortedArr.length
+                let m = Math.floor(length/ 2)
+                let newNode;
 
-                if (arr.length < 1) {
-                    //skip 
+                if (length < 1) {
+                    //skip
                 } else {
-                    let midIndex = Math.floor((sortedArr.length - 1)/ 2) // find the middle index and round down, 4 would be from 9 elements
-                    let mid = sortedArr[midIndex] // actually find the value at the middle
-
-                    let leftHalfOfTree = sortedArr.slice(0, midIndex)
-                    let rightHalfOfTree = sortedArr.slice(midIndex + 1, sortedArr.length)
-
-                    this.treeArray.push(mid) //push current mid since mid = current node
-
-                    leftTree = this.buildTree(leftHalfOfTree)
-                    rightTree = this.buildTree(rightHalfOfTree)
-
-                    //node classes are created here 
-
-                    let newNode = new Node(this.treeArray[0]); 
-                    this.copyArray.unshift(newNode) // stores tree nodes as array
-                    this.treeArray.splice(0,1)
-                    
-                    if (newNode.data > this.treeArray[0]) {
-                        newNode.left = this.treeArray[0];
-                        parentNode = newNode;
-                        this.length++
-
-                    } else if (newNode.data < this.treeArray[0]){
-                        newNode.right = this.treeArray[0]
-                        parentNode = newNode
-                        this.length++;
-                    }
-                    console.log(this.copyArray)
-                    // console.log(this.treeArray)
+                    newNode = new Node(sortedArr[m]);
+                    newNode.left = this.buildTree(sortedArr.slice(0, m))
+                    newNode.right = this.buildTree(sortedArr.slice(m + 1, length))
                     // console.log(newNode)
-
-
-                    // if (newNode.data > this.treeArray[0]) {// 5 < 2
-                    //     for (let i = 1; i < this.copyArray.length - 1; i++) {//loop for checking over each node's data and checking it is on the correct side
-
-                    //         if (newNode.data < this.copyArray[i]) { // if current node < parent node
-                    //             newNode.left = this.treeArray[0];
-                    //             this.length++
-                    //         }
-                    //     }
-                        
-                    // } else if (newNode.data < this.treeArray[0]){ // 2 < 5
-                    //     for (let i = 1; i < this.copyArray.length; i++) {//loop for checking over each node's data and checking it is on the correct side
-                        
-                    //     if ()
-                    // }
-
-                    //     newNode.right = this.treeArray[0]
-                    //     this.length++;
-                    // }
                 }
-                // return this.root
+                return newNode // this is each node created and 5 is the root
+                
             }
         }
-
-
         //---Merge Sort functions that are stored globally---//
 
         function mergeSort(arr) {
@@ -137,17 +87,10 @@
 
         // console.log(mergeSort([1, 3, 2, 5, 4]))
 
-        let h = new Tree()
-        h.buildTree([1, 2, 3, 4, 5, 6, 7, 8, 9])
+        let h = new Tree([1,2,3,4,5,6,7,8,9]);
+        console.log(h.root); // Display the root of the balanced BST
         
     </script>
 
 </body>
 </html>
-
-
-        5 
-      2   4
-     1 3 6 7
-            8
-             9
