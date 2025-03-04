@@ -21,6 +21,8 @@
             constructor(arr) {
                 this.root = this.buildTree(arr);
                 this.treeArray = [];
+                this.nodeCount = 1;
+                this.currentNode;
             }
 
             buildTree(arr) { 
@@ -39,6 +41,40 @@
                 }
                 return newNode // this is each node created and 5 is the root
                 
+            }
+
+            insert(value) {
+                if (this.nodeCount == 1) {
+                this.currentNode = this.root;
+                this.nodeCount++
+                }
+                if (value == null) {
+                    return "No input"
+                }
+                if (value == this.currentNode.data) {
+                    return "Duplicate has been entered"
+                }
+                if ((this.currentNode.left == undefined) && (this.currentNode.right == undefined)) {
+                    if (value < this.currentNode.data) {
+                        this.currentNode.left = new Node(value)
+                    } else {
+                        this.currentNode.right = new Node(value)
+                    }
+                }
+                if (value < this.currentNode.data) {
+                    this.nodeCount++;
+                    this.currentNode = this.currentNode.left
+                    this.insert(value)
+                } else if (value > this.currentNode.data) {
+                    this.nodeCount++;
+                    this.currentNode = this.currentNode.right
+                    this.insert(value)
+                }
+                return this.root
+            }
+
+            deleteItem(value) {
+
             }
         }
         //---Merge Sort functions that are stored globally---//
@@ -88,7 +124,7 @@
         // console.log(mergeSort([1, 3, 2, 5, 4]))
 
         let h = new Tree([1,2,3,4,5,6,7,8,9]);
-        console.log(h.root); // Display the root of the balanced BST
+        console.log(h.insert(10)); // Display the root of the balanced BST
         
     </script>
 
