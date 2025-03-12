@@ -21,14 +21,13 @@
             constructor(arr) {
                 this.root = this.buildTree(arr);
                 this.treeArray = [];
-                this.dataArray = [];
                 this.nodeCount = 1;
-                this.currentNode = this.root;
+                this.currentNode = this.root
             }
 
             buildTree(arr) { 
                 let sortedArr = mergeSort(arr)
-                let midIndex = Math.floor(sortedArr.length / 2); 
+                let midIndex = Math.floor((sortedArr.length  - 1)/ 2); 
                 let mid = sortedArr[midIndex]
                 let newNode;
 
@@ -45,8 +44,53 @@
             }
 
             insert(value) {
+               if (value == this.currentNode.data) {//dupe
+                return "Duplicate value has been entered and no value has been inserted"
+               }
+
+               if (!value) {//no input
+                return "No value provided"
+               }
+
+               if (!this.currentNode.left && !this.currentNode.right) {// no children
+                if (value < this.currentNode.data) {
+                    this.currentNode.left = new Node(value)
+                } else {
+                    this.currentNode.right = new Node(value)
+                }
+               }
+
+               if (this.currentNode.left && !this.currentNode.right) {// only left child
+
+
+               }
                
+               if (value < this.currentNode.data) {
+                this.currentNode = this.currentNode.left
+                this.insert(value)
+               } else if (value > this.currentNode.data) {
+                this.currentNode = this.currentNode.right
+                this.insert(value)
+               }
             }
+
+            // UNIVERSAL CHECKS
+                // 1. Check for dupe, return message that dupe has been entered
+                // 2. Check for null (empty) parameter entered, return message that no value is provided
+
+            //INSERT AT CHILDLESS NODE
+                // check if nodes are empty - you are at the leaf node
+                //      if true, if value < node.data, node.left = new Node(value)
+                //               else node.right = new Node(value)
+                
+                // compare value to node.data
+                // if smaller, node.left = node && insert(value)
+                // else node.right = node && insert(value)
+
+            // INSERT AT LEFT-ONLY NODE
+                //check that only left exists
+                //
+
 
             deleteItem(value) {
             
@@ -111,9 +155,10 @@
         }
 
 
-        let h = new Tree([15,13,11,7,12,4,1,2]);
+        let h = new Tree([15,14,21,12,5,32,4,21,55]);
+        console.log(h.root)
+        h.insert(3)
         prettyPrint(h.root)        
-        
     </script>
 
 </body>
