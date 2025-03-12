@@ -61,7 +61,19 @@
                }
 
                if (this.currentNode.left && !this.currentNode.right) {// only left child
+                if (value < this.currentNode.data) {
+                    //skip
+                } else {
+                    this.currentNode.right = new Node(value)
+                }
+               }
 
+               if (!this.currentNode.left && this.currentNode.right) {// only right child
+                if (value < this.currentNode.data) {
+                    //skip
+                } else {
+                    this.currentNode.left = new Node(value)
+                }
 
                }
                
@@ -73,24 +85,6 @@
                 this.insert(value)
                }
             }
-
-            // UNIVERSAL CHECKS
-                // 1. Check for dupe, return message that dupe has been entered
-                // 2. Check for null (empty) parameter entered, return message that no value is provided
-
-            //INSERT AT CHILDLESS NODE
-                // check if nodes are empty - you are at the leaf node
-                //      if true, if value < node.data, node.left = new Node(value)
-                //               else node.right = new Node(value)
-                
-                // compare value to node.data
-                // if smaller, node.left = node && insert(value)
-                // else node.right = node && insert(value)
-
-            // INSERT AT LEFT-ONLY NODE
-                //check that only left exists
-                //
-
 
             deleteItem(value) {
             
@@ -155,9 +149,9 @@
         }
 
 
-        let h = new Tree([15,14,21,12,5,32,4,21,55]);
+        let h = new Tree([15,14,21,12,6,32,4,21,55]);
         console.log(h.root)
-        h.insert(3)
+        h.insert(33)
         prettyPrint(h.root)        
     </script>
 
