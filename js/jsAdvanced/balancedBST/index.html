@@ -131,12 +131,42 @@
                             this.currentNode.data = leftOfRightChild.data
                             leftOfRightChild.data = null
                         }
-                        
-
                     }
-
                 }
+                this.currentNode = this.root
             }
+            
+            find(value) {
+
+                if (!value) {
+                    console.log("no value entered")
+                }
+                console.log(this.currentNode)
+
+                if (value == this.currentNode.data) {//found value
+                    console.log(this.currentNode)
+
+                } else {//not found so go and find
+                    if (value < this.currentNode.data) {
+                        this.currentNode = this.currentNode.left
+                        if (!this.currentNode) { // was made into a null child so there is no more nodes to search
+                            console.log("NO VALUE MATCHED")
+                            return
+                        }
+                        this.find(value)
+
+                    } else if (value > this.currentNode.data) {
+                        this.currentNode = this.currentNode.right 
+                        if (!this.currentNode) {  // was made into a null child so there is no more nodes to search
+                            console.log("NO VALUE MATCHED")
+                            return
+                        }
+                        this.find(value)
+                    }
+                }
+                this.currentNode = this.root
+            }
+            
         }
         
         const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -203,6 +233,7 @@
         h.insert(13)
         h.insert(16)
         h.deleteItem(54)
+        h.find(2)
 
         prettyPrint(h.root)        
     </script>
