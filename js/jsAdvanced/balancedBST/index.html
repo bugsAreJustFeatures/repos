@@ -83,59 +83,59 @@
                } else if (value > this.currentNode.data) {
                 this.currentNode = this.currentNode.right
                 this.insert(value)
-                this.currentNode = this.root
                }
                this.currentNode = this.root
-
-               
-
             }
 
             deleteItem(value) {
-                let leftChild;
-                let rightChild;
-                console.log(this.currentNode)
                 if (!value) {
                     console.log("no value entered") 
                 }
-
                 if (value !== this.currentNode.data) {
-                    //skip
-                } else {
-                    if (!this.currentNode.left && !this.currentNode.right) {//no children
+                    if (value < this.currentNode.data) {
+                        this.currentNode = this.currentNode.left
+                        this.deleteItem(value)
+                    } else if (value > this.currentNode.data) {
+                        this.currentNode = this.currentNode.right
+                        this.deleteItem(value)
+                    } 
+                } else { // found value that i want to delete
+                    if (!this.currentNode.left && !this.currentNode.right) {
                         this.currentNode.data = null
-                    } else if (this.currentNode.left && !this.currentNode.right) {//only left child
-                        leftChild = this.currentNode.left
-                        this.currentNode = new Node(leftChild.data, leftChild.left, leftChild.right)
-                        // this.currentNode.left = leftChild.left
-                        // this.currentNode.right = leftChild.right
-                        // this.currentNode.data = leftChild.data
-                    } else if (!this.currentNode.left && this.currentNode.right) {//only right child
-                        rightChild = this.currentNode.right
-                        this.currentNode = new Node(rightChild.data, rightChild.left, rightChild.right)
-                        // this.currentNode.left = rightChild.left
-                        // this.currentNode.right = rightChild.right
-                        // this.currentNode.data = rightChild.data
-                    } else if (this.currentNode.left && this.currentNode.right) {//both children
-                        // this.currentNode = this.currentNode.right 
-                    } else {
-                        console.log("else statement met")
+
+                    } else if (this.currentNode.left && !this.currentNode.right) {//left child only
+                        let leftChild = this.currentNode.left
+                        this.currentNode.data = leftChild.data
+                        this.currentNode.left = leftChild.left
+                        this.currentNode.right = leftChild.right
+
+                    } else if (!this.currentNode.left && this.currentNode.right) {//right child only
+                        let rightChild = this.currentNode.right
+                        this.currentNode.data = rightChild.data
+                        this.currentNode.left = rightChild.left
+                        this.currentNode.right = rightChild.right
+                        
+                    } else { // both children
+                        let rightChild = this.currentNode.right
+                        if (!rightChild.left) {
+                            this.currentNode.data = rightChild.data
+                            rightChild.data = null
+                        } else {
+                            let leftOfRightChild = rightChild.left
+                            console.log(leftOfRightChild)
+                            if (leftOfRightChild.left) {
+                                while (leftOfRightChild.left) {//until left child has no more left children
+                                leftOfRightChild = leftOfRightChild.left
+                                }
+                            }
+                            this.currentNode.data = leftOfRightChild.data
+                            leftOfRightChild.data = null
+                        }
+                        
+
                     }
+
                 }
-
-                if (!this.currentNode.left && !this.currentNode.right) {// if its inserted it, exit recursion and set currentNode back to root
-                    //skip
-                } else if (value < this.currentNode.data) {
-                this.currentNode = this.currentNode.left
-                this.deleteItem(value)
-               } else if (value > this.currentNode.data) {
-                this.currentNode = this.currentNode.right
-                this.deleteItem(value)
-               }
-            
-               this.currentNode = this.root
-
-                
             }
         }
         
@@ -194,17 +194,15 @@
             return final.concat(left).concat(right);
         }
 
-        let h = new Tree([15,14,21,12,6,32,4,21,55]);
-        // console.log(h.root)
+        let h = new Tree([15,14,21,12,32, 36,4,21,54,55]);
         h.insert(11)
         h.insert(8)
-        h.insert(54)
-        h.insert(36)
         h.insert(44)
-        h.deleteItem(11)
-        h.insert(9)
-        h.deleteItem(8)
-        // h.deleteItem(32)
+        h.insert(7)
+        h.insert(10)
+        h.insert(13)
+        h.insert(16)
+        h.deleteItem(54)
 
         prettyPrint(h.root)        
     </script>
