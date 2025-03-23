@@ -23,6 +23,7 @@
                 this.treeArray = [];
                 this.nodeCount = 1;
                 this.currentNode = this.root
+                this.queue = [this.currentNode.data];
             }
 
             buildTree(arr) { 
@@ -141,7 +142,7 @@
                 if (!value) {
                     console.log("no value entered")
                 }
-                console.log(this.currentNode)
+                // console.log(this.currentNode)
 
                 if (value == this.currentNode.data) {//found value
                     console.log(this.currentNode)
@@ -165,6 +166,64 @@
                     }
                 }
                 this.currentNode = this.root
+            }
+
+            levelOrder(callback) {
+
+                let leftChild = this.currentNode.left
+                let rightChild = this.currentNode.right
+
+                if (!callback) {// callback doesnt exist
+                    console.log( "No Callback function passed")
+                    
+                }
+
+                if (this.queue.length == 0) {//no more nodes
+                    return this.currentNode = this.root //reset currentNode back to root node
+
+                } else {
+                // console.log(this.queue[0])
+
+                    if (leftChild && rightChild && (this.queue.includes(this.root.data))) { // root node
+                        this.queue.push(this.currentNode)
+                        this.queue.push(leftChild)
+                        this.queue.push(rightChild)
+                        callback(this.queue[0].data) 
+                        this.queue.shift()
+                        this.currentNode = this.queue[0]
+                        this.levelOrder(callback)
+
+                    } else if (leftChild && rightChild && (!this.queue.includes(this.root.data))) {
+                      this.queue.push(leftChild)
+                      this.queue.push(rightChild)
+                      callback(this.queue[0].data)
+                      this.queue.shift()
+                      this.currentNode = this.queue[0]
+                      this.levelOrder(callback)
+
+                    } else if (leftChild && !rightChild) {// left child only
+                        this.queue.push(leftChild)
+                        callback(this.queue[0].data)
+                        this.queue.shift()
+                        this.currentNode = this.queue[0]
+                        this.levelOrder(callback)
+
+                    } else if (!leftChild && rightChild) {//right child only
+                        this.queue.push(rightChild)
+                        callback(this.queue[0].data)
+                        this.queue.shift()
+                        this.currentNode = this.queue[0]
+                        this.levelOrder(callback)
+                        
+                    } else if (!leftChild && !rightChild) {// no children
+                        callback(this.queue[0].data)
+                        this.queue.shift()
+                        this.currentNode = this.queue[0]
+                        this.levelOrder(callback)
+                    }
+                }
+                this.queue = [];
+
             }
             
         }
@@ -234,6 +293,10 @@
         h.insert(16)
         h.deleteItem(54)
         h.find(2)
+        function myFunc(a) {
+            console.log(a)
+        }
+        h.levelOrder(myFunc)
 
         prettyPrint(h.root)        
     </script>
