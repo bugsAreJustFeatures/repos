@@ -179,7 +179,7 @@
                 let rightChild = this.currentNode.right
                 
                 if (!callback) {// callback doesnt exist
-                    console.log( "No Callback function passed")
+                    throw new Error("No Callback function passed")
                     
                 } else {
                 // console.log(this.queue)
