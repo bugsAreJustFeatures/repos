@@ -170,30 +170,34 @@
 
             levelOrder(callback) {
 
-                let leftChild = this.currentNode.left
-                let rightChild = this.currentNode.right
-
-                if (!callback) {// callback doesnt exist
-                    console.log( "No Callback function passed")
-                    
-                }
 
                 if (this.queue.length == 0) {//no more nodes
                     return this.currentNode = this.root //reset currentNode back to root node
+                } 
 
+                let leftChild = this.currentNode.left
+                let rightChild = this.currentNode.right
+                
+                if (!callback) {// callback doesnt exist
+                    console.log( "No Callback function passed")
+                    
                 } else {
-                // console.log(this.queue[0])
+                // console.log(this.queue)
 
-                    if (leftChild && rightChild && (this.queue.includes(this.root.data))) { // root node
+                    if (leftChild && rightChild && this.queue.includes(this.root)) { // root node
+                        console.log("IF")
                         this.queue.push(this.currentNode)
                         this.queue.push(leftChild)
                         this.queue.push(rightChild)
+                        console.log(this.queue[0].data)
                         callback(this.queue[0].data) 
                         this.queue.shift()
                         this.currentNode = this.queue[0]
                         this.levelOrder(callback)
 
-                    } else if (leftChild && rightChild && (!this.queue.includes(this.root.data))) {
+                    } else if (leftChild && rightChild && !this.queue.includes(this.root)) {
+                        // console.log("ELSE IF 1")
+
                       this.queue.push(leftChild)
                       this.queue.push(rightChild)
                       callback(this.queue[0].data)
@@ -220,12 +224,11 @@
                         this.queue.shift()
                         this.currentNode = this.queue[0]
                         this.levelOrder(callback)
+
                     }
                 }
                 this.queue = [];
-
             }
-            
         }
         
         const prettyPrint = (node, prefix = "", isLeft = true) => {
