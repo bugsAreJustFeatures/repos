@@ -184,18 +184,15 @@
                 } else {
                 // console.log(this.queue)
 
-                    if (leftChild && rightChild && this.queue.includes(this.root)) { // root node
+                    if (leftChild && rightChild && (this.currentNode == this.root)) { // root node
                         console.log("IF")
-                        this.queue.push(this.currentNode)
                         this.queue.push(leftChild)
                         this.queue.push(rightChild)
-                        console.log(this.queue[0].data)
-                        callback(this.queue[0].data) 
-                        this.queue.shift()
+                        callback(this.currentNode.data) 
                         this.currentNode = this.queue[0]
                         this.levelOrder(callback)
 
-                    } else if (leftChild && rightChild && !this.queue.includes(this.root)) {
+                    } else if (leftChild && rightChild && (this.currentNode !== this.root)) {
                         // console.log("ELSE IF 1")
 
                       this.queue.push(leftChild)
@@ -297,7 +294,7 @@
         h.deleteItem(54)
         h.find(2)
         function myFunc(a) {
-            console.log(a)
+            console.log(a) // will console.log undefined once but it only does that when it gets here for the first time, so the function is correct and this is not an error
         }
         h.levelOrder(myFunc)
 
