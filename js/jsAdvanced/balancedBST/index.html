@@ -226,6 +226,32 @@
                 }
                 this.queue = [];
             }
+
+            inOrder(callback) {
+
+                if (this.currentNode.data == null) {
+                    //skip
+                } else {
+                    let leftChild = this.currentNode.left
+                    let rightChild = this.currentNode.right
+
+                    if (!callback) {
+                        throw new Error("No Callback Provided")
+                    }
+
+                    callback(this.currentNode.data)
+                    
+                    if (leftChild) {
+                        this.currentNode = leftChild
+                        this.inOrder(callback)
+                    } else if (rightChild) {
+                        this.currentNode = rightChild
+                        this.inOrder(callback)
+                    }
+                }
+                this.currentNode = this.root
+                
+            }
         }
         
         const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -294,10 +320,10 @@
         h.deleteItem(54)
         h.find(2)
         function myFunc(a) {
-            console.log(a) // will console.log undefined once but it only does that when it gets here for the first time, so the function is correct and this is not an error
+            console.log(a) // will console.log undefined once but it only does that when it gets here for the first time, so the function is correct and this is not a bug
         }
-        h.levelOrder(myFunc)
-
+        // h.levelOrder(myFunc)
+        h.inOrder(myFunc)
         prettyPrint(h.root)        
     </script>
 
