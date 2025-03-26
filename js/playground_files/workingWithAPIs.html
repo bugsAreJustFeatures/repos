@@ -8,23 +8,26 @@
 <body>
     <div id="div-1">
         <button>Click Me for GIF</button>
-        <img src="#">
+        <img src="">
         
     </div>
     
     <script>
         const img = document.querySelector("img");
         img.style.display = "none";
-         function fetchGif() {
-            fetch("https://api.giphy.com/v1/gifs/translate?api_key=zhfed0ucUvSBvTTmq6N39BE80FHu8Jra&s=cats", {mode: "cors"})
-        .then( function(response) {
-            let jsonFile = response.json();
+        
+        async function fetchGif() {
+            await fetch("https://api.giphy.com/v1/gifs/translate?api_key=zhfed0ucUvSBvTTmq6N39BE80FHu8Jra&s=cat", {mode: "cors"})
+        .then( async function(response) {
+            let jsonFile = await response.json();
             return jsonFile;
         })
-        .then( function(response) {
-            img.src = response.data.images.original.url;
+        .then(async function(response) {
+            let imgURL = await response.data.images.original.url
+            img.src =  imgURL;
+            console.log("IMAGE CHANGED")
         })
-        .catch ((e) => {
+        .catch (e => {
             console.log(e)
         })};
         
