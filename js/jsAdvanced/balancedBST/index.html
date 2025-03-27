@@ -258,7 +258,14 @@
                     }
                 }
                 this.currentNode = this.root
-                
+            }
+
+            preOrder(callback) {
+
+            }
+
+            postOrder(callback) {
+
             }
         }
         
@@ -331,7 +338,8 @@
             console.log(a) // will console.log undefined once but it only does that when it gets here for the first time, so the function is correct and this is not a bug
         }
         // h.levelOrder(myFunc)
-        h.inOrder(myFunc)
+        // h.inOrder(myFunc)
+        h.preOrder(myFunc)
         prettyPrint(h.root)        
     </script>
 
