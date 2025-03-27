@@ -229,7 +229,7 @@
 
             inOrder(callback) {
 
-                if (this.currentNode.data == null) {
+                if (this.currentNode == null) {
                     //skip
                 } else {
                     let leftChild = this.currentNode.left
@@ -241,12 +241,20 @@
 
                     callback(this.currentNode.data)
                     
-                    if (leftChild) {
+                    if (leftChild && rightChild) { //hold both children
                         this.currentNode = leftChild
                         this.inOrder(callback)
-                    } else if (rightChild) {
                         this.currentNode = rightChild
                         this.inOrder(callback)
+
+                    } else if (leftChild) { //hold only left child
+                        this.currentNode = leftChild
+                        this.inOrder(callback)
+
+                    } else if (rightChild) { // hold only right child
+                        this.currentNode = rightChild
+                        this.inOrder(callback)
+
                     }
                 }
                 this.currentNode = this.root
