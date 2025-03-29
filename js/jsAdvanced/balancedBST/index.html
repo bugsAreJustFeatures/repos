@@ -230,6 +230,32 @@
             inOrder(callback) {
 
                 if (this.currentNode == null) {
+
+                } else {
+                    let leftChild = this.currentNode.left
+                    let rightChild = this.currentNode.right
+
+                    if (!callback) {
+                        throw new Error("No Callback Provided")
+                    }
+
+                    if (leftChild) {
+                        this.currentNode = leftChild
+                        this.inOrder(callback)
+                    }
+
+                    callback(this.currentNode.data)
+
+                    if (rightChild) {
+                        this.currentNode = rightChild
+                        this.inOrder(callback)
+                    }
+                }
+            }
+
+            preOrder(callback) {
+
+                if (this.currentNode == null) {
                     //skip
                 } else {
                     let leftChild = this.currentNode.left
@@ -243,26 +269,24 @@
                     
                     if (leftChild && rightChild) { //hold both children
                         this.currentNode = leftChild
-                        this.inOrder(callback)
+                        this.preOrder(callback)
+
                         this.currentNode = rightChild
-                        this.inOrder(callback)
+                        this.preOrder(callback)
 
                     } else if (leftChild) { //hold only left child
                         this.currentNode = leftChild
-                        this.inOrder(callback)
+                        this.preOrder(callback)
 
                     } else if (rightChild) { // hold only right child
                         this.currentNode = rightChild
-                        this.inOrder(callback)
+                        this.preOrder(callback)
 
                     }
                 }
                 this.currentNode = this.root
             }
 
-            preOrder(callback) {
-
-            }
 
             postOrder(callback) {
 
