@@ -229,18 +229,24 @@
 
             inOrder(callback, node = this.root) {
 
+                //can go left = recursive call
+                // no left = visit self node with callback
+                // after these = go right
+
+
                 let results = []
             
                 if (node.data == null) {
                     return
                 } else {
-                   if (node.left) {
+
+                   if (node.left) {//go left
                     this.inOrder(callback, node.left)
                    }
+                   //visit node
+                   callback(node.data)
 
-                    results.push(callback(node.data))
-
-                    if (node.right) {
+                    if (node.right) {// go right
                     this.inOrder(callback, node.right)
                    }
 
@@ -284,8 +290,29 @@
             }
 
 
-            postOrder(callback) {
+            postOrder(callback, node = this.root) {
 
+                if (!callback) {
+                    throw new Error("No callback provided")
+
+                }
+
+                if (node.data == null) {
+                    return
+                } else {
+
+                    if (node.right) {
+                        this.postOrder(callback, node.right)
+
+                    }
+
+                    callback(node.data)
+
+
+                    if (node.left) {
+                        this.postOrder(callback, node.left)
+                    }
+                }
             }
         }
         
@@ -358,8 +385,9 @@
             console.log(a) // will console.log undefined once but it only does that when it gets here for the first time, so the function is correct and this is not a bug
         }
         // h.levelOrder(myFunc)
-        h.inOrder(myFunc)
+        // h.inOrder(myFunc)
         // h.preOrder(myFunc)
+        h.postOrder(myFunc)
         prettyPrint(h.root)        
     </script>
 
