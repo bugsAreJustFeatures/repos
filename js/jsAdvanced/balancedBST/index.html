@@ -227,35 +227,24 @@
                 this.queue = [];
             }
 
-            inOrder(callback) {
+            inOrder(callback, node = this.root) {
 
+                let results = []
             
-                if (this.currentNode.data == null) {
+                if (node.data == null) {
                     return
                 } else {
-                    let leftChild = this.currentNode.left
-                    let rightChild = this.currentNode.right
+                   if (node.left) {
+                    this.inOrder(callback, node.left)
+                   }
 
-                    if (!callback) {
-                    throw new Error("No callback entered")
-                    }
-                 
-                    if (leftChild) { //hold only left child
-                        this.currentNode = leftChild
-                        this.inOrder(callback)
-                        callback(this.currentNode.data)
+                    results.push(callback(node.data))
 
+                    if (node.right) {
+                    this.inOrder(callback, node.right)
+                   }
 
-                    } 
-                    
-                    if (rightChild) { // hold only right child
-                        this.currentNode = rightChild
-                        this.inOrder(callback)
-                        callback(this.currentNode.data)
-
-
-                    
-                    }
+                   
                 }
             }
             
