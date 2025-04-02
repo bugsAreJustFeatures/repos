@@ -24,6 +24,9 @@
                 this.nodeCount = 1;
                 this.currentNode = this.root
                 this.queue = [this.currentNode.data];
+                this.heightCounterLeft = 0;
+                this.heightCounterRight = 0;
+                this.findNode;
             }
 
             buildTree(arr) { 
@@ -138,34 +141,30 @@
             }
             
             find(value) {
-
                 if (!value) {
-                    console.log("no value entered")
+                    console.log("no value entered");
+                    return null;
                 }
-                // console.log(this.currentNode)
 
-                if (value == this.currentNode.data) {//found value
-                    console.log(this.currentNode)
-
-                } else {//not found so go and find
+                if (value == this.currentNode.data) { // found value
+                    return this.currentNode;
+                } else { // not found, keep searching
                     if (value < this.currentNode.data) {
-                        this.currentNode = this.currentNode.left
-                        if (!this.currentNode) { // was made into a null child so there is no more nodes to search
-                            console.log("NO VALUE MATCHED")
-                            return
+                        if (!this.currentNode.left) {
+                            console.log("No value matched");
+                            return null;
                         }
-                        this.find(value)
-
+                        this.currentNode = this.currentNode.left;
+                        return this.find(value); // return the node found
                     } else if (value > this.currentNode.data) {
-                        this.currentNode = this.currentNode.right 
-                        if (!this.currentNode) {  // was made into a null child so there is no more nodes to search
-                            console.log("NO VALUE MATCHED")
-                            return
+                        if (!this.currentNode.right) {
+                            console.log("No value matched");
+                            return null;
                         }
-                        this.find(value)
+                        this.currentNode = this.currentNode.right;
+                        return this.find(value); // return the node found
                     }
                 }
-                this.currentNode = this.root
             }
 
             levelOrder(callback) {
@@ -314,6 +313,43 @@
                     }
                 }
             }
+
+            height(node) {
+                
+                // if node == root then they havent passed through a node so throw error
+                // if node == null then this means there are no children so return -1
+                // if node.left exist, recursively call function on it
+                // if node.right exist, do the same
+                // then return the biggest ones via math.max + 1
+                
+
+                //almost done it but its not correctly adding up the totals 
+
+                if (!node) {
+                    throw new Error("no node")
+
+                } else {
+                    node = this.find(node)
+                }
+
+                if (node == null) {
+                    return -1
+
+                } else {
+                    if (node.left) {
+                        this.heightCounterLeft++
+                        this.height(node.left)
+                    }
+
+                    if (node.right) {
+                        this.heightCounterRight++
+                        this.height(node.right)
+                    }
+                }
+                return Math.max(this.heightCounterLeft, this.heightCounterRight) + 1
+
+
+            }
         }
         
         const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -371,7 +407,7 @@
             return final.concat(left).concat(right);
         }
 
-        let h = new Tree([15,14,21,12,32, 36,4,21,54,55]);
+        let h = new Tree([15,14,21,12,32,36,4,21,54,55]);
         h.insert(11)
         h.insert(8)
         h.insert(44)
@@ -380,14 +416,15 @@
         h.insert(13)
         h.insert(16)
         // h.deleteItem(54)
-        h.find(2)
+        // h.find(2)
         function myFunc(a) {
             console.log(a) // will console.log undefined once but it only does that when it gets here for the first time, so the function is correct and this is not a bug
         }
         // h.levelOrder(myFunc)
         // h.inOrder(myFunc)
         // h.preOrder(myFunc)
-        h.postOrder(myFunc)
+        // h.postOrder(myFunc)
+        console.log(h.height(21))
         prettyPrint(h.root)        
     </script>
 
