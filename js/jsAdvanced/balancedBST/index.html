@@ -9,348 +9,380 @@
     
     <script>
 
+        // class Node {
+        //     constructor(data, left = null, right = null) {
+        //         this.data = data;
+        //         this.left = left;
+        //         this.right = right;
+        //     }
+        // }
+
+        // class Tree {
+        //     constructor(arr) {
+        //         this.root = this.buildTree(arr);
+        //         this.treeArray = [];
+        //         this.nodeCount = 1;
+        //         this.currentNode
+        //         this.queue = [this.currentNode.data];
+        //     }
+
+        //     buildTree(arr) { 
+        //         let sortedArr = mergeSort(arr)
+        //         let midIndex = Math.floor((sortedArr.length  - 1)/ 2); 
+        //         let mid = sortedArr[midIndex]
+        //         let newNode;
+
+        //         if (sortedArr.length < 1) {
+        //             //skip
+        //         } else {
+        //             newNode = new Node(mid);
+        //             newNode.left = this.buildTree(sortedArr.slice(0, midIndex))
+        //             newNode.right = this.buildTree(sortedArr.slice(midIndex + 1, sortedArr.length))
+        //             // console.log(newNode)
+        //         }
+        //         return newNode // this is each node created and 5 is the root
+                
+        //     }
+
+        //     insert(value) {
+        //        if (value == this.currentNode.data) {//dupe
+        //         return "Duplicate value has been entered and no value has been inserted"
+        //        }
+
+        //        if (!value) {//no input
+        //         return "No value provided"
+        //        }
+
+        //        if (!this.currentNode.left && !this.currentNode.right) {// no children
+        //         if (value < this.currentNode.data) {
+        //             this.currentNode.left = new Node(value)
+        //         } else {
+        //             this.currentNode.right = new Node(value)
+        //         }
+        //        }
+
+        //        if (this.currentNode.left && !this.currentNode.right) {// only left child
+        //         if (value < this.currentNode.data) {
+        //             //skip
+        //         } else {
+        //             this.currentNode.right = new Node(value)
+        //         }
+        //        }
+
+        //        if (!this.currentNode.left && this.currentNode.right) {// only right child
+        //         if (value > this.currentNode.data) {
+        //             //skip
+        //         } else {
+        //             this.currentNode.left = new Node(value)
+        //         }
+
+        //        }
+               
+        //        if (value < this.currentNode.data) {
+        //         this.currentNode = this.currentNode.left
+        //         this.insert(value)
+        //        } else if (value > this.currentNode.data) {
+        //         this.currentNode = this.currentNode.right
+        //         this.insert(value)
+        //        }
+        //        this.currentNode = this.root
+        //     }
+
+        //     deleteItem(value) {
+        //         if (!value) {
+        //             console.log("no value entered") 
+        //         }
+        //         if (value !== this.currentNode.data) {
+        //             if (value < this.currentNode.data) {
+        //                 this.currentNode = this.currentNode.left
+        //                 this.deleteItem(value)
+        //             } else if (value > this.currentNode.data) {
+        //                 this.currentNode = this.currentNode.right
+        //                 this.deleteItem(value)
+        //             } 
+        //         } else { // found value that i want to delete
+        //             if (!this.currentNode.left && !this.currentNode.right) {
+        //                 this.currentNode.data = null
+
+        //             } else if (this.currentNode.left && !this.currentNode.right) {//left child only
+        //                 let leftChild = this.currentNode.left
+        //                 this.currentNode.data = leftChild.data
+        //                 this.currentNode.left = leftChild.left
+        //                 this.currentNode.right = leftChild.right
+
+        //             } else if (!this.currentNode.left && this.currentNode.right) {//right child only
+        //                 let rightChild = this.currentNode.right
+        //                 this.currentNode.data = rightChild.data
+        //                 this.currentNode.left = rightChild.left
+        //                 this.currentNode.right = rightChild.right
+                        
+        //             } else { // both children
+        //                 let rightChild = this.currentNode.right
+        //                 if (!rightChild.left) {
+        //                     this.currentNode.data = rightChild.data
+        //                     rightChild.data = null
+        //                 } else {
+        //                     let leftOfRightChild = rightChild.left
+        //                     console.log(leftOfRightChild)
+        //                     if (leftOfRightChild.left) {
+        //                         while (leftOfRightChild.left) {//until left child has no more left children
+        //                         leftOfRightChild = leftOfRightChild.left
+        //                         }
+        //                     }
+        //                     this.currentNode.data = leftOfRightChild.data
+        //                     leftOfRightChild.data = null
+        //                 }
+        //             }
+        //         }
+        //         this.currentNode = this.root
+        //     }
+            
+        //     find(value) {
+        //         if (!value) {
+        //             console.log("no value entered");
+        //             return null;
+        //         }
+
+        //         if (value == this.currentNode.data) { // found value
+        //             return this.currentNode;
+        //         } else { // not found, keep searching
+        //             if (value < this.currentNode.data) {
+        //                 if (!this.currentNode.left) {
+        //                     console.log("No value matched");
+        //                     return null;
+        //                 }
+        //                 this.currentNode = this.currentNode.left;
+        //                 return this.find(value); // return the node found
+        //             } else if (value > this.currentNode.data) {
+        //                 if (!this.currentNode.right) {
+        //                     console.log("No value matched");
+        //                     return null;
+        //                 }
+        //                 this.currentNode = this.currentNode.right;
+        //                 return this.find(value); // return the node found
+        //             }
+        //         }
+        //         this.currentNode = this.root
+        //     }
+
+        //     levelOrder(callback) {
+
+
+        //         if (this.queue.length == 0) {//no more nodes
+        //             return this.currentNode = this.root //reset currentNode back to root node
+        //         } 
+
+        //         let leftChild = this.currentNode.left
+        //         let rightChild = this.currentNode.right
+                
+        //         if (!callback) {// callback doesnt exist
+        //             throw new Error("No Callback function passed")
+                    
+        //         } else {
+        //         // console.log(this.queue)
+
+        //             if (leftChild && rightChild && (this.currentNode == this.root)) { // root node
+        //                 console.log("IF")
+        //                 this.queue.push(leftChild)
+        //                 this.queue.push(rightChild)
+        //                 callback(this.currentNode.data) 
+        //                 this.currentNode = this.queue[0]
+        //                 this.levelOrder(callback)
+
+        //             } else if (leftChild && rightChild && (this.currentNode !== this.root)) {
+        //                 // console.log("ELSE IF 1")
+
+        //               this.queue.push(leftChild)
+        //               this.queue.push(rightChild)
+        //               callback(this.queue[0].data)
+        //               this.queue.shift()
+        //               this.currentNode = this.queue[0]
+        //               this.levelOrder(callback)
+
+        //             } else if (leftChild && !rightChild) {// left child only
+        //                 this.queue.push(leftChild)
+        //                 callback(this.queue[0].data)
+        //                 this.queue.shift()
+        //                 this.currentNode = this.queue[0]
+        //                 this.levelOrder(callback)
+
+        //             } else if (!leftChild && rightChild) {//right child only
+        //                 this.queue.push(rightChild)
+        //                 callback(this.queue[0].data)
+        //                 this.queue.shift()
+        //                 this.currentNode = this.queue[0]
+        //                 this.levelOrder(callback)
+                        
+        //             } else if (!leftChild && !rightChild) {// no children
+        //                 callback(this.queue[0].data)
+        //                 this.queue.shift()
+        //                 this.currentNode = this.queue[0]
+        //                 this.levelOrder(callback)
+
+        //             }
+        //         }
+        //         this.queue = [];
+        //         this.currentNode = this.root
+        //     }
+
+        //     inOrder(callback, node = this.root) {
+
+        //         //can go left = recursive call
+        //         // no left = visit self node with callback
+        //         // after these = go right
+
+
+        //         let results = []
+            
+        //         if (node.data == null) {
+        //             return
+        //         } else {
+
+        //            if (node.left) {//go left
+        //             this.inOrder(callback, node.left)
+        //            }
+        //            //visit node
+        //            callback(node.data)
+
+        //             if (node.right) {// go right
+        //             this.inOrder(callback, node.right)
+        //            }
+
+                   
+        //         }
+        //     }
+            
+
+        //     preOrder(callback) {
+
+        //         if (this.currentNode == null) {
+        //             //skip
+        //         } else {
+        //             let leftChild = this.currentNode.left
+        //             let rightChild = this.currentNode.right
+
+        //             if (!callback) {
+        //                 throw new Error("No Callback Provided")
+        //             }
+
+        //             callback(this.currentNode.data)
+                    
+        //             if (leftChild && rightChild) { //hold both children
+        //                 this.currentNode = leftChild
+        //                 this.preOrder(callback)
+
+        //                 this.currentNode = rightChild
+        //                 this.preOrder(callback)
+
+        //             } else if (leftChild) { //hold only left child
+        //                 this.currentNode = leftChild
+        //                 this.preOrder(callback)
+
+        //             } else if (rightChild) { // hold only right child
+        //                 this.currentNode = rightChild
+        //                 this.preOrder(callback)
+
+        //             }
+        //         }
+        //         this.currentNode = this.root
+        //     }
+
+
+        //     postOrder(callback, node = this.root) {
+
+        //         if (!callback) {
+        //             throw new Error("No callback provided")
+
+        //         }
+
+        //         if (node.data == null) {
+        //             return
+        //         } else {
+
+        //             if (node.right) {
+        //                 this.postOrder(callback, node.right)
+
+        //             }
+
+        //             callback(node.data)
+
+
+        //             if (node.left) {
+        //                 this.postOrder(callback, node.left)
+        //             }
+        //         }
+        //     }
+
+        //     height(root) {
+        //         if (root == null) {
+        //         return -1;
+        //         }
+                
+        //         let leftHeight = this.height(root.left);
+        //         let rightHeight = this.height(root.right);
+                
+        //         return Math.max(leftHeight, rightHeight) + 1;
+        //     }
+        // }
+
+   // let h = new Tree([15,14,21,12,32,36,4,21,54,55]);
+        // h.insert(11)
+        // h.insert(8)
+        // h.insert(44)
+        // h.insert(7)
+        // h.insert(10)
+        // h.insert(13)
+        // h.insert(16)
+        // h.deleteItem(54)
+        // h.find(2)
+        // function myFunc(a) {
+        //     console.log(a) // will console.log undefined once but it only does that when it gets here for the first time, so the function is correct and this is not a bug
+        // }
+        // h.levelOrder(myFunc)
+        // h.inOrder(myFunc)
+        // h.preOrder(myFunc)
+        // h.postOrder(myFunc)
+        // console.log(h.height(36))
+        // prettyPrint(h.root)  
+
+        // ------STARTED AGAIN ----- //
+
         class Node {
-            constructor(data, left = null, right = null) {
-                this.data = data;
-                this.left = left;
-                this.right = right;
+            constructor(data = null, left = null, right = null) {
+                this.data = data
+                this.left = left
+                this.right = right
             }
         }
 
         class Tree {
-            constructor(arr) {
-                this.root = this.buildTree(arr);
-                this.treeArray = [];
-                this.nodeCount = 1;
-                this.currentNode = this.root
-                this.queue = [this.currentNode.data];
-                this.heightCounterLeft = 0;
-                this.heightCounterRight = 0;
-                this.findNode;
+            constructor(array) {
+                this.root = this.buildTree(array)
             }
 
-            buildTree(arr) { 
-                let sortedArr = mergeSort(arr)
-                let midIndex = Math.floor((sortedArr.length  - 1)/ 2); 
-                let mid = sortedArr[midIndex]
-                let newNode;
+            buildTree(array) {
+                array = mergeSort(array) // sort and remove duplicates
+                let midIndex = Math.floor((array.length - 1) / 2)
+                let mid = array[midIndex]
+                let newNode = new Node(mid)
 
-                if (sortedArr.length < 1) {
-                    //skip
+                if (mid == null) {
+                    return null
+
                 } else {
-                    newNode = new Node(mid);
-                    newNode.left = this.buildTree(sortedArr.slice(0, midIndex))
-                    newNode.right = this.buildTree(sortedArr.slice(midIndex + 1, sortedArr.length))
-                    // console.log(newNode)
-                }
-                return newNode // this is each node created and 5 is the root
-                
-            }
-
-            insert(value) {
-               if (value == this.currentNode.data) {//dupe
-                return "Duplicate value has been entered and no value has been inserted"
-               }
-
-               if (!value) {//no input
-                return "No value provided"
-               }
-
-               if (!this.currentNode.left && !this.currentNode.right) {// no children
-                if (value < this.currentNode.data) {
-                    this.currentNode.left = new Node(value)
-                } else {
-                    this.currentNode.right = new Node(value)
-                }
-               }
-
-               if (this.currentNode.left && !this.currentNode.right) {// only left child
-                if (value < this.currentNode.data) {
-                    //skip
-                } else {
-                    this.currentNode.right = new Node(value)
-                }
-               }
-
-               if (!this.currentNode.left && this.currentNode.right) {// only right child
-                if (value > this.currentNode.data) {
-                    //skip
-                } else {
-                    this.currentNode.left = new Node(value)
-                }
-
-               }
-               
-               if (value < this.currentNode.data) {
-                this.currentNode = this.currentNode.left
-                this.insert(value)
-               } else if (value > this.currentNode.data) {
-                this.currentNode = this.currentNode.right
-                this.insert(value)
-               }
-               this.currentNode = this.root
-            }
-
-            deleteItem(value) {
-                if (!value) {
-                    console.log("no value entered") 
-                }
-                if (value !== this.currentNode.data) {
-                    if (value < this.currentNode.data) {
-                        this.currentNode = this.currentNode.left
-                        this.deleteItem(value)
-                    } else if (value > this.currentNode.data) {
-                        this.currentNode = this.currentNode.right
-                        this.deleteItem(value)
-                    } 
-                } else { // found value that i want to delete
-                    if (!this.currentNode.left && !this.currentNode.right) {
-                        this.currentNode.data = null
-
-                    } else if (this.currentNode.left && !this.currentNode.right) {//left child only
-                        let leftChild = this.currentNode.left
-                        this.currentNode.data = leftChild.data
-                        this.currentNode.left = leftChild.left
-                        this.currentNode.right = leftChild.right
-
-                    } else if (!this.currentNode.left && this.currentNode.right) {//right child only
-                        let rightChild = this.currentNode.right
-                        this.currentNode.data = rightChild.data
-                        this.currentNode.left = rightChild.left
-                        this.currentNode.right = rightChild.right
-                        
-                    } else { // both children
-                        let rightChild = this.currentNode.right
-                        if (!rightChild.left) {
-                            this.currentNode.data = rightChild.data
-                            rightChild.data = null
-                        } else {
-                            let leftOfRightChild = rightChild.left
-                            console.log(leftOfRightChild)
-                            if (leftOfRightChild.left) {
-                                while (leftOfRightChild.left) {//until left child has no more left children
-                                leftOfRightChild = leftOfRightChild.left
-                                }
-                            }
-                            this.currentNode.data = leftOfRightChild.data
-                            leftOfRightChild.data = null
-                        }
-                    }
-                }
-                this.currentNode = this.root
-            }
-            
-            find(value) {
-                if (!value) {
-                    console.log("no value entered");
-                    return null;
-                }
-
-                if (value == this.currentNode.data) { // found value
-                    return this.currentNode;
-                } else { // not found, keep searching
-                    if (value < this.currentNode.data) {
-                        if (!this.currentNode.left) {
-                            console.log("No value matched");
-                            return null;
-                        }
-                        this.currentNode = this.currentNode.left;
-                        return this.find(value); // return the node found
-                    } else if (value > this.currentNode.data) {
-                        if (!this.currentNode.right) {
-                            console.log("No value matched");
-                            return null;
-                        }
-                        this.currentNode = this.currentNode.right;
-                        return this.find(value); // return the node found
-                    }
-                }
-            }
-
-            levelOrder(callback) {
-
-
-                if (this.queue.length == 0) {//no more nodes
-                    return this.currentNode = this.root //reset currentNode back to root node
-                } 
-
-                let leftChild = this.currentNode.left
-                let rightChild = this.currentNode.right
-                
-                if (!callback) {// callback doesnt exist
-                    throw new Error("No Callback function passed")
                     
-                } else {
-                // console.log(this.queue)
-
-                    if (leftChild && rightChild && (this.currentNode == this.root)) { // root node
-                        console.log("IF")
-                        this.queue.push(leftChild)
-                        this.queue.push(rightChild)
-                        callback(this.currentNode.data) 
-                        this.currentNode = this.queue[0]
-                        this.levelOrder(callback)
-
-                    } else if (leftChild && rightChild && (this.currentNode !== this.root)) {
-                        // console.log("ELSE IF 1")
-
-                      this.queue.push(leftChild)
-                      this.queue.push(rightChild)
-                      callback(this.queue[0].data)
-                      this.queue.shift()
-                      this.currentNode = this.queue[0]
-                      this.levelOrder(callback)
-
-                    } else if (leftChild && !rightChild) {// left child only
-                        this.queue.push(leftChild)
-                        callback(this.queue[0].data)
-                        this.queue.shift()
-                        this.currentNode = this.queue[0]
-                        this.levelOrder(callback)
-
-                    } else if (!leftChild && rightChild) {//right child only
-                        this.queue.push(rightChild)
-                        callback(this.queue[0].data)
-                        this.queue.shift()
-                        this.currentNode = this.queue[0]
-                        this.levelOrder(callback)
-                        
-                    } else if (!leftChild && !rightChild) {// no children
-                        callback(this.queue[0].data)
-                        this.queue.shift()
-                        this.currentNode = this.queue[0]
-                        this.levelOrder(callback)
-
-                    }
+                    newNode.left = this.buildTree(array.slice(0, midIndex))
+                    newNode.right = this.buildTree(array.slice(midIndex + 1, array.length))                    
                 }
-                this.queue = [];
-            }
-
-            inOrder(callback, node = this.root) {
-
-                //can go left = recursive call
-                // no left = visit self node with callback
-                // after these = go right
-
-
-                let results = []
-            
-                if (node.data == null) {
-                    return
-                } else {
-
-                   if (node.left) {//go left
-                    this.inOrder(callback, node.left)
-                   }
-                   //visit node
-                   callback(node.data)
-
-                    if (node.right) {// go right
-                    this.inOrder(callback, node.right)
-                   }
-
-                   
-                }
-            }
-            
-
-            preOrder(callback) {
-
-                if (this.currentNode == null) {
-                    //skip
-                } else {
-                    let leftChild = this.currentNode.left
-                    let rightChild = this.currentNode.right
-
-                    if (!callback) {
-                        throw new Error("No Callback Provided")
-                    }
-
-                    callback(this.currentNode.data)
-                    
-                    if (leftChild && rightChild) { //hold both children
-                        this.currentNode = leftChild
-                        this.preOrder(callback)
-
-                        this.currentNode = rightChild
-                        this.preOrder(callback)
-
-                    } else if (leftChild) { //hold only left child
-                        this.currentNode = leftChild
-                        this.preOrder(callback)
-
-                    } else if (rightChild) { // hold only right child
-                        this.currentNode = rightChild
-                        this.preOrder(callback)
-
-                    }
-                }
-                this.currentNode = this.root
-            }
-
-
-            postOrder(callback, node = this.root) {
-
-                if (!callback) {
-                    throw new Error("No callback provided")
-
-                }
-
-                if (node.data == null) {
-                    return
-                } else {
-
-                    if (node.right) {
-                        this.postOrder(callback, node.right)
-
-                    }
-
-                    callback(node.data)
-
-
-                    if (node.left) {
-                        this.postOrder(callback, node.left)
-                    }
-                }
-            }
-
-            height(node) {
-                
-                // if node == root then they havent passed through a node so throw error
-                // if node == null then this means there are no children so return -1
-                // if node.left exist, recursively call function on it
-                // if node.right exist, do the same
-                // then return the biggest ones via math.max + 1
-                
-
-                //almost done it but its not correctly adding up the totals 
-
-                if (!node) {
-                    throw new Error("no node")
-
-                } else {
-                    node = this.find(node)
-                }
-
-                if (node == null) {
-                    return -1
-
-                } else {
-                    if (node.left) {
-                        this.heightCounterLeft++
-                        this.height(node.left)
-                    }
-
-                    if (node.right) {
-                        this.heightCounterRight++
-                        this.height(node.right)
-                    }
-                }
-                return Math.max(this.heightCounterLeft, this.heightCounterRight) + 1
-
-
+                console.log(newNode)
+                return newNode
             }
         }
+
+
+
+
+
         
         const prettyPrint = (node, prefix = "", isLeft = true) => {
            if (!node) {
@@ -407,25 +439,8 @@
             return final.concat(left).concat(right);
         }
 
-        let h = new Tree([15,14,21,12,32,36,4,21,54,55]);
-        h.insert(11)
-        h.insert(8)
-        h.insert(44)
-        h.insert(7)
-        h.insert(10)
-        h.insert(13)
-        h.insert(16)
-        // h.deleteItem(54)
-        // h.find(2)
-        function myFunc(a) {
-            console.log(a) // will console.log undefined once but it only does that when it gets here for the first time, so the function is correct and this is not a bug
-        }
-        // h.levelOrder(myFunc)
-        // h.inOrder(myFunc)
-        // h.preOrder(myFunc)
-        // h.postOrder(myFunc)
-        console.log(h.height(21))
-        prettyPrint(h.root)        
+        let a = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
+        prettyPrint(a.root)  
     </script>
 
 </body>
