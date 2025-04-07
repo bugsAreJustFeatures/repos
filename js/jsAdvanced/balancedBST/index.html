@@ -504,10 +504,10 @@
                 if (node === null) {
                     return
                 } else {
-                    callback(node)
                     if (node.left) {
                         this.inOrder(callback, node.left)
                     }
+                    callback(node)
 
                     if (node.right) {
                         this.inOrder(callback, node.right)
@@ -515,8 +515,28 @@
                 }
             }
 
-            preOrder(callback) {
+            preOrder(callback, node = this.root) {
+                if (!callback) {
+                    throw new Error("No callback")
+                }
 
+                if (this.root === null) {
+                    return "Tree is empty, so no nodes to traverse. "
+                }
+
+                if (node === null) {
+                    return
+                } else {
+                    callback(node)
+
+                    if (node.left) {
+                        this.preOrder(callback, node.left)
+                    }
+
+                    if (node.right) {
+                        this.preOrder(callback, node.right)
+                    }
+                }
             }
 
             postOrder(callback) {
@@ -604,7 +624,7 @@
         function myFunc(a) {
             console.log(a)
         }
-        console.log(a.inOrder(myFunc))
+        console.log(a.preOrder(myFunc))
         prettyPrint(a.root)  
     </script>
 
