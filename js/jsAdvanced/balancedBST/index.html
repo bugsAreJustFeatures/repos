@@ -379,7 +379,6 @@
             }
 
             insert(value, node = this.root) {
-
                 if (!value) {
                     throw new Error("No value inserted")
 
@@ -396,27 +395,55 @@
                 if (value < node.data) { //move down left subtree
                     if (!node.left) {// no left child
                         node.left = new Node(value)
-
                     } else {
-                    this.insert(value, node.left)
-
+                        this.insert(value, node.left)
                     }
 
                 } else if (value > node.data) { // move down right subtree
                     if (!node.right) { // no right child
                         node.right = new Node(value)
-
                     } else {
                         this.insert(value, node.right)
-
                     }
                   
                 }
 
             }
 
-            deleteItem(value) {
+            deleteItem(value, node = this.root) {
+                if (!value) {
+                    throw new Error("No value entered")
+                }
 
+                if (this.root === null) {
+                    return "The tree is empty, so no nodes viable for deletion"
+                }
+
+                if (value === node.data) {//found node 
+                    if (!node.left && !node.right) {//no children
+                        node.data = null
+                        node.left = null
+                        node.right = null  
+
+                    } else if (node.left && !node.right) {//only left child
+                        node.data = node.left.data
+                        node.left = node.left.left
+                        node.right = node.left.right 
+
+                    } else if (!node.left && node.right) {//only right child
+                        node.data = node.right.data
+                        node.left = node.right.left
+                        node.right = node.right.right
+                    }
+                } else {//not found node
+                    if (value < node.data) {
+                        this.deleteItem(value, node.left)
+
+                    } else if (value > node.data) {
+                        this.deleteItem(value, node.right)
+
+                    }
+                }
             }
 
             find(value) {
@@ -517,7 +544,7 @@
         }
 
         let a = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-        console.log(a.insert(2))
+        console.log(a.deleteItem(1))
         prettyPrint(a.root)  
     </script>
 
