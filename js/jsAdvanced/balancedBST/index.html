@@ -492,8 +492,27 @@
 
             }
 
-            inOrder(callback) {
+            inOrder(callback, node = this.root) {
+                if (!callback) {
+                    throw new Error("No callback")
+                }
 
+                if (this.root === null) {
+                    return "Tree is empty, so no nodes to traverse. "
+                }
+
+                if (node === null) {
+                    return
+                } else {
+                    callback(node)
+                    if (node.left) {
+                        this.inOrder(callback, node.left)
+                    }
+
+                    if (node.right) {
+                        this.inOrder(callback, node.right)
+                    }
+                }
             }
 
             preOrder(callback) {
@@ -585,7 +604,7 @@
         function myFunc(a) {
             console.log(a)
         }
-        console.log(a.levelOrder(myFunc))
+        console.log(a.inOrder(myFunc))
         prettyPrint(a.root)  
     </script>
 
