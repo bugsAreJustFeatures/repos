@@ -539,8 +539,27 @@
                 }
             }
 
-            postOrder(callback) {
+            postOrder(callback, node = this.root) {
+                if (!callback) {
+                    throw new Error("No callback passed ")
+                }
 
+                if (this.root === null) {
+                    return "Tree is empty, so no nodes to traverse. "
+                }
+
+                if (node === null) {
+                    return
+                } else {
+                    if (node.right) {
+                        this.postOrder(callback, node.right)
+                    } 
+                    callback(node)
+
+                    if (node.left) {
+                        this.postOrder(callback, node.left)
+                    }
+                }
             }
 
             height(value) {
@@ -624,7 +643,7 @@
         function myFunc(a) {
             console.log(a)
         }
-        console.log(a.preOrder(myFunc))
+        console.log(a.postOrder(myFunc))
         prettyPrint(a.root)  
     </script>
 
