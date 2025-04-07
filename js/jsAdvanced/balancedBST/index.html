@@ -370,12 +370,89 @@
                     return null
 
                 } else {
-                    
                     newNode.left = this.buildTree(array.slice(0, midIndex))
-                    newNode.right = this.buildTree(array.slice(midIndex + 1, array.length))                    
+                    newNode.right = this.buildTree(array.slice(midIndex + 1, array.length))     
+
                 }
-                console.log(newNode)
+                // console.log(newNode)
                 return newNode
+            }
+
+            insert(value, node = this.root) {
+
+                if (!value) {
+                    throw new Error("No value inserted")
+
+                }
+                if (this.root === null) { // no nodes in the tree
+                    return this.root = new Node(value)
+
+                } 
+                if (value === node.data) { // input already exists
+                    return "Value is already in the tree"
+
+                }
+
+                if (value < node.data) { //move down left subtree
+                    if (!node.left) {// no left child
+                        node.left = new Node(value)
+
+                    } else {
+                    this.insert(value, node.left)
+
+                    }
+
+                } else if (value > node.data) { // move down right subtree
+                    if (!node.right) { // no right child
+                        node.right = new Node(value)
+
+                    } else {
+                        this.insert(value, node.right)
+
+                    }
+                  
+                }
+
+            }
+
+            deleteItem(value) {
+
+            }
+
+            find(value) {
+
+            }
+
+            levelOrder(callback) {
+
+            }
+
+            inOrder(callback) {
+
+            }
+
+            preOrder(callback) {
+
+            }
+
+            postOrder(callback) {
+
+            }
+
+            height(value) {
+
+            }
+
+            depth(value) {
+
+            }
+
+            isBalanced() {
+
+            }
+
+            rebalance() {
+
             }
         }
 
@@ -440,6 +517,7 @@
         }
 
         let a = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
+        console.log(a.insert(2))
         prettyPrint(a.root)  
     </script>
 
