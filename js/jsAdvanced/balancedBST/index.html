@@ -564,7 +564,7 @@
             }
 
             height(node = this.root) {
-                if (this.counter == 0) {
+                if (this.counter == 0) {// initial call so need to turn value into node
                     node = this.find(node)
                     this.counter++
                 }
@@ -577,10 +577,32 @@
                 let rh = this.height(node.right)
 
                 return Math.max(lh, rh) + 1
+                this.counter = 0
             }
 
-            depth(value) {
+            depth(value, node = this.root, depth = 0) {
+                if (this.root === null) {
+                    return "Tree is empty, so no nodes to be found. "
+                }
 
+                if (!value) {
+                    return "If you entered a value, it does not exist. If you did not, please do."
+                }
+
+                // console.log("value: "+value)
+                // console.log("node: "+node.data)
+                // console.log("depth: "+depth)
+                if (value === node.data) { // found node
+                    return depth
+                } else { 
+                    if (value < node.data) { //move left
+                        return this.depth(value, node.left, depth+1)
+
+                    } else if (value > node.data) {//move right
+                        return this.depth(value, node.right, depth+1)
+                    }
+   
+                }
             }
 
             isBalanced() {
@@ -656,7 +678,7 @@
         function myFunc(a) {
             console.log(a)
         }
-        console.log(a.height(23))
+        console.log(a.depth(6345))
         prettyPrint(a.root)  
     </script>
 
