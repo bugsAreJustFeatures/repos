@@ -348,7 +348,7 @@
         // ------STARTED AGAIN ----- //
 
         class Node {
-            constructor(data = null, left = null, right = null) {
+            constructor(data, left = null, right = null) {
                 this.data = data
                 this.left = left
                 this.right = right
@@ -358,6 +358,7 @@
         class Tree {
             constructor(array) {
                 this.root = this.buildTree(array)
+                this.counter = 0
             }
 
             buildTree(array) {
@@ -562,8 +563,20 @@
                 }
             }
 
-            height(value) {
+            height(node = this.root) {
+                if (this.counter == 0) {
+                    node = this.find(node)
+                    this.counter++
+                }
+                
+                if (node === null) {
+                    return -1
+                }
+                
+                let lh = this.height(node.left)
+                let rh = this.height(node.right)
 
+                return Math.max(lh, rh) + 1
             }
 
             depth(value) {
@@ -643,7 +656,7 @@
         function myFunc(a) {
             console.log(a)
         }
-        console.log(a.postOrder(myFunc))
+        console.log(a.height(23))
         prettyPrint(a.root)  
     </script>
 
