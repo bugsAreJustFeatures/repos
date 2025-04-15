@@ -1,0 +1,5 @@
+1. make board and return it, no need for making it virtual.
+2. make a function that knows each move the knight can make on the board, such as x + 2, y - 1
+    2b. return something that anounces when the knight has gone off
+3. use the function made in step 2 on all steps until it reaches the desired position. 
+4. trace the steps back that will be able to return the steps taken in the shorten possible path. 

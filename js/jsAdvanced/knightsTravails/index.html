@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knight Moves</title>
+</head>
+<body>
+    
+    <script>
+
+        function moveOne(x, y) { // up 2, right 1
+            if (x + 1 < 8 && y + 2 < 8) { // make sure it doesnt go off board
+                x = x + 1
+                y = y + 2
+                return [x, y]
+            } else {
+                return "Invalid move, try again"
+            }
+            
+        }
+        function moveTwo(x, y) { // up 1, right 2
+            if (x + 2 < 8 && y + 1 < 8) {
+                x = x + 2
+                y = y + 1
+                return [x, y]
+            } else {
+                return "Invalid move, try again"
+            }
+            
+        }
+        function moveThree(x, y) { // down 1, right 2
+            if (x + 2 < 8 && y - 1 < 8) {
+                x = x + 2
+                y = y - 1
+                return [x, y]
+            } else {
+                return "Invalid move, try again"
+            }
+            
+        }
+        function moveFour(x, y) { // down 2, right 1
+            if (x + 1 < 8 && y - 2 < 8) {
+                x = x + 1
+                y = y - 2
+                return [x, y]
+            } else {
+                return "Invalid move, try again"
+            }
+            
+        }
+        function moveFive(x, y) { // down 2, left 1
+            if (x - 1 < 8 && y - 2 < 8) {
+                x = x - 1
+                y = y - 2
+                return [x, y]
+            } else {
+                return "Invalid move, try again"
+            }
+            
+        }
+        function moveSix(x, y) { // down 1, left 2
+            if (x - 2 < 8 && y - 1 < 8) {
+                x = x - 2
+                y = y - 1
+                return [x, y]
+            } else {
+                return "Invalid move, try again"
+            }
+            
+        }
+        function moveSeven(x, y) { // up 1, left 2
+            if (x - 2 < 8 && y + 1 < 8) {
+                x = x - 2
+                y = y + 1
+                return [x, y]
+            } else {
+                return "Invalid move, try again"
+            }
+            
+        }
+        function moveEight(x, y) { // up 2, left 1
+            if (x - 1 < 8 && y + 2 < 8) {
+                x = x - 1
+                y = y + 2
+                return [x, y]
+            } else {
+                return "Invalid move, try again"
+            }
+            
+        }
+
+        console.log(moveEight(3, 3))
+
+        function knightMoves(start, end) { // knightMoves([0,0], [1,2]) returns [0,0] and then [1,2] as the path
+
+
+        }
+
+        
+
+
+
+
+    </script>
+
+</body>
+</html>
