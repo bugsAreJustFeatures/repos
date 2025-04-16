@@ -119,36 +119,49 @@
 
             const visited = new Set()
             const queue = []// [currentPos, path]
+            let isFound = false
             visited.add(start)
 
 
             // pass each possible move, with their coords being pushed individually
             queue.push(callMoves(...start)) 
-
             // console.log(visited)
-            console.log(queue) // queue = [outer = a holder for all moves [middle = all possible moves[inner = actual position]]]
+            console.log(queue) // queue = [outer = a holder for all moves [middle = all possible moves[inner = actual position [array within inner = path (each inner has one)]]]]
             
-            for (let k of queue[0]) {
-                
+            // while (isFound == false) { // while loop for going through each of the moves ---- only activvate when you have fully functional function, otherwise it will create infinite loop ----
+                for (let k of queue[0]) { // for..of loop to check if position is desired
                 if (k === null) {
                     //skip because move is not valid
 
                 } else {
-                end = end.toString() 
-                k = k.toString()
-                // need to do make these strings otherwise they always return false
+                    end = end.toString() 
+                    k = k.toString()
+                    // need to do make these strings otherwise they always return false
 
-                console.log(k)
-                if (end === k) {
-                    console.log(`Path for [${end}] has been found`)
-                    return 
+                    console.log(k)
+                    if (end === k) {
+                        console.log(`Path for [${end}] has been found`)
+                        isFound == true
+                        return 
+                        }
                     }
                 }
+
+                // not found end goal yet
+
+                queue.splice()
+                visited.add(queue[0][0])
+                console.log(visited)
+                console.log(queue)
+
+
+
             }
+            
 
             console.log( "hi")
-        }
-        knightMoves([4,1], [7,7])
+        // } ----- NEED TO UNCOMMENT WHEN ACTIVATING FUNCTION------//
+        knightMoves([3,3], [7,7])
 
         
         // -----Done so far------ //
@@ -166,7 +179,7 @@
         // -----Need to do----- //
 
         // 
-        // 6. after checking is complete and none is the correct one, move onto the next position within the queue and add it to the visited set, as well as add their possible moves into the array
+        // 6. after checking is complete and none is the correct one, move onto the next position within the queue and add it to the visited set, as well as add their possible moves into the array and each of their paths
         // 7. loop through 5-6 until position is found
         // 8. get the path of the desired coords and return them.
         //
