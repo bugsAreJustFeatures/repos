@@ -9,10 +9,20 @@
     
     <script>
 
+        function isValid(x, y) {
+            if (x < 8 && x > 0 && y < 8 && y > 0) {
+                return true
+            } else {
+                return false
+            }
+        }
+
         function moveOne(x, y) { // up 2, right 1
-            if (x + 1 < 8 && y + 2 < 8) { // make sure it doesnt go off board
-                x = x + 1
-                y = y + 2
+            
+            x = x + 1
+            y = y + 2
+
+            if (isValid(x,y)) {
                 return [x, y]
             } else {
                 return null
@@ -20,74 +30,74 @@
             
         }
         function moveTwo(x, y) { // up 1, right 2
-            if (x + 2 < 8 && y + 1 < 8) {
-                x = x + 2
-                y = y + 1
+            x = x + 2
+            y = y + 1
+           
+            if (isValid(x,y)) {
                 return [x, y]
             } else {
                 return null
             }
-            
         }
         function moveThree(x, y) { // down 1, right 2
-            if (x + 2 < 8 && y - 1 < 8) {
-                x = x + 2
-                y = y - 1
+            x = x + 2
+            y = y - 1
+
+            if (isValid(x,y)) {
                 return [x, y]
             } else {
                 return null
             }
-            
         }
         function moveFour(x, y) { // down 2, right 1
-            if (x + 1 < 8 && y - 2 < 8) {
-                x = x + 1
-                y = y - 2
-                return [x, y]
-            }  else {
-                return null
-            }
-            
-        }
-        function moveFive(x, y) { // down 2, left 1
-            if (x - 1 < 8 && y - 2 < 8) {
-                x = x - 1
-                y = y - 2
-                return [x, y]
-            }  else {
-                return null
-            }
-            
-        }
-        function moveSix(x, y) { // down 1, left 2
-            if (x - 2 < 8 && y - 1 < 8) {
-                x = x - 2
-                y = y - 1
-                return [x, y]
-            }  else {
-                return null
-            }
-            
-        }
-        function moveSeven(x, y) { // up 1, left 2
-            if (x - 2 < 8 && y + 1 < 8) {
-                x = x - 2
-                y = y + 1
+            x = x + 1
+            y = y - 2
+
+            if (isValid(x,y)) {
                 return [x, y]
             } else {
                 return null
             }
-            
         }
-        function moveEight(x, y) { // up 2, left 1
-            if (x - 1 < 8 && y + 2 < 8) {
-                x = x - 1
-                y = y + 2
+        function moveFive(x, y) { // down 2, left 1
+            x = x - 1
+            y = y - 2
+
+            if (isValid(x,y)) {
                 return [x, y]
-            }  else {
+            } else {
                 return null
             }
-            
+        }
+        function moveSix(x, y) { // down 1, left 2
+            x = x - 2
+            y = y - 1
+
+            if (isValid(x,y)) {
+                return [x, y]
+            } else {
+                return null
+            }
+        }
+        function moveSeven(x, y) { // up 1, left 2
+            x = x - 2
+            y = y + 1
+
+            if (isValid(x,y)) {
+                return [x, y]
+            } else {
+                return null
+            }
+        }
+        function moveEight(x, y) { // up 2, left 1
+            x = x - 1
+            y = y + 2
+
+            if (isValid(x,y)) {
+                return [x, y]
+            } else {
+                return null
+            }
         }
         // console.log(moveOne(3, 3))
 
@@ -120,24 +130,31 @@
             console.log(queue) // queue = [outer = a holder for all moves [middle = all possible moves[inner = actual position]]]
             
             for (let k of queue[0]) {
-               
+                
+                if (k === null) {
+                    //skip because move is not valid
 
-                end = end.toString()
+                } else {
+                end = end.toString() 
                 k = k.toString()
+                // need to do make these strings otherwise they always return false
 
-                if (end == k) {
+                console.log(k)
+                if (end === k) {
                     console.log(`Path for [${end}] has been found`)
-
+                    return 
+                    }
                 }
             }
 
-            // console.log(end)
-            // console.log(queue[0][0])
+            console.log( "hi")
+
+
 
 
 
         }
-        knightMoves([3,3], [4,5])
+        knightMoves([3,3], [7,7])
 
         
         // -----Done so far------ //
