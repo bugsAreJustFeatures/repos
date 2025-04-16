@@ -15,7 +15,7 @@
                 y = y + 2
                 return [x, y]
             } else {
-                return "Invalid move, try again"
+                return null
             }
             
         }
@@ -25,7 +25,7 @@
                 y = y + 1
                 return [x, y]
             } else {
-                return "Invalid move, try again"
+                return null
             }
             
         }
@@ -35,7 +35,7 @@
                 y = y - 1
                 return [x, y]
             } else {
-                return "Invalid move, try again"
+                return null
             }
             
         }
@@ -44,8 +44,8 @@
                 x = x + 1
                 y = y - 2
                 return [x, y]
-            } else {
-                return "Invalid move, try again"
+            }  else {
+                return null
             }
             
         }
@@ -54,8 +54,8 @@
                 x = x - 1
                 y = y - 2
                 return [x, y]
-            } else {
-                return "Invalid move, try again"
+            }  else {
+                return null
             }
             
         }
@@ -64,8 +64,8 @@
                 x = x - 2
                 y = y - 1
                 return [x, y]
-            } else {
-                return "Invalid move, try again"
+            }  else {
+                return null
             }
             
         }
@@ -75,7 +75,7 @@
                 y = y + 1
                 return [x, y]
             } else {
-                return "Invalid move, try again"
+                return null
             }
             
         }
@@ -84,21 +84,81 @@
                 x = x - 1
                 y = y + 2
                 return [x, y]
-            } else {
-                return "Invalid move, try again"
+            }  else {
+                return null
             }
             
         }
+        // console.log(moveOne(3, 3))
 
-        console.log(moveEight(3, 3))
+        function callMoves(x,y) {
+            let moves = [
+                moveOne(x,y),
+                moveTwo(x,y),
+                moveThree(x,y),
+                moveFour(x,y),
+                moveFive(x,y),
+                moveSix(x,y),
+                moveSeven(x,y),
+                moveEight(x,y)
+
+            ]
+            return moves
+        }
 
         function knightMoves(start, end) { // knightMoves([0,0], [1,2]) returns [0,0] and then [1,2] as the path
 
+            const visited = new Set()
+            const queue = []// [currentPos, path]
+            visited.add(start)
+
+
+            // pass each possible move, with their coords being pushed individually
+            queue.push(callMoves(...start)) 
+
+            // console.log(visited)
+            console.log(queue) // queue = [outer = a holder for all moves [middle = all possible moves[inner = actual position]]]
+            
+            for (let k of queue[0]) {
+               
+
+                end = end.toString()
+                k = k.toString()
+
+                if (end == k) {
+                    console.log(`Path for [${end}] has been found`)
+
+                }
+            }
+
+            // console.log(end)
+            // console.log(queue[0][0])
+
+
 
         }
+        knightMoves([3,3], [4,5])
 
         
+        // -----Done so far------ //
 
+        //  1. made set to store the visited positions
+        // 2. made queue array that stores where the knight currently is, as well as the next possible moves alongside each of these moves' paths
+        // 3. been able to store the first set of possible moves in the queue
+        // 4. been able to store the starting position in the visited set
+        // 5. check each of the possible moves to see if they are the end goal
+        //
+        //
+        //
+
+
+        // -----Need to do----- //
+
+        // 
+        // 6. after checking is complete and none is the correct one, move onto the next position within the queue and add it to the visited set, as well as add their possible moves into the array
+        // 7. loop through 5-6 until position is found
+        // 8. get the path of the desired coords and return them.
+        //
 
 
 
