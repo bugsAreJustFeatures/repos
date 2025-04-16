@@ -10,7 +10,7 @@
     <script>
 
         function isValid(x, y) {
-            if (x < 8 && x > 0 && y < 8 && y > 0) {
+            if (x < 8 && x >= 0 && y < 8 && y >= 0) {
                 return true
             } else {
                 return false
@@ -18,7 +18,6 @@
         }
 
         function moveOne(x, y) { // up 2, right 1
-            
             x = x + 1
             y = y + 2
 
@@ -148,13 +147,8 @@
             }
 
             console.log( "hi")
-
-
-
-
-
         }
-        knightMoves([3,3], [7,7])
+        knightMoves([4,1], [7,7])
 
         
         // -----Done so far------ //
