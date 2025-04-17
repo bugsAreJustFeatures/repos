@@ -126,7 +126,7 @@
             while (visited.size <= 64) { // while loop for going through each of the moves
                 // console.log(queue)
 
-                if (queue[0][0] === null || visited.has(queue[0][0].toString())) {
+                if (queue[0][0] === null || visited.has(queue[0][0].toString())) {// move is not valid or has been visited already
                     queue[0].shift()
 
                 } else {
@@ -134,42 +134,38 @@
                     for (let i = 0; i < nextMoves.length; i++) { // for loop needed to loop through all moves and then add them
                         queue[0].push(nextMoves[i]) 
                     }
-                    console.log(queue[0])
-                    // console.log(queue[1])
 
                     for (let k of queue[0]) { // for..of loop to check if position is the desired node 
 
                     if (k === null || visited.has(queue[0][0].toString())) {
                         //skip because move is not valid
-
+                        queue[0].splice([queue[0].indexOf(k)],1) // deletes dupes and nulls from queue, saving space and time
                     } else {
+                        visited.add(queue[0][0].toString())// add next node to visited set
+
                         end = end.toString() 
                         k = k.toString()
                         // need to do make these strings otherwise they always return false
 
-                        // console.log(k)
                         if (end === k) { // found desired node
 
                             // for..of loop for listing visited nodes, which will be the path to the desired node
                             let visitedNodes = []
+                            console.log(visited)
                             for (let j of visited) {
                                 visitedNodes.push(`[${j}]`)
                             }
-                            console.log(`Path for [${end}] has been found and its ${visitedNodes},[${end}]`)
+                            // console.log(`Path for [${end}] has been found and its ${visitedNodes}`)
                             return 
                             }
+
                         }
                     }
-
-                    // not found end goal coords yet //
-                    
-                    visited.add(queue[0][0].toString())// add next node to visited set
-                    console.log(visited)
                     queue[0].shift() // remove the visited node from queue
                 }
             }
         } 
-        knightMoves([0,0], [3,3])
+        knightMoves([0,0], [7,7])
 
     </script>
 
