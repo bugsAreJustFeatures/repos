@@ -118,18 +118,18 @@
         function knightMoves(start, end) { // knightMoves([0,0], [1,2]) returns [0,0] and then [1,2] as the path
 
             const visited = new Set()
-            const queue = []// [currentPos, path]
-            let isFound = false
+            const queue = []
             visited.add(start)
+            queue.push(callMoves(...start))
 
 
-            // pass each possible move, with their coords being pushed individually
-            queue.push(callMoves(...start)) 
-            // console.log(visited)
-            console.log(queue) // queue = [outer = a holder for all moves [middle = all possible moves[inner = actual position [array within inner = path (each inner has one)]]]]
-            
-            // while (isFound == false) { // while loop for going through each of the moves ---- only activvate when you have fully functional function, otherwise it will create infinite loop ----
-                for (let k of queue[0]) { // for..of loop to check if position is desired
+            // queue = [outer = a holder for all moves [middle = all possible moves[inner = actual position]]]
+
+            while (visited.size <= 64) { // while loop for going through each of the moves
+                console.log(queue)
+                queue.push(callMoves(...queue[0][0])) //ERROR ON THIS LINE//----------
+                
+                for (let k of queue[0]) { // for..of loop to check if position is the desired node 
                 if (k === null) {
                     //skip because move is not valid
 
@@ -138,29 +138,30 @@
                     k = k.toString()
                     // need to do make these strings otherwise they always return false
 
-                    console.log(k)
-                    if (end === k) {
-                        console.log(`Path for [${end}] has been found`)
-                        isFound == true
+                    // console.log(k)
+                    if (end === k) { // found desired node
+
+                        // for..of loop for listing visited nodes, which will be the path to the desired node
+                        let visitedNodes = []
+                        for (let j of visited) {
+                            visitedNodes.push(` [${j[0]}, ${j[1]}]`)
+                        }
+                        console.log(`Path for [${end}] has been found and its ${visitedNodes}, [${end}]`)
                         return 
                         }
                     }
                 }
 
-                // not found end goal yet
-
-                queue.splice()
-                visited.add(queue[0][0])
+                // not found end goal coords yet //
+                
+                visited.add(queue[0][0])// add next node to visited set
+                queue.shift() // remove the visited node from queue
                 console.log(visited)
-                console.log(queue)
 
 
 
             }
-            
-
-            console.log( "hi")
-        // } ----- NEED TO UNCOMMENT WHEN ACTIVATING FUNCTION------//
+        } //----- NEED TO UNCOMMENT bracket WHEN ACTIVATING FUNCTION------//
         knightMoves([3,3], [7,7])
 
         
