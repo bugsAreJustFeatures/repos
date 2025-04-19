@@ -116,56 +116,48 @@
 
         function knightMoves(start, end) { // knightMoves([0,0], [1,2]) returns [0,0] and then [1,2] as the path
 
+            if (!isValid(start[0], start[1]) || !isValid(end[0], end[1])) {
+                console.log("Make sure your start and end points are from 0 to 7")
+                return
+            }
+
             const visited = new Set()
-            const queue = []
             visited.add(start.toString())
-            queue.push(callMoves(...start))
 
-            // queue = [outer = a holder for all moves [middle = all possible moves[inner = 0,0]]]
+            const queue = [[start, [start]]]
 
-            while (visited.size <= 64) { // while loop for going through each of the moves
+            while (queue.length > 0) {
+                const [currentMove, path] = queue.shift(); //take current node and its path
+                
+                if (currentMove.toString() === end.toString()) {//found desired node
+                    console.log(`Your path to ${end} has been found and the shortest path is: `) 
+                    for (let i = 0; i < path.length; i++) {
+                        console.log(path[i])
+                    }
+                    return
+                }
+
+                // console.log(currentMove)
+                let nextMoves = callMoves(currentMove[0], currentMove[1])
+
+                // console.log(nextMoves)
                 // console.log(queue)
 
-                if (queue[0][0] === null || visited.has(queue[0][0].toString())) {// move is not valid or has been visited already
-                    queue[0].shift()
+                for (let move of nextMoves) {
 
-                } else {
-                    let nextMoves = callMoves(...queue[0][0])
-                    for (let i = 0; i < nextMoves.length; i++) { // for loop needed to loop through all moves and then add them
-                        queue[0].push(nextMoves[i]) 
+                    if (move && !visited.has(move.toString())) {//valid move and not visited
+                        queue.push([move, [...path, move]]) // add the move with its path, to the queue
+
+                    } else if (move === null || visited.has(move.toString())) {//not valid move or has been visited
+                        nextMoves.splice(nextMoves.indexOf(move), 1) // remove invalid move to save space and time
                     }
-
-                    for (let k of queue[0]) { // for..of loop to check if position is the desired node 
-
-                    if (k === null || visited.has(queue[0][0].toString())) {
-                        //skip because move is not valid
-                        queue[0].splice([queue[0].indexOf(k)],1) // deletes dupes and nulls from queue, saving space and time
-                    } else {
-                        visited.add(queue[0][0].toString())// add next node to visited set
-
-                        end = end.toString() 
-                        k = k.toString()
-                        // need to do make these strings otherwise they always return false
-
-                        if (end === k) { // found desired node
-
-                            // for..of loop for listing visited nodes, which will be the path to the desired node
-                            let visitedNodes = []
-                            console.log(visited)
-                            for (let j of visited) {
-                                visitedNodes.push(`[${j}]`)
-                            }
-                            // console.log(`Path for [${end}] has been found and its ${visitedNodes}`)
-                            return 
-                            }
-
-                        }
-                    }
-                    queue[0].shift() // remove the visited node from queue
                 }
+                
             }
-        } 
-        knightMoves([0,0], [7,7])
+        }
+
+
+        knightMoves([0,0], [7,0])
 
     </script>
 
