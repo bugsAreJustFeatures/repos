@@ -29,8 +29,8 @@ class GameBoard {
     makeBoard() { 
         let array = []
         let column
-        for (let i = 65; i < 75; i++) { // letter
-            for (let j = 49; j < 59; j++) { // number
+        for (let i = 65; i < 75; i++) { // letter, x
+            for (let j = 49; j < 59; j++) { // number, y
 
                 if (j == 58) {//make ten with unicode, since j is going to be in 10th column 
                     j = [49,48]
@@ -50,53 +50,55 @@ class GameBoard {
     }
 
     getBoatPosition(shipSize) {
-        // make while..loop that loops until the boat can fit
-            // make and use randomiser to pick a coordinate somewhere on board
-            // use randomiser, pick 0-3, 0/1 (up/down) 2/3 (left/right)
-            // check if the boat will fit, via increasing coords by size - 1, in whatever the relevant direction is
-            // if not, loop back through
-        // then return an array that houses the position of the boat
-
         let canFit = false
         let fullPos = []
+        let message;
 
         function getRandomNum(max) {
             return Math.floor(Math.random() * max)
         }
 
-        while (canFit === false) {
-            let randomPos = getRandomNum(99) // get random coordinate
+        while (canFit == false) {
+            let randomPos = 0 // get random coordinate
             let randomDirection = getRandomNum(3) // 0 = up, 1 = down, 2 = left, 3 = right
 
-            if (randomDirection == 0) {
-                if (this.board[randomPos + (shipSize - 1)][1]) {
+            if (randomDirection == 0) { // up, keep row same
+                let legalCheckerZero = this.board[randomPos][0] == this.board[randomPos + (shipSize - 1)][0]
+                if (legalCheckerZero) { // [A,9] [A,10] [B,1] [B,2] [B,3] 
                     canFit = true
+                    message = "UP"
                     for (let i = 0; i < shipSize; i++) {
                         fullPos.push(this.board[randomPos + i])
                     }
                 }
 
-            } else if (randomDirection == 1) {
-                if (this.board[randomPos - (shipSize - 1)][1]) {
+            } else if (randomDirection == 1) { // down, keep row same
+                let legalCheckerOne = this.board[randomPos][0] == this.board[randomPos - (shipSize - 1)][0]
+                if (legalCheckerOne) {
                     canFit = true
+                    message = "DOWN"
                     for (let i = 0; i < shipSize; i++) {
-                        fullPos.push(this.board[randomPos + i])
+                        fullPos.push(this.board[randomPos - i])
                     }
                 }
 
-            } else if (randomDirection == 2) {
-                if (this.board[randomPos + (shipSize - 1)][0]) {
+            } else if (randomDirection == 2) { // left, keep column same
+                let legalCheckerTwo = this.board[randomPos][1] == this.board[randomPos + (shipSize - 1)][1]
+                if (legalCheckerTwo) {
                     canFit = true
+                    message = "LEFT"
                     for (let i = 0; i < shipSize; i++) {
-                        fullPos.push(this.board[randomPos + i])
+                        fullPos.push(this.board[randomPos + i][1])
                     }
                 }
 
-            } else {
-                if (this.board[randomPos - (shipSize - 1)][1]) {
+            } else if (randomDirection == 3) { //right, keep column same
+                let legalCheckerThree = this.board[randomPos][1] == this.board[randomPos - (shipSize - 1)][1]
+                if (legalCheckerThree) {
                     canFit = true
+                    message = "RIGHT"
                     for (let i = 0; i < shipSize; i++) {
-                        fullPos.push(this.board[randomPos + i])
+                        fullPos.push(this.board[randomPos - i][1])
                     }
                 }
 
@@ -109,6 +111,7 @@ class GameBoard {
 
 
     receiveAttack(coordinates) {
+
         return coordinates
     }
 }
@@ -117,7 +120,7 @@ class GameBoard {
 let newShip = () => {return new Ship(5)}
 let newGameBoard = () => {return new GameBoard()}
 let boardMoves = newGameBoard().gameBoardSize
-let showBoats = newGameBoard().getBoatPosition(5)
+let carrierBoat = newGameBoard().getBoatPosition(5)
 
 // exports //
-module.exports = {newShip, newGameBoard, boardMoves, showBoats}
+module.exports = {newShip, newGameBoard, boardMoves, carrierBoat}

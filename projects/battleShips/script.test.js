@@ -1,7 +1,7 @@
 import {newShip} from "./src/script"
 import {newGameBoard} from "./src/script"
 import {boardMoves} from "./src/script";
-import { showBoats } from "./src/script";
+import {carrierBoat} from "./src/script";
 
 describe("makes a ship object and ", () => {
     test("adds a length", () => {
@@ -35,7 +35,7 @@ describe("tests function in gameBoard class", () => {
         expect(newGameBoard().board[0]).toStrictEqual(["A", "1"])
     })
     test("mock tests getBoatPosition() correctly creates boat positions for a carrier - uses 0 as randomPos", () => {
-        expect(showBoats).toStrictEqual([["A", "1"], ["A", "2"], ["A", "3"], ["A", "4"], ["A", "5"]])
+        expect(carrierBoat).toStrictEqual([["A", "1"], ["A", "2"], ["A", "3"], ["A", "4"], ["A", "5"]])
     })
     
 
