@@ -28,7 +28,11 @@ class GameBoard {
 
     makeBoard() { 
         let array = []
-        let column
+        //  array = [
+        //  [[A],[1]], [[B],[1]], [[C],[1]] ...
+        //  [[A],[2]], [[A],[2]], [[A],[2]] ...
+        //  ]
+        let column;
         for (let i = 65; i < 75; i++) { // letter, x
             for (let j = 49; j < 59; j++) { // number, y
 
@@ -42,7 +46,7 @@ class GameBoard {
                 }
                 let row = String.fromCharCode(i)
 
-                array.push([row, column])
+                array.push([[row], [column]])
             }
         }
         this.gameBoardSize = ((array.length))
@@ -50,7 +54,7 @@ class GameBoard {
     }
 
     getBoatPosition(shipSize) {
-        let canFit = false
+        let canPlace = false
         let fullPos = []
         let message;
 
@@ -58,53 +62,45 @@ class GameBoard {
             return Math.floor(Math.random() * max)
         }
 
-        while (canFit == false) {
-            let randomPos = 0 // get random coordinate
-            let randomDirection = getRandomNum(3) // 0 = up, 1 = down, 2 = left, 3 = right
+        while (canPlace === false) {
+            let randomPos = getRandomNum(99) // use random num to call a random coordinate
+            let randomDirection = getRandomNum(1)
 
-            if (randomDirection == 0) { // up, keep row same
-                let legalCheckerZero = this.board[randomPos][0] == this.board[randomPos + (shipSize - 1)][0]
-                if (legalCheckerZero) { // [A,9] [A,10] [B,1] [B,2] [B,3] 
-                    canFit = true
-                    message = "UP"
+            let xAxisPos = this.board[randomPos][0][0] // if randomPos = 50, will be the 6th row because 0 is the 1st, returns 6
+            let yAxisPos = this.board[randomPos][0][1] // if randomPos = 50, will be the 6th column because 0 is the 1st, returns F
+
+            let horizontalCheck = (xAxisPos === this.board[randomPos + (shipSize - 1)][0][0]) // checks to make sure the row has remained the same, used to check ships placed horizontally dont go over into other columns
+            let verticalCheck = (yAxisPos === this.board[randomPos + (shipSize - 1)][0][1]) // checks to make sure the column has remained the same, used to check ships placed vertically dont go over into other rows 
+
+            if (randomDirection == 0) { // horizontal check, y axis will stay the same
+                if (horizontalCheck) {
+                    canPlace = true
+                    message = "HORIZONTAL"
+                    for (let i = 0; i < shipSize; i++) {
+                        let next = 10 * i
+                        fullPos.push(this.board[randomPos + next])
+                    }
+                } else {
+                    canPlace = true
+                    message = "HORIZONTAL"
+                    return `couldnt place ${message} at ${this.board[randomPos]}`
+                }
+
+            } else if (randomDirection == 1) { // vertical check, x axis will stay the same
+                if (verticalCheck) {
+                    canPlace = true
+                    message = "VERTICAL"
                     for (let i = 0; i < shipSize; i++) {
                         fullPos.push(this.board[randomPos + i])
                     }
+                } else {
+                    canPlace = true
+                    message = "VERTICAL"
+                    return `couldnt place ${message} at ${this.board[randomPos]}`
                 }
-
-            } else if (randomDirection == 1) { // down, keep row same
-                let legalCheckerOne = this.board[randomPos][0] == this.board[randomPos - (shipSize - 1)][0]
-                if (legalCheckerOne) {
-                    canFit = true
-                    message = "DOWN"
-                    for (let i = 0; i < shipSize; i++) {
-                        fullPos.push(this.board[randomPos - i])
-                    }
-                }
-
-            } else if (randomDirection == 2) { // left, keep column same
-                let legalCheckerTwo = this.board[randomPos][1] == this.board[randomPos + (shipSize - 1)][1]
-                if (legalCheckerTwo) {
-                    canFit = true
-                    message = "LEFT"
-                    for (let i = 0; i < shipSize; i++) {
-                        fullPos.push(this.board[randomPos + i][1])
-                    }
-                }
-
-            } else if (randomDirection == 3) { //right, keep column same
-                let legalCheckerThree = this.board[randomPos][1] == this.board[randomPos - (shipSize - 1)][1]
-                if (legalCheckerThree) {
-                    canFit = true
-                    message = "RIGHT"
-                    for (let i = 0; i < shipSize; i++) {
-                        fullPos.push(this.board[randomPos - i][1])
-                    }
-                }
-
             }
         }
-        return fullPos
+        return `${message} at ${fullPos}`
 
     }
 

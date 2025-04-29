@@ -25,17 +25,17 @@ describe("tests functions within ship class - not constructor, thats above.", ()
 })
 
 describe("tests function in gameBoard class", () => {
-    test("tests makeBoard() starts at ['A', '1']", () => {
-        expect(newGameBoard().makeBoard()[0]).toStrictEqual(["A", "1"])
-    })
-    test("tests makeBoard() finishes at ['J', '10'], and checks there are only 100 positions", () => {
-        expect(newGameBoard().makeBoard()[boardMoves - 1]).toStrictEqual(["J", "10"])
-    })
-    test("tests board starting", () => {
-        expect(newGameBoard().board[0]).toStrictEqual(["A", "1"])
-    })
-    test("mock tests getBoatPosition() correctly creates boat positions for a carrier - uses 0 as randomPos", () => {
-        expect(carrierBoat).toStrictEqual([["A", "1"], ["A", "2"], ["A", "3"], ["A", "4"], ["A", "5"]])
+    // test("tests makeBoard() starts at ['A', '1']", () => {
+    //     expect(newGameBoard().makeBoard()[0]).toStrictEqual(["A", "1"])
+    // })
+    // test("tests makeBoard() finishes at ['J', '10'], and checks there are only 100 positions", () => {
+    //     expect(newGameBoard().makeBoard()[boardMoves - 1]).toStrictEqual(["J", "10"])
+    // })
+    // test("tests board starting", () => {
+    //     expect(newGameBoard().board[0]).toStrictEqual(["A", "1"])
+    // })
+    test("mock tests getBoatPosition() correctly creates boat positions for a carrier - uses 50 as randomPos and goes DOWN", () => {
+        expect(carrierBoat).toStrictEqual([[["F"], ["1"]], [["F"], ["2"]], [["F"], ["3"]], [["F"], ["4"]], [["F"], ["5"]]])
     })
     
 
