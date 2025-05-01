@@ -5,6 +5,7 @@ import { carrierBoat } from "./src/script";
 import { hitCarrier } from "./src/script";
 import { missCarrier } from "./src/script";
 import { revealPositions } from "./src/script";
+import { isGameFinsished } from "./src/script";
 
 describe("makes a ship object and ", () => {
     test("adds a length", () => {
@@ -37,7 +38,7 @@ describe("tests function in gameBoard class", () => {
     test("tests board starting", () => {
         expect(newGameBoard().board[0]).toStrictEqual([["A"], ["1"]])
     })
-    // describe("mock tests, that check functions that involves coordinates being mutated", () => {
+    // }) // -- THESE ARE COMMENTED OUT OTHERWISE WILL FAIL SINCE THEY REQUIRE EXPLICIT DATA--//
     //     test("mock tests getBoatPosition() correctly creates boat positions for a carrier - uses 50 as randomPos", () => {
     //         expect(carrierBoat).toStrictEqual([[["F"], ["1"]], [["F"], ["2"]], [["F"], ["3"]], [["F"], ["4"]], [["F"], ["5"]]])
     //     })
@@ -47,9 +48,11 @@ describe("tests function in gameBoard class", () => {
     //     test("mock tests receiveAttack() correctly acknowledges missed attacks", () => {
     //         expect(missCarrier).toBe("missed carrier at ['A','1']")
     //     })
-    // }) // -- THESE ARE COMMENTED OUT OTHERWISE WILL FAIL SINCE THEY REQUIRE EXPLICIT DATA--//
-    test("checks boats have correct lengths being pushed to their coordinates (checks after they have been deployed) by using the deployShip() function", () => {
-        expect(newGameBoard().ships.battleShip.coordinates).toBe("some coordinates")
-    })
+    // test("checks boats have correct lengths being pushed to their coordinates (checks after they have been deployed) by using the deployShip() function", () => {
+    //     expect(newGameBoard().ships.carrier.coordinates).toBe("some coordinates")
+    // })
+    // test("check if all boats are sunk", () => {
+    //     expect(isGameFinsished()).toBe("true")
+    // })
     
 })

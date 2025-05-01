@@ -36,7 +36,7 @@ class GameBoard {
             onTarget: {coordinates: []},
             missed: {coordinates: []}
         }
-        
+        this.startGame = this.deployShips()
     }
 
     makeBoard() { 
@@ -96,12 +96,6 @@ class GameBoard {
             let xAxisPos = this.board[randomPos] // if randomPos = 50, will be the 6th row because 0 is the 1st, returns 6
             let yAxisPos = this.board[randomPos] // if randomPos = 50, will be the 6th column because 0 is the 1st, returns F
 
-            // canPlace = true
-            // let endPos = this.board[randomPos + ((shipSize - 1) * 10)]
-            // horizontalCheck = (xAxisPos[0][1] === endPos[0][1]) 
-            // return horizontalCheck
-
-
             if (randomDirection == 0) { // horizontal check, y axis will stay the same
                 if ((randomPos + ((shipSize - 1) * 10)) <= 99) { // checks if ship can fit horizontally and does not spill over the edge by adding working out the next correct space
                     let endPos = this.board[randomPos + ((shipSize - 1) * 10)]
@@ -136,6 +130,7 @@ class GameBoard {
                     let endPos = this.board[randomPos + (shipSize - 1)]
                     verticalCheck = (yAxisPos[0][0] === endPos[0][0])
                     verticalCheckAdd = true
+
                 } else if (randomPos - (shipSize - 1) >= 0) { // if it will spill out, it subtracts and places ship the other vertical way
                     let endPos = this.board[randomPos - (shipSize - 1)]
                     verticalCheck = (yAxisPos[0][0] === endPos[0][0])
@@ -158,13 +153,6 @@ class GameBoard {
             }
         }
 
-
-        for (let [name, data] of Object.entries(this.ships)) { // find the ship object and store coordinates there
-            if (name === shipInput) {
-                data.coordinates.push(fullPos)
-                break;
-            }
-        }
         return fullPos
     }
 
@@ -190,21 +178,30 @@ class GameBoard {
             return `Missed at ${inputCoordinates}`
         }
 
+        this.endChecker()
     }
 
     deployShips() {
-        let deployCarrier = () => {return this.getBoatPosition("carrier")}
-        let deployBattleShip = () => {return this.getBoatPosition("battleShip")}
-        let deployDestroyer = () => {return this.getBoatPosition("destroyer")}
-        let deploySubmarine = () => {return this.getBoatPosition("submarine")}
-        let deployPatrolBoat = () => {return this.getBoatPosition("patrolBoat")}
+        this.ships.carrier.coordinates.push(this.getBoatPosition("carrier"))
+        this.ships.battleShip.coordinates.push(this.getBoatPosition("battleShip"))
+        this.ships.destroyer.coordinates.push(this.getBoatPosition("destroyer"))
+        this.ships.submarine.coordinates.push(this.getBoatPosition("submarine"))
+        this.ships.patrolBoat.coordinates.push(this.getBoatPosition("patrolBoat"))
 
-        this.ships.carrier.coordinates.push(deployCarrier())
-        this.ships.battleShip.coordinates.push(deployBattleShip())
-        this.ships.destroyer.coordinates.push(deployDestroyer())
-        this.ships.submarine.coordinates.push(deploySubmarine())
-        this.ships.patrolBoat.coordinates.push(deployPatrolBoat())
+    }
 
+    endChecker() {
+        let sunkShips = 0;
+
+        for (let [name, data] of Object.entries(this.ships)) {
+            if (data.status.sunk === true) {
+                sunkShips + 1
+            }
+        }
+
+        if (sunkShips === 5) {
+            return `All 5 ships have been sunk, game over.`
+        }
     }
 }
 
@@ -216,6 +213,7 @@ let carrierBoat = newGameBoard().getBoatPosition("carrier")
 let hitCarrier = newGameBoard().receiveAttack(["F", "1"])
 let missCarrier = newGameBoard().receiveAttack(["A", "1"]);
 let revealPositions = newGameBoard().deployShips()
+let isGameFinsished = () => {return newGameBoard().endChecker()}
 
 // exports //
 module.exports = {
@@ -225,5 +223,6 @@ module.exports = {
     carrierBoat,
     hitCarrier,
     missCarrier,
-    revealPositions
+    revealPositions,
+    isGameFinsished
 }
