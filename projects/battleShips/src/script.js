@@ -1,3 +1,4 @@
+
 class Ship {
     constructor(length, hitNum = 0, sunk = false) {
         this.length = length
@@ -24,13 +25,25 @@ class GameBoard {
     constructor() {
         this.board = this.makeBoard()
         this.gameBoardSize
+        this.ships = {
+            carrier: {status: new Ship(5), coordinates: []},
+            battleShip: {status: new Ship(4), coordinates: []},
+            destroyer: {status: new Ship(3), coordinates: []},
+            submarine: {status: new Ship(3), coordinates: []},
+            patrolBoat: {status: new Ship(2), coordinates: []}
+        }
+        this.boardAttacks = {
+            onTarget: {coordinates: []},
+            missed: {coordinates: []}
+        }
+        
     }
 
     makeBoard() { 
         let array = []
         //  array = [
         //  [[A],[1]], [[B],[1]], [[C],[1]] ...
-        //  [[A],[2]], [[A],[2]], [[A],[2]] ...
+        //  [[A],[2]], [[B],[2]], [[C],[2]] ...
         //  ]
         let column;
         for (let i = 65; i < 75; i++) { // letter, x
@@ -53,10 +66,18 @@ class GameBoard {
         return array
     }
 
-    getBoatPosition(shipSize) {
+    getBoatPosition(shipInput) {
         let canPlace = false
         let fullPos = []
         let message;
+        let shipSize;
+
+        for (let [name, data] of Object.entries(this.ships)) { // find length of ship via the name
+            if (name === shipInput) {
+                shipSize = data.status.length
+                break;
+            }
+        }
 
         function getRandomNum(max) {
             return Math.floor(Math.random() * max)
@@ -70,7 +91,7 @@ class GameBoard {
             let verticalCheckAdd;// true = added, false = sutracted
             
             let randomPos = getRandomNum(99)// use random num to call a random coordinate
-            let randomDirection = getRandomNum(2)
+            let randomDirection = getRandomNum(1)
 
             let xAxisPos = this.board[randomPos] // if randomPos = 50, will be the 6th row because 0 is the 1st, returns 6
             let yAxisPos = this.board[randomPos] // if randomPos = 50, will be the 6th column because 0 is the 1st, returns F
@@ -79,6 +100,8 @@ class GameBoard {
             // let endPos = this.board[randomPos + ((shipSize - 1) * 10)]
             // horizontalCheck = (xAxisPos[0][1] === endPos[0][1]) 
             // return horizontalCheck
+
+
             if (randomDirection == 0) { // horizontal check, y axis will stay the same
                 if ((randomPos + ((shipSize - 1) * 10)) <= 99) { // checks if ship can fit horizontally and does not spill over the edge by adding working out the next correct space
                     let endPos = this.board[randomPos + ((shipSize - 1) * 10)]
@@ -134,15 +157,54 @@ class GameBoard {
                 }
             }
         }
-        return `${message} at ${fullPos}`
+
+
+        for (let [name, data] of Object.entries(this.ships)) { // find the ship object and store coordinates there
+            if (name === shipInput) {
+                data.coordinates.push(fullPos)
+                break;
+            }
+        }
+        return fullPos
+    }
+
+    receiveAttack(inputCoordinates) {
+        let successHit;
+
+        for (let [name, data] of Object.entries(this.ships)) { // go through each ship and its data
+            if (data.coordinates[0].length > 0) { // if true, ship is on board, if false, ship is not and has been sunk or not deployed
+                 for (let i = 0; i < data.status.length; i++) { // go through each ship's coordinates to see if any was hit
+                    if (inputCoordinates[0] === data.coordinates[0][i][0][0] && inputCoordinates[1] === data.coordinates[0][i][1][0]) { // if one of the current ship's coordinates are the ones entered
+                        data.status.hit()
+                        successHit = true
+                        this.boardAttacks.onTarget.coordinates.push(inputCoordinates);
+                        return `Success, ${name} has now been hit ${data.status.hitNum} time(s), from ${data.coordinates[0][i]}.`
+
+                    }
+                }
+            }
+        }
+           
+        if (successHit === false) { // if no coordinates of any ship were the ones entered, so it was a miss
+            this.boardAttacks.missed.push(inputCoordinates)
+            return `Missed at ${inputCoordinates}`
+        }
 
     }
 
+    deployShips() {
+        let deployCarrier = () => {return this.getBoatPosition("carrier")}
+        let deployBattleShip = () => {return this.getBoatPosition("battleShip")}
+        let deployDestroyer = () => {return this.getBoatPosition("destroyer")}
+        let deploySubmarine = () => {return this.getBoatPosition("submarine")}
+        let deployPatrolBoat = () => {return this.getBoatPosition("patrolBoat")}
 
+        this.ships.carrier.coordinates.push(deployCarrier())
+        this.ships.battleShip.coordinates.push(deployBattleShip())
+        this.ships.destroyer.coordinates.push(deployDestroyer())
+        this.ships.submarine.coordinates.push(deploySubmarine())
+        this.ships.patrolBoat.coordinates.push(deployPatrolBoat())
 
-    receiveAttack(coordinates) {
-
-        return coordinates
     }
 }
 
@@ -150,7 +212,18 @@ class GameBoard {
 let newShip = () => {return new Ship(5)}
 let newGameBoard = () => {return new GameBoard()}
 let boardMoves = newGameBoard().gameBoardSize
-let carrierBoat = newGameBoard().getBoatPosition(5)
+let carrierBoat = newGameBoard().getBoatPosition("carrier")
+let hitCarrier = newGameBoard().receiveAttack(["F", "1"])
+let missCarrier = newGameBoard().receiveAttack(["A", "1"]);
+let revealPositions = newGameBoard().deployShips()
 
 // exports //
-module.exports = {newShip, newGameBoard, boardMoves, carrierBoat}
+module.exports = {
+    newShip, 
+    newGameBoard, 
+    boardMoves, 
+    carrierBoat,
+    hitCarrier,
+    missCarrier,
+    revealPositions
+}
