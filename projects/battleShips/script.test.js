@@ -1,12 +1,5 @@
-import { newShip } from "./src/script"
-import { newGameBoard } from "./src/script"
-import { boardMoves } from "./src/script";
-import { carrierBoat } from "./src/script";
-import { hitCarrier } from "./src/script";
-import { missCarrier } from "./src/script";
-import { revealPositions } from "./src/script";
-import { isGameFinsished } from "./src/script";
-import { playerOne } from "./src/script";
+import { newShip, newGameBoard, boardMoves, carrierBoat, hitCarrier, missCarrier, revealPositions, isGameFinsished, playerTest, } from "./src/script.js"
+
 
 describe("makes a ship object and ", () => {
     test("adds a length", () => {
@@ -62,6 +55,9 @@ describe("test player class", () => { // these will fail, but actually dont. i j
     //     expect(playerOne.playerShips).toBe("object with ships inside")
     // })
     // test("tests that the class correctly stores misssed attacks and hit ones", () => {
-    //     expect(playerOne.boardAttacks).toBe("1 empty array, then the other should house the coordinates")
+    //     expect(playerTest.boardAttacks).toBe("1 empty array, then the other should house the coordinates")
     // })
+    test("makes sure they have their own board", () => {
+        expect(playerTest.gameBoard.board).toContain([["A"], ["1"]])// use toContainEqual to pass
+    })
 })

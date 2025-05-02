@@ -211,6 +211,18 @@ class Player {
         this.playerShips = this.gameBoard.ships
         this.boardAttacks = this.gameBoard.boardAttacks
     }
+
+    buildBoard() {
+        let wholeBoard = this.gameBoard.board
+
+        for (let i = 0; i < wholeBoard.length; i++) {
+            let boardWrapper = document.getElementById("boardWrapper")
+            
+            let square = wholeBoard[i]
+            let placeSquare = boardWrapper.appendChild(square)
+
+        }
+    }
 }
 
 // test functions //
@@ -222,12 +234,13 @@ let hitCarrier = newGameBoard().receiveAttack(["F", "1"])
 let missCarrier = newGameBoard().receiveAttack(["A", "1"]);
 let revealPositions = newGameBoard().deployShips()
 let isGameFinsished = () => {return newGameBoard().endChecker()}
-let playerOne = new Player()
-let attackPlayerOne = () => {return playerOne.gameBoard.receiveAttack(["F", "3"])}
-attackPlayerOne()
+let playerTest = new Player()
+let attackPlayerTest = () => {return playerTest.gameBoard.receiveAttack(["F", "3"])}
+attackPlayerTest()
 
 // exports //
-module.exports = {
+export {
+    // to test //
     newShip, 
     newGameBoard, 
     boardMoves, 
@@ -236,5 +249,10 @@ module.exports = {
     missCarrier,
     revealPositions,
     isGameFinsished,
-    playerOne
+    playerTest,
+
+    // to drive game //
+    Player,
+    GameBoard,
+    Ship
 }
