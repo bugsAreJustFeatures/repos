@@ -6,6 +6,7 @@ import { hitCarrier } from "./src/script";
 import { missCarrier } from "./src/script";
 import { revealPositions } from "./src/script";
 import { isGameFinsished } from "./src/script";
+import { playerOne } from "./src/script";
 
 describe("makes a ship object and ", () => {
     test("adds a length", () => {
@@ -54,5 +55,13 @@ describe("tests function in gameBoard class", () => {
     // test("check if all boats are sunk", () => {
     //     expect(isGameFinsished()).toBe("true")
     // })
-    
+})
+
+describe("test player class", () => { // these will fail, but actually dont. i just cant predict what the random numbers will be so as long as they are returning what the description says, it passes.
+    // test("tests that the class works as intended and deploys the ships", () => {
+    //     expect(playerOne.playerShips).toBe("object with ships inside")
+    // })
+    // test("tests that the class correctly stores misssed attacks and hit ones", () => {
+    //     expect(playerOne.boardAttacks).toBe("1 empty array, then the other should house the coordinates")
+    // })
 })

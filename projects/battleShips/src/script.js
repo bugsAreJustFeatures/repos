@@ -36,7 +36,7 @@ class GameBoard {
             onTarget: {coordinates: []},
             missed: {coordinates: []}
         }
-        this.startGame = this.deployShips()
+        this.startGame = this.deployShips() // undefined, see function comment
     }
 
     makeBoard() { 
@@ -157,7 +157,7 @@ class GameBoard {
     }
 
     receiveAttack(inputCoordinates) {
-        let successHit;
+        let successHit = false;
 
         for (let [name, data] of Object.entries(this.ships)) { // go through each ship and its data
             if (data.coordinates[0].length > 0) { // if true, ship is on board, if false, ship is not and has been sunk or not deployed
@@ -174,20 +174,20 @@ class GameBoard {
         }
            
         if (successHit === false) { // if no coordinates of any ship were the ones entered, so it was a miss
-            this.boardAttacks.missed.push(inputCoordinates)
+            this.boardAttacks.missed.coordinates.push(inputCoordinates)
             return `Missed at ${inputCoordinates}`
         }
 
         this.endChecker()
     }
 
-    deployShips() {
+    deployShips() { // returns undefined since im not actually returning anything inside this function
         this.ships.carrier.coordinates.push(this.getBoatPosition("carrier"))
         this.ships.battleShip.coordinates.push(this.getBoatPosition("battleShip"))
         this.ships.destroyer.coordinates.push(this.getBoatPosition("destroyer"))
         this.ships.submarine.coordinates.push(this.getBoatPosition("submarine"))
         this.ships.patrolBoat.coordinates.push(this.getBoatPosition("patrolBoat"))
-
+        
     }
 
     endChecker() {
@@ -205,6 +205,14 @@ class GameBoard {
     }
 }
 
+class Player {
+    constructor() {
+        this.gameBoard = new GameBoard()
+        this.playerShips = this.gameBoard.ships
+        this.boardAttacks = this.gameBoard.boardAttacks
+    }
+}
+
 // test functions //
 let newShip = () => {return new Ship(5)}
 let newGameBoard = () => {return new GameBoard()}
@@ -214,6 +222,9 @@ let hitCarrier = newGameBoard().receiveAttack(["F", "1"])
 let missCarrier = newGameBoard().receiveAttack(["A", "1"]);
 let revealPositions = newGameBoard().deployShips()
 let isGameFinsished = () => {return newGameBoard().endChecker()}
+let playerOne = new Player()
+let attackPlayerOne = () => {return playerOne.gameBoard.receiveAttack(["F", "3"])}
+attackPlayerOne()
 
 // exports //
 module.exports = {
@@ -224,5 +235,6 @@ module.exports = {
     hitCarrier,
     missCarrier,
     revealPositions,
-    isGameFinsished
+    isGameFinsished,
+    playerOne
 }
