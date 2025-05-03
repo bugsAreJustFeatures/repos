@@ -36,7 +36,8 @@ class GameBoard {
             onTarget: {coordinates: []},
             missed: {coordinates: []}
         }
-        this.startGame = this.deployShips() // undefined, see function comment
+        this.deployShips() // undefined, see function comment
+        this.buildBoard()
     }
 
     makeBoard() { 
@@ -64,6 +65,20 @@ class GameBoard {
         }
         this.gameBoardSize = ((array.length))
         return array
+    }
+
+    buildBoard() {
+        let pageWrapper = document.createElement("div")
+        pageWrapper.id = "pageWrapper"
+        document.body.appendChild(pageWrapper)
+
+        for (let i = 0; i < this.board.length; i++) {
+            let boardSquare = document.createElement("div")
+            boardSquare.className = "boardSquare"
+            boardSquare.innerHTML = `${this.board[i]}`
+            pageWrapper.appendChild(boardSquare)
+            // use js to wrap when board[i][1] == "10" so wrap around the next one to
+        }
     }
 
     getBoatPosition(shipInput) {
@@ -208,48 +223,34 @@ class GameBoard {
 class Player {
     constructor() {
         this.gameBoard = new GameBoard()
-        this.playerShips = this.gameBoard.ships
-        this.boardAttacks = this.gameBoard.boardAttacks
-    }
-
-    buildBoard() {
-        let wholeBoard = this.gameBoard.board
-
-        for (let i = 0; i < wholeBoard.length; i++) {
-            let boardWrapper = document.getElementById("boardWrapper")
-            
-            let square = wholeBoard[i]
-            let placeSquare = boardWrapper.appendChild(square)
-
-        }
     }
 }
 
 // test functions //
-let newShip = () => {return new Ship(5)}
-let newGameBoard = () => {return new GameBoard()}
-let boardMoves = newGameBoard().gameBoardSize
-let carrierBoat = newGameBoard().getBoatPosition("carrier")
-let hitCarrier = newGameBoard().receiveAttack(["F", "1"])
-let missCarrier = newGameBoard().receiveAttack(["A", "1"]);
-let revealPositions = newGameBoard().deployShips()
-let isGameFinsished = () => {return newGameBoard().endChecker()}
-let playerTest = new Player()
-let attackPlayerTest = () => {return playerTest.gameBoard.receiveAttack(["F", "3"])}
-attackPlayerTest()
+// let newShip = () => {return new Ship(5)}
+// let newGameBoard = () => {return new GameBoard()}
+// let boardMoves = newGameBoard().gameBoardSize
+// let carrierBoat = newGameBoard().getBoatPosition("carrier")
+// let hitCarrier = newGameBoard().receiveAttack(["F", "1"])
+// let missCarrier = newGameBoard().receiveAttack(["A", "1"]);
+// let revealPositions = newGameBoard().deployShips()
+// let isGameFinsished = () => {return newGameBoard().endChecker()}
+// let playerTest = new Player()
+// let attackPlayerTest = () => {return playerTest.gameBoard.receiveAttack(["F", "3"])}
+// attackPlayerTest()
 
 // exports //
 export {
     // to test //
-    newShip, 
-    newGameBoard, 
-    boardMoves, 
-    carrierBoat,
-    hitCarrier,
-    missCarrier,
-    revealPositions,
-    isGameFinsished,
-    playerTest,
+    // newShip, 
+    // newGameBoard, 
+    // boardMoves, 
+    // carrierBoat,
+    // hitCarrier,
+    // missCarrier,
+    // revealPositions,
+    // isGameFinsished,
+    // playerTest,
 
     // to drive game //
     Player,

@@ -1,0 +1,8 @@
+#pageWrapper {
+    background-color: aqua;
+    display: flex;
+}
+
+.boardSquare {
+    border: 1px solid black;
+}
