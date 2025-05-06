@@ -67,18 +67,116 @@ class GameBoard {
         return array
     }
 
-    buildBoard() {
-        let pageWrapper = document.createElement("div")
-        pageWrapper.id = "pageWrapper"
-        document.body.appendChild(pageWrapper)
+    buildBoard() { // display the board
+        let findGameWrapper = document.getElementById("gameWrapper")
+        if (findGameWrapper.innerHTML === "") {// make playerOne's board
 
-        for (let i = 0; i < this.board.length; i++) {
-            let boardSquare = document.createElement("div")
-            boardSquare.className = "boardSquare"
-            boardSquare.innerHTML = `${this.board[i]}`
-            pageWrapper.appendChild(boardSquare)
-            // use js to wrap when board[i][1] == "10" so wrap around the next one to
+            // needs to be inside playerOne maker, so it doesnt make the titles and button twice
+            //display player board titles
+            let playerOneTitle = document.createElement("div")
+            playerOneTitle.id = "playerOneTitle"
+            playerOneTitle.className = "title"
+            playerOneTitle.innerHTML = "Your Board"
+            findGameWrapper.appendChild(playerOneTitle)
+            let playerTwoTitle = document.createElement("div")
+            playerTwoTitle.id = "playerTwoTitle"
+            playerTwoTitle.className = "title"
+            playerTwoTitle.innerHTML = "Opponent's Board"
+            findGameWrapper.appendChild(playerTwoTitle)
+
+            // play game button
+            let playButton = document.createElement("button")
+            playButton.id = "playButton"
+            playButton.innerHTML = "Play"
+            findGameWrapper.appendChild(playButton)
+
+            let playerOneBoard = document.createElement("div") // house the board
+            playerOneBoard.id = "playerOneBoard"
+            playerOneBoard.className = "playerBoard"
+            findGameWrapper.appendChild(playerOneBoard)
+
+            let columnLabels = document.createElement("div") // show the label of each column
+            columnLabels.className = "columnLabels"
+            playerOneBoard.appendChild(columnLabels)
+
+            let rowLabels = document.createElement("div") //show the label of each row
+            rowLabels.className = "rowLabels"
+            playerOneBoard.appendChild(rowLabels)
+
+            for (let i = 0; i < 10; i++) { // each column label
+                let eachColumn = document.createElement("div")
+                eachColumn.className = "eachColumn"
+                let columnFinder = 10 * i
+                eachColumn.innerHTML = this.board[columnFinder][0]
+                columnLabels.appendChild(eachColumn)
+            }
+
+            for (let j = 0; j < 10; j++) {// each row label
+                let eachRow = document.createElement("div")
+                eachRow.className = "eachRow"
+                eachRow.innerHTML = this.board[j][1]
+                rowLabels.appendChild(eachRow)
+            }
+
+            let boardGridContainer = document.createElement("div") // make board squares
+            boardGridContainer.className = "boardGridContainer"
+            playerOneBoard.appendChild(boardGridContainer)
+
+            for (let i = 0; i < this.board.length; i++) { // place square in position
+                let singleSquare = document.createElement("div")
+                singleSquare.className = "singleSquareOne"
+                singleSquare.id = `square${this.board[i][0]}${this.board[i][1]}`
+                // singleSquare.innerHTML = this.board[i]
+                singleSquare.style.gridRow = this.board[i][1]
+                boardGridContainer.appendChild(singleSquare)
+            }
+
+        } else { // make playerTwo's board
+            
+            let playerTwoBoard = document.createElement("div") // house the board
+            playerTwoBoard.id = "playerTwoBoard"
+            playerTwoBoard.className = "playerBoard"
+            findGameWrapper.appendChild(playerTwoBoard)
+          
+            let columnLabels = document.createElement("div") // show the label of each column
+            columnLabels.className = "columnLabels"
+            playerTwoBoard.appendChild(columnLabels)
+
+            let rowLabels = document.createElement("div") //show the label of each row
+            rowLabels.className = "rowLabels"
+            playerTwoBoard.appendChild(rowLabels)
+
+            for (let i = 0; i < 10; i++) { // each column label
+                let eachColumn = document.createElement("div")
+                eachColumn.className = "eachColumn"
+                let columnFinder = 10 * i
+                eachColumn.innerHTML = this.board[columnFinder][0]
+                columnLabels.appendChild(eachColumn)
+            }
+
+            for (let j = 0; j < 10; j++) {
+                let eachRow = document.createElement("div")
+                eachRow.className = "eachRow"
+                eachRow.innerHTML = this.board[j][1]
+                rowLabels.appendChild(eachRow)
+            }
+
+            let boardGridContainer = document.createElement("div")
+            boardGridContainer.className = "boardGridContainer"
+            playerTwoBoard.appendChild(boardGridContainer)
+
+            for (let i = 0; i < this.board.length; i++) { // place square in position
+                let singleSquare = document.createElement("div")
+                singleSquare.className = "singleSquareTwo"
+                singleSquare.id = `square${this.board[i][0]}${this.board[i][1]}`
+                singleSquare.style.gridRow = this.board[i][1]
+                boardGridContainer.appendChild(singleSquare)
+            }
         }
+
+
+
+
     }
 
     getBoatPosition(shipInput) {

@@ -1,8 +1,115 @@
-#pageWrapper {
-    background-color: aqua;
-    display: flex;
+/* styling of page itself */
+body {
+    padding: 0;
+    margin: 0;
 }
 
-.boardSquare {
-    border: 1px solid black;
+#container {
+    width: 100vw;
+    height: 100vh;
+}
+
+/* styling how the boards are laid out */
+#gameWrapper {
+    height: 100%;
+    width: 100%;
+    /* border: thick solid blue; */
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr;
+    grid-template-rows: 1fr 2fr 1fr;
+}
+
+/* the board titles */
+#playerOneTitle {
+    grid-row: 1;
+    grid-column: 1;
+}
+
+#playerTwoTitle {
+    grid-row: 1;
+    grid-column: 3;
+}
+
+.title {
+    text-align: center;
+    align-self: center;
+    font-size: 3rem;
+    text-decoration: underline;
+}
+
+/* each player's board */
+#playerOneBoard {
+    /* border: thin solid slateblue; */
+    grid-column: 1;
+}
+
+#playerTwoBoard {
+    /* border: thin solid black; */
+    grid-column: 3;
+}
+
+.playerBoard {
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: 1fr 10fr;
+    grid-template-rows: 1fr 10fr;
+    margin-right: 4rem;
+    text-align: center;
+}
+
+.columnLabels {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    justify-content: space-around;
+    align-self: center;
+    /* border: thin solid black; */
+    height: 100%;
+    align-items: center;
+
+}
+
+.rowLabels {
+    grid-column: 1;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    /* border: thin solid black; */
+    width: 100%;
+}
+
+.boardGridContainer {
+    grid-column: 2;
+    grid-row: 2;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+}
+
+.singleSquareOne, .singleSquareTwo {
+    border: thin solid black;
+}
+
+.singleSquareTwo:hover {
+    border: 5px solid lightcoral;
+}
+
+
+/* play button */
+#playButton {
+    grid-column: 2;
+    grid-row: 1;
+    height: 15%;
+    width: 40%;
+    align-self: center;
+    justify-self: center;
+    background-color: pink;
+}
+
+#playButton:hover {
+    cursor: pointer;
+    background-color: greenyellow;
 }
