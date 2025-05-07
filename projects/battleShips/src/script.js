@@ -168,7 +168,7 @@ class GameBoard {
             for (let i = 0; i < this.board.length; i++) { // place square in position
                 let singleSquare = document.createElement("div")
                 singleSquare.className = "singleSquareTwo"
-                singleSquare.id = `square${this.board[i][0]}${this.board[i][1]}`
+                singleSquare.id = `${this.board[i][0]}${this.board[i][1]}`
                 singleSquare.style.gridRow = this.board[i][1]
                 boardGridContainer.appendChild(singleSquare)
             }
@@ -184,6 +184,7 @@ class GameBoard {
         let fullPos = []
         let message;
         let shipSize;
+        let currentPlaced = []
 
         for (let [name, data] of Object.entries(this.ships)) { // find length of ship via the name
             if (name === shipInput) {
@@ -204,10 +205,30 @@ class GameBoard {
             let verticalCheckAdd;// true = added, false = sutracted
             
             let randomPos = getRandomNum(99)// use random num to call a random coordinate
-            let randomDirection = getRandomNum(1)
+            let randomDirection = getRandomNum(2)
 
             let xAxisPos = this.board[randomPos] // if randomPos = 50, will be the 6th row because 0 is the 1st, returns 6
             let yAxisPos = this.board[randomPos] // if randomPos = 50, will be the 6th column because 0 is the 1st, returns F
+
+            // check that boats are not overlapping - COMING BACK AT LATER STAGE
+            // function samePosition(a, b) {
+            //     return a[0][0] === b[0][0] && a[1][0] === b[1][0]
+            // }
+
+            // let boatIsHere = false
+            // for (let i = 0; i < currentPlaced.length; i++) {
+            //     if (samePosition(currentPlaced[i], [xAxisPos, yAxisPos])) {
+            //         boatIsHere = true;
+            //         break;
+            //     }
+            // }
+
+            // if (boatIsHere) {
+            //     continue;
+            // } else {
+            //     currentPlaced.push([xAxisPos, yAxisPos])
+            // }
+
 
             if (randomDirection == 0) { // horizontal check, y axis will stay the same
                 if ((randomPos + ((shipSize - 1) * 10)) <= 99) { // checks if ship can fit horizontally and does not spill over the edge by adding working out the next correct space
@@ -279,7 +300,7 @@ class GameBoard {
                         data.status.hit()
                         successHit = true
                         this.boardAttacks.onTarget.coordinates.push(inputCoordinates);
-                        return `Success, ${name} has now been hit ${data.status.hitNum} time(s), from ${data.coordinates[0][i]}.`
+                        return true
 
                     }
                 }
@@ -288,10 +309,9 @@ class GameBoard {
            
         if (successHit === false) { // if no coordinates of any ship were the ones entered, so it was a miss
             this.boardAttacks.missed.coordinates.push(inputCoordinates)
-            return `Missed at ${inputCoordinates}`
+            return false
         }
 
-        this.endChecker()
     }
 
     deployShips() { // returns undefined since im not actually returning anything inside this function
