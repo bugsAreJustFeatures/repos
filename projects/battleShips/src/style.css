@@ -102,8 +102,8 @@ body {
 #playButton {
     grid-column: 2;
     grid-row: 1;
-    height: 15%;
-    width: 40%;
+    height: fit-content;
+    width: fit-content;
     align-self: center;
     justify-self: center;
     background-color: pink;

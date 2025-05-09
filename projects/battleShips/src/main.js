@@ -70,4 +70,3 @@ for (let i = 0; i < playerOne.gameBoardSize; i++) {
 
 // playerTwo board
 let playerTwo = new Player().gameBoard
-

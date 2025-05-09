@@ -36,6 +36,7 @@ class GameBoard {
             onTarget: {coordinates: []},
             missed: {coordinates: []}
         }
+        this.currentlyPlaced = []
         this.deployShips() // undefined, see function comment
         this.buildBoard()
     }
@@ -182,9 +183,7 @@ class GameBoard {
     getBoatPosition(shipInput) {
         let canPlace = false
         let fullPos = []
-        let message;
         let shipSize;
-        let currentPlaced = []
 
         for (let [name, data] of Object.entries(this.ships)) { // find length of ship via the name
             if (name === shipInput) {
@@ -197,7 +196,7 @@ class GameBoard {
             return Math.floor(Math.random() * max)
         }
 
-        while (canPlace == false) {
+        loop1: while (canPlace == false) {
             let horizontalCheck;
             let horizontalCheckAdd; // true = added, false = sutracted
 
@@ -210,27 +209,9 @@ class GameBoard {
             let xAxisPos = this.board[randomPos] // if randomPos = 50, will be the 6th row because 0 is the 1st, returns 6
             let yAxisPos = this.board[randomPos] // if randomPos = 50, will be the 6th column because 0 is the 1st, returns F
 
-            // check that boats are not overlapping - COMING BACK AT LATER STAGE
-            // function samePosition(a, b) {
-            //     return a[0][0] === b[0][0] && a[1][0] === b[1][0]
-            // }
-
-            // let boatIsHere = false
-            // for (let i = 0; i < currentPlaced.length; i++) {
-            //     if (samePosition(currentPlaced[i], [xAxisPos, yAxisPos])) {
-            //         boatIsHere = true;
-            //         break;
-            //     }
-            // }
-
-            // if (boatIsHere) {
-            //     continue;
-            // } else {
-            //     currentPlaced.push([xAxisPos, yAxisPos])
-            // }
-
 
             if (randomDirection == 0) { // horizontal check, y axis will stay the same
+
                 if ((randomPos + ((shipSize - 1) * 10)) <= 99) { // checks if ship can fit horizontally and does not spill over the edge by adding working out the next correct space
                     let endPos = this.board[randomPos + ((shipSize - 1) * 10)]
                     horizontalCheck = (xAxisPos[0][1] === endPos[0][1]) 
@@ -242,22 +223,72 @@ class GameBoard {
                     horizontalCheckAdd = false
                 }
 
-                if (horizontalCheck && (horizontalCheckAdd === true)) {
-                    canPlace = true
-                    message = "HORIZONTAL + "
-                    for (let i = 0; i < shipSize; i++) {
-                        let next = 10 * i
-                        fullPos.push(this.board[randomPos + next])
+                if (horizontalCheck && (horizontalCheckAdd === true)) { // fits horizontally and by adding
+                    let totalEmptySpaces = 0
+                    if (this.currentlyPlaced.length > 0) { // check that there are actual ships to check with
+                        for (let i = 0; i < shipSize; i++) {
+                            let next = 10 * i; 
+                            if (this.currentlyPlaced.includes(this.board[randomPos + next])) {
+                                continue loop1; // exit to the if loop that fits horizontally and by adding
+                                
+                            } else if (!this.currentlyPlaced.includes(this.board[randomPos + next])) {
+                                totalEmptySpaces++
+                                // continue with this code
+                            }
+                        } 
+                    } else {
+                        totalEmptySpaces = shipSize
                     }
+                    
 
-                } else if (horizontalCheck && horizontalCheckAdd === false) {
-                    canPlace = true
-                    message = "HORIZONTAL - " 
-                    for (let i = 0; i < shipSize; i++) {
-                        let next = 10 * i
-                        fullPos.push(this.board[randomPos - next])
+                    if (totalEmptySpaces == shipSize) {// all spaces are empty
+                        canPlace = true
+                        for (let i = 0; i < shipSize; i++) {
+                            let next = 10 * i
+                            fullPos.push(this.board[randomPos + next]) // place the ships
+                            this.currentlyPlaced.push(this.board[randomPos + next]) // record where they are and use this to check other ships are not being placed on top of this ship
+                        totalEmptySpaces = 0
+
+                    } 
                     }
+                    
+
+                } else if (horizontalCheck && horizontalCheckAdd === false) { //fit horizontally and by subtracting
+
+                    let totalEmptySpaces = 0
+
+                    if (this.currentlyPlaced.length > 0) {
+                         for (let i = 0; i < shipSize; i++) {
+                        let next = 10 * i
+
+                        if (this.currentlyPlaced.includes(this.board[randomPos - next])) {
+                            continue loop1;
+
+                        } else if (!this.currentlyPlaced.includes(this.board[randomPos - next])) {
+                            totalEmptySpaces++
+                        }
+                    }
+                    } else {
+                        totalEmptySpaces = shipSize
+                    }
+                   
+
+                        if (totalEmptySpaces == shipSize) {
+                            canPlace = true
+
+                            for (let i = 0; i < shipSize; i++) {
+                                let next = 10 * i
+                                fullPos.push(this.board[randomPos - next])
+                                this.currentlyPlaced.push(this.board[randomPos - next])
+                                totalEmptySpaces = 0
+
+                            }
+                        }
+                        
+                    
                 }
+
+                
 
             } else if (randomDirection == 1) { // vertical check, x axis will stay the same
                 if (randomPos + (shipSize - 1) <= 99) {// checks that ships dont spill over out of the board
@@ -271,22 +302,63 @@ class GameBoard {
                     verticalCheckAdd = false
                 }
 
-                if (verticalCheck && verticalCheckAdd === true) {
-                    canPlace = true
-                    message = "VERTICAL + "
-                    for (let i = 0; i < shipSize; i++) {
-                        fullPos.push(this.board[randomPos + i])
+                if (verticalCheck && verticalCheckAdd === true) { // fits vertically by adding
+                    let totalEmptySpaces = 0;
+
+                    if (this.currentlyPlaced.length > 0) {
+                        for (let i = 0; i < shipSize; i++) {
+                            if (this.currentlyPlaced.includes(this.board[randomPos + i])) {
+                                continue loop1;
+
+                            } else if (!this.currentlyPlaced.includes(this.board[randomPos + i])) {
+                                totalEmptySpaces++
+                            }
+                        }
+                    } else {
+                        totalEmptySpaces = shipSize
                     }
-                } else if (verticalCheck && verticalCheckAdd === false) {
-                    canPlace = true
-                    message = "VERTICAL - "
-                    for (let i = 0; i < shipSize; i++) {
-                        fullPos.push(this.board[randomPos - i])
+                    
+
+                    if (totalEmptySpaces == shipSize) {
+                        canPlace = true
+                        for (let i = 0; i < shipSize; i++) {
+                            fullPos.push(this.board[randomPos + i])
+                            this.currentlyPlaced.push(this.board[randomPos + i])
+                        }
+                        totalEmptySpaces = 0
+
+                    } 
+                    
+                } else if (verticalCheck && verticalCheckAdd === false) { // fits vertically by subtracting
+                    let totalEmptySpaces = 0
+
+                    if (this.currentlyPlaced.length > 0) {
+                        for (let i = 0; i < shipSize; i++) {
+                            if (this.currentlyPlaced.includes(this.board[randomPos - i])) {
+                                continue loop1
+    
+                            } else if (!this.currentlyPlaced.includes(this.board[randomPos - i])) {
+                                totalEmptySpaces++
+                            }
+                        }
+                    } else {
+                        totalEmptySpaces = shipSize
                     }
+
+                    if (totalEmptySpaces == shipSize) {
+                        canPlace = true
+                        for (let i = 0; i < shipSize; i++) {
+                            fullPos.push(this.board[randomPos - i])
+                            this.currentlyPlaced.push(this.board[randomPos - i])
+                        }
+                        totalEmptySpaces = 0
+                    }
+
+                    
                 }
             }
         }
-
+        console.log(fullPos)
         return fullPos
     }
 
