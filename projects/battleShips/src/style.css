@@ -54,7 +54,10 @@ body {
     grid-template-columns: 1fr 10fr;
     grid-template-rows: 1fr 10fr;
     margin-right: 4rem;
+    height: 60vh;
+    width: 30vw;
     text-align: center;
+    justify-self: center;
 }
 
 .columnLabels {
@@ -91,6 +94,7 @@ body {
 
 .singleSquareOne, .singleSquareTwo {
     border: thin solid black;
+
 }
 
 .singleSquareTwo:hover {

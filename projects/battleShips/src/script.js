@@ -79,6 +79,7 @@ class GameBoard {
             playerOneTitle.className = "title"
             playerOneTitle.innerHTML = "Your Board"
             findGameWrapper.appendChild(playerOneTitle)
+
             let playerTwoTitle = document.createElement("div")
             playerTwoTitle.id = "playerTwoTitle"
             playerTwoTitle.className = "title"
@@ -88,7 +89,7 @@ class GameBoard {
             // play game button
             let playButton = document.createElement("button")
             playButton.id = "playButton"
-            playButton.innerHTML = "Play"
+            playButton.innerHTML = "Play - Disabled, need to make it so refreshing page does not restart game"
             findGameWrapper.appendChild(playButton)
 
             let playerOneBoard = document.createElement("div") // house the board
@@ -358,17 +359,16 @@ class GameBoard {
                 }
             }
         }
-        console.log(fullPos)
         return fullPos
     }
 
-    receiveAttack(inputCoordinates) {
+    receiveAttack(inputCoordinates) { // [["C"], ["6"]]
         let successHit = false;
 
         for (let [name, data] of Object.entries(this.ships)) { // go through each ship and its data
             if (data.coordinates[0].length > 0) { // if true, ship is on board, if false, ship is not and has been sunk or not deployed
                  for (let i = 0; i < data.status.length; i++) { // go through each ship's coordinates to see if any was hit
-                    if (inputCoordinates[0] === data.coordinates[0][i][0][0] && inputCoordinates[1] === data.coordinates[0][i][1][0]) { // if one of the current ship's coordinates are the ones entered
+                    if (inputCoordinates[0][0] === data.coordinates[0][i][0][0] && inputCoordinates[1][0] === data.coordinates[0][i][1][0]) { // if one of the current ship's coordinates are the ones entered
                         data.status.hit()
                         successHit = true
                         this.boardAttacks.onTarget.coordinates.push(inputCoordinates);

@@ -15,9 +15,15 @@ function getId(array) { // turn coordinates (array) into a the Id (string)
     return array
 }
 
+function getCoordinates(coordinates) { // turn id (string) into coordinates (array)
+    coordinates = coordinates.split("")
+    coordinates = [[coordinates[0]], [coordinates[1]]]
+    return coordinates
+}
+
+
 // adding own ships to player one's board
 
-console.log(playerOne)
 
 for (let i = 0; i < playerOne.gameBoardSize; i++) {
     // look for carrier 
@@ -70,3 +76,40 @@ for (let i = 0; i < playerOne.gameBoardSize; i++) {
 
 // playerTwo board
 let playerTwo = new Player().gameBoard
+console.log(playerTwo)
+let playerTwoCarrier = playerTwo.ships.carrier.coordinates[0]
+let playerTwoBattleShip = playerTwo.ships.battleShip.coordinates[0]
+let playerTwoDestroyer = playerTwo.ships.destroyer.coordinates[0]
+let playerTwoSubmarine = playerTwo.ships.submarine.coordinates[0]
+let playerTwoPatrolBoat = playerTwo.ships.patrolBoat.coordinates[0]
+
+console.log(playerTwo.currentlyPlaced.toString())
+// add event listeners to each square to listen for clicks
+
+
+for (let i = 0; i < playerTwo.board.length; i++) {
+
+    let squareTwoCoordinates = playerTwo.board[i]
+    let squareTwoId = getId(squareTwoCoordinates)
+
+    let squarePosition = document.getElementById(squareTwoId)
+    squarePosition.addEventListener("click", () => {
+        console.log(`You have clicked on ${squareTwoCoordinates}`)
+
+        let callAttack = playerTwo.receiveAttack(squareTwoCoordinates)
+        console.log(squareTwoCoordinates)
+        console.log(callAttack)
+    })
+    
+}
+
+// when i know what square has been clicked, i get the coordinates via the helper function at the top of this file - done 
+
+// call receiveAttack with the newly found coordinates
+
+// if the attack is successfull:
+    // make the border a certain colour - limegreen for example
+    // announce that it was a successful hit
+        // check to see if the hit ship has been sunk
+        // if so, announce this
+    // make sure that the game is not over by checking that not all ships are sunk
