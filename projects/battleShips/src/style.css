@@ -2,6 +2,7 @@
 body {
     padding: 0;
     margin: 0;
+    background-color: aquamarine;
 }
 
 #container {
@@ -13,7 +14,6 @@ body {
 #gameWrapper {
     height: 100%;
     width: 100%;
-    /* border: thick solid blue; */
     display: grid;
     grid-template-columns: 2fr 1fr 2fr;
     grid-template-rows: 1fr 2fr 1fr;
@@ -39,12 +39,10 @@ body {
 
 /* each player's board */
 #playerOneBoard {
-    /* border: thin solid slateblue; */
     grid-column: 1;
 }
 
 #playerTwoBoard {
-    /* border: thin solid black; */
     grid-column: 3;
 }
 
@@ -117,3 +115,47 @@ body {
     cursor: pointer;
     background-color: greenyellow;
 }
+
+/* announcement section */
+#announcementSection {
+    grid-row: 2;
+    grid-column: 2;
+    /* border: thin solid black; */
+    height: 100%;
+    width: 10%%;
+    justify-self: center;
+    align-self: center;
+    display: grid;
+    grid-template-rows: 1fr 3fr 1fr;
+    text-align: center;
+}
+
+#playerOneAnnouncements {
+    grid-row: 1;
+    /* border: thin solid black; */
+}
+
+#playerTwoAnnouncements {
+    grid-row: 3;
+    /* border: thin solid black; */
+
+}
+
+#shipStatus {
+    display: grid;
+    grid-template-columns: 2;
+    /* border: thin solid black; */
+
+}
+
+#playerOneStatus, #playerTwoStatus  {
+    grid-column: 1;
+    height: fit-content;
+    align-self: center;
+    justify-self: center;
+    /* border: thin solid black; */
+    font-size: 1rem;
+
+}
+
+

@@ -1,5 +1,23 @@
 import { Player, GameBoard, Ship } from "./script.js"
 
+let announcementBox
+let oneAnnouncements
+let twoAnnouncements
+let shipStatus
+let playerOneStatus
+let playerTwoStatus
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    announcementBox = document.getElementById("announcementSection")
+    oneAnnouncements = document.getElementById("playerOneAnnouncements")
+    twoAnnouncements = document.getElementById("playerTwoAnnouncements")
+    shipStatus = document.getElementById("shipStatus")
+    playerOneStatus = document.getElementById("playerOneStatus")
+    playerTwoStatus = document.getElementById("playerTwoStatus")
+})
+
+
 // playerOne board 
 let playerOne = new Player().gameBoard
 let playerOneCarrier = playerOne.ships.carrier.coordinates[0]
@@ -83,33 +101,115 @@ let playerTwoDestroyer = playerTwo.ships.destroyer.coordinates[0]
 let playerTwoSubmarine = playerTwo.ships.submarine.coordinates[0]
 let playerTwoPatrolBoat = playerTwo.ships.patrolBoat.coordinates[0]
 
-console.log(playerTwo.currentlyPlaced.toString())
+console.log(playerTwo.currentlyPlaced.toString()) // display all boat positions in a single string
+
 // add event listeners to each square to listen for clicks
-
-
 for (let i = 0; i < playerTwo.board.length; i++) {
-
     let squareTwoCoordinates = playerTwo.board[i]
     let squareTwoId = getId(squareTwoCoordinates)
 
+    
     let squarePosition = document.getElementById(squareTwoId)
-    squarePosition.addEventListener("click", () => {
-        console.log(`You have clicked on ${squareTwoCoordinates}`)
+    squarePosition.addEventListener("mouseover", () => {
 
-        let callAttack = playerTwo.receiveAttack(squareTwoCoordinates)
-        console.log(squareTwoCoordinates)
-        console.log(callAttack)
+        if (squarePosition.style.border === "5px solid lightcoral" || squarePosition.style.border === "5px solid limegreen") {
+            oneAnnouncements.innerHTML = `Cannot attack ${squareTwoId} again.`
+            
+        } else {
+            let callAttack = playerTwo.receiveAttack(squareTwoCoordinates)
+            let hasPlayerWon = playerTwo.endChecker()
+    
+            if (callAttack) { // attack from humans was successful
+                squarePosition.style.border = "5px solid limegreen"
+                oneAnnouncements.innerHTML = `Successful hit on ${squareTwoCoordinates}`
+    
+                let shipsThatSunk = []
+                for (let [name, data] of Object.entries(playerOne.ships)) {
+                    if (data.status.sunk === true) {
+                        shipsThatSunk.push(name)
+                    }
+                } 
+
+                if (shipsThatSunk.length > 0) {
+                    playerOneStatus.innerHTML = `Your Sunk Ships: ${shipsThatSunk}`
+                }
+
+                if (hasPlayerWon) {
+                    alert(`Game is over, Player One (You) has Won! Refresh page to play again.`)
+                    return
+                }
+    
+            } else {
+                squarePosition.style.border = "5px solid lightcoral"
+                oneAnnouncements.innerHTML = `Missed at ${squareTwoId}`
+            }
+    
+            // computer turn // 
+    
+            let randomIndex
+            let randomAttack
+            let getAttackedId
+            let findAttackedSquare
+    
+            let legalMove = false
+    
+            loop2: while (legalMove === false) {
+                randomIndex = playerTwo.getRandomNum(100);
+                randomAttack = playerTwo.board[randomIndex];
+                getAttackedId = getId(randomAttack);
+                findAttackedSquare = document.getElementById(`square${getAttackedId}`);
+            
+                let alreadyAttacked = false;
+            
+                for (let [type, data] of Object.entries(playerOne.boardAttacks)) {
+                    for (let i = 0; i < data.coordinates.length; i++) {
+                        if (getId(data.coordinates[i]) === getAttackedId) {
+                            alreadyAttacked = true;
+                            continue loop2;
+                        }
+                    }
+                }
+                legalMove = true;
+            }
+    
+            let computerAttack = playerOne.receiveAttack(randomAttack) // find and attack the square
+    
+            let hasComputerWon = playerOne.endChecker()
+    
+            if (computerAttack) { // if it was a success
+                findAttackedSquare.style.backgroundColor = "red"
+                twoAnnouncements.innerHTML = "Computer has hit one of your ships."
+                
+                let shipsThatSunk = []
+                for (let [name, data] of Object.entries(playerTwo.ships)) {
+                    if (data.status.sunk === true) {
+                        shipsThatSunk.push(name)
+                    }
+                } 
+
+                if (shipsThatSunk.length > 0) {
+                    playerTwoStatus.innerHTML = `Computer's Sunk Ships: ${shipsThatSunk}`
+                }
+    
+                 if (hasComputerWon) {
+                    alert(`Game is over, Player Two (Computer) has Won! Refresh page to play again.`)
+                }
+            } else { // if it was a miss
+                findAttackedSquare.style.backgroundColor = "lightblue"
+                twoAnnouncements.innerHTML ="Your Opponent missed"
+    
+            }
+    
+        }
+
+        
     })
     
 }
 
-// when i know what square has been clicked, i get the coordinates via the helper function at the top of this file - done 
 
-// call receiveAttack with the newly found coordinates
+    
 
-// if the attack is successfull:
-    // make the border a certain colour - limegreen for example
-    // announce that it was a successful hit
-        // check to see if the hit ship has been sunk
-        // if so, announce this
-    // make sure that the game is not over by checking that not all ships are sunk
+
+
+

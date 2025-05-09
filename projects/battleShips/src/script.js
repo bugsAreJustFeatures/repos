@@ -8,14 +8,16 @@ class Ship {
 
     hit() {
         if (this.hitNum < this.length) { // acknowledge the hit and increase the number of hits on the hit ship, but only if its not sunk 
-            this.hitNum = this.hitNum + 1
+            this.hitNum += 1
         } 
-        return this.hitNum
+        return this.isSunk()
     }
 
     isSunk() {
-        if (this.hitNum == this.length) { // check to see if it has been sunken
+        if (this.hitNum === this.length) { // check to see if it has been sunken
             this.sunk = true
+        } else {
+            this.sunk = false
         }
         return this.sunk
     }
@@ -87,11 +89,38 @@ class GameBoard {
             findGameWrapper.appendChild(playerTwoTitle)
 
             // play game button
-            let playButton = document.createElement("button")
-            playButton.id = "playButton"
-            playButton.innerHTML = "Play - Disabled, need to make it so refreshing page does not restart game"
-            findGameWrapper.appendChild(playButton)
+            // let playButton = document.createElement("button")
+            // playButton.id = "playButton"
+            // playButton.innerHTML = "Play - Disabled, need to make it so refreshing page does not restart game"
+            // findGameWrapper.appendChild(playButton)
 
+            // announcement section container
+            let announcementSection = document.createElement("div")
+            announcementSection.id = "announcementSection"
+            findGameWrapper.appendChild(announcementSection)
+
+            //top box
+            let playerOneAnnouncements = document.createElement("div")
+            playerOneAnnouncements.id = "playerOneAnnouncements"
+            announcementSection.appendChild(playerOneAnnouncements)
+            // bottom box
+            let playerTwoAnnouncements = document.createElement("div")
+            playerTwoAnnouncements.id = "playerTwoAnnouncements"
+            announcementSection.appendChild(playerTwoAnnouncements)
+            //middle box
+            let shipStatus = document.createElement("div")
+            shipStatus.id = "shipStatus"
+            announcementSection.appendChild(shipStatus)
+            //middle-left box
+            let playerOneStatus = document.createElement("div")
+            playerOneStatus.id = "playerOneStatus"
+            shipStatus.appendChild(playerOneStatus)
+            //middle-right box
+            let playerTwoStatus = document.createElement("div")
+            playerTwoStatus.id = "playerTwoStatus"
+            shipStatus.appendChild(playerTwoStatus)
+
+            // player One's board
             let playerOneBoard = document.createElement("div") // house the board
             playerOneBoard.id = "playerOneBoard"
             playerOneBoard.className = "playerBoard"
@@ -181,6 +210,10 @@ class GameBoard {
 
     }
 
+    getRandomNum(max) {
+        return Math.floor(Math.random() * max)
+    }
+
     getBoatPosition(shipInput) {
         let canPlace = false
         let fullPos = []
@@ -193,9 +226,7 @@ class GameBoard {
             }
         }
 
-        function getRandomNum(max) {
-            return Math.floor(Math.random() * max)
-        }
+        
 
         loop1: while (canPlace == false) {
             let horizontalCheck;
@@ -204,8 +235,8 @@ class GameBoard {
             let verticalCheck;
             let verticalCheckAdd;// true = added, false = sutracted
             
-            let randomPos = getRandomNum(99)// use random num to call a random coordinate
-            let randomDirection = getRandomNum(2)
+            let randomPos = this.getRandomNum(99)// use random num to call a random coordinate
+            let randomDirection = this.getRandomNum(2)
 
             let xAxisPos = this.board[randomPos] // if randomPos = 50, will be the 6th row because 0 is the 1st, returns 6
             let yAxisPos = this.board[randomPos] // if randomPos = 50, will be the 6th column because 0 is the 1st, returns F
@@ -396,17 +427,22 @@ class GameBoard {
     }
 
     endChecker() {
-        let sunkShips = 0;
-
+        let sunkShips = []; 
         for (let [name, data] of Object.entries(this.ships)) {
-            if (data.status.sunk === true) {
-                sunkShips + 1
+            if (data.status.sunk == true) {
+                sunkShips.push(name)
             }
         }
+        if (sunkShips.length !== 5) { // returns true because this players ships are all sunk and they lost
 
-        if (sunkShips === 5) {
-            return `All 5 ships have been sunk, game over.`
+            return false
+
+        } else {
+
+            return true
         }
+
+        
     }
 }
 
