@@ -1,0 +1,268 @@
+* {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+:root {
+    --mainBlue: rgb(62, 168, 235);
+}
+
+/* contains everything - except background since its not in the same scope */
+
+#pageContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(33%);
+    min-height: 120vh;
+}
+
+#topBackground {
+    background-color: var(--mainBlue);
+    position: absolute;
+    min-height: 60vh;
+    max-height: 70vh;
+    width: 100vw;
+    z-index: -1;
+    transform: skewY(-10deg);
+    transform-origin: left;
+    padding: 0;
+    margin: 0;
+}
+
+/* make main content of page be infront and on a different scope than the background */
+
+#topContentContainer, #middleSection, #endContent {
+    position: relative;
+    margin: 3% 5%;
+    max-width: 100vw;
+}
+
+/* top picture and about me box */
+
+#topContentContainer {
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    justify-self: center;
+    align-self: center;
+
+}
+
+#topImage {
+    object-fit: fill;
+    grid-column: 1;
+    max-height: 50vh;
+    max-width: 30vw;
+    display: grid;
+    justify-self: end;
+    align-self: center;
+    transform: none;
+
+}
+
+#aboutMeTextBox > h2, p {
+    margin-top: 3%;
+}
+
+
+#aboutMeTextBox {
+    padding-left: 3%;
+    border-style: outset;
+    max-height: 100%;
+    align-self: center;
+    background-color: white;
+    font-size: 20px;
+}
+
+.socialMediaIconContainer {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    margin-top: -7%;    
+}
+
+.socialMediaIcons {
+    width: 25px;
+    margin-right: 2%;
+    margin-bottom: 2%;
+    display: grid;
+}
+
+img {
+    transition: transform 150ms ease-in-out;
+}
+
+img:hover {
+    transform: scale(1.25);
+}
+
+/* middle section now */
+
+#middleSection {
+    grid-row: 2;
+    /* border: thin solid black; */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 0.1fr 1fr 1fr;
+    justify-content: space-evenly;
+    max-height: 100%;
+}
+
+#middleSection > u {
+    grid-column: 1;
+    grid-row: 1;
+    margin-left: 3%;
+    font-size: 24px;
+}
+
+.projects {
+    border-style: outset;
+    margin: 1.75%;
+
+}
+
+.projectInfo {
+    padding-left: 3%;
+}
+
+.projectImage {
+    object-fit: fill;
+    width: 100%;
+}
+
+.projectImage:hover {
+    transform: scale(0.98);
+}
+
+#projectOne {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+#projectTwo {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+#projectThree {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+#projectFour {
+    grid-column: 1;
+    grid-row: 3;
+}
+
+#projectFive {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+#projectSix {
+    grid-column: 3;
+    grid-row: 3;
+}
+
+.projectLinkIcons {
+    width: 100%;
+    display: flex;
+    align-items: end;
+    justify-content: end;
+}
+
+.projectGitHubIcon, .projectPreviewIcon {
+    width: 25px;
+    margin: 0.75% 1%;
+}
+
+/* end section */
+
+#endSection {
+    grid-row: 3;
+    position: relative;
+}
+
+#endBackground {
+    background-color: var(--mainBlue);
+    position: absolute;
+    min-width: 100vw;
+    height: 100%;
+
+}
+
+#endContent {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+#contactMeTextBox {
+    grid-column: 1;
+    display: grid;
+    align-self: start;
+    justify-self: start;
+    width: 50%;
+    grid-template-rows: 3fr 1fr;
+}
+
+#contactMeTextBox > .socialMediaIconContainer{
+    grid-row: 2;
+    display: flex;
+    justify-content: start;
+}
+
+#phone, #email {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    vertical-align: text-bottom;
+}
+
+#phoneContactIcon, #emailContactIcon {
+    width: 25px;
+    height: 25px;
+    margin-right: 3%;
+}
+
+#secondImage {
+    grid-column: 2;
+    width: 100%;
+    transform: none;
+    align-self: center;
+}
+
+@media (max-width: 600px) {
+   * {
+    font-size: 8px;
+   }
+
+   .socialMediaIcons, #phoneContactIcon, #emailContactIcon {
+        width: 15px;
+        height: 15px;
+   }
+
+   .socialMediaIconContainer{
+    margin:0;
+    padding: 0;
+}
+
+   #contactMeTextBox > .socialMediaIconContainer {
+    margin-top: 10%;
+   }
+
+   .projectLinkIcons > img{
+    height: 15px;
+    margin: 2%;
+   }
+
+
+
+}
+
+
