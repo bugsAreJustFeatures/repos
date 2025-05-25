@@ -1,0 +1,54 @@
+
+
+#wrapper {
+  width: 90%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.square {
+  border: thin solid white;
+  display: grid;
+  text-align: center;
+  align-items: center;
+}
+
+.square > img {
+  height: 100%;
+  width: 100%;
+  object-fit:cover;
+  transition: transform 100ms ease-in-out ;
+}
+
+#scores {
+  height: 100%;
+  margin-top: 2rem;
+}
+
+img:hover {
+  cursor: pointer;
+  transform: scale(0.98);
+}
+
+.hidden {
+  display: none;
+}
+
+.showModal {
+  position: absolute;
+  bottom: 1.5rem;
+  padding: 0 2rem;
+  font-size: 3em;
+  background-color: #242424;
+  color: hsl(120, 100%, 50%);
+  width: 90vw;
+  height: 95vh;
+  align-self: center;
+  justify-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
