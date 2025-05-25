@@ -110,7 +110,7 @@ for (let i = 0; i < playerTwo.board.length; i++) {
 
     
     let squarePosition = document.getElementById(squareTwoId)
-    squarePosition.addEventListener("mouseover", () => {
+    squarePosition.addEventListener("click", () => {
 
         if (squarePosition.style.border === "5px solid lightcoral" || squarePosition.style.border === "5px solid limegreen") {
             oneAnnouncements.innerHTML = `Cannot attack ${squareTwoId} again.`
