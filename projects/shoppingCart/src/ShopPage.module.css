@@ -1,0 +1,39 @@
+.shopContent {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-self: center;
+    border: thin solid white;
+    width: 60vw;
+    height: 100vh;
+    margin: 2rem 3rem;
+    padding: 1rem;
+    text-align: center;
+    gap: 2rem;
+}
+
+.item {
+    border: thin solid white;
+    display: grid;
+    grid-template-rows: 0.8fr 0.2fr;
+}
+
+.imageContainer {
+    border: solid red;
+}
+
+.selectorContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.addBtn {
+    width: 50%;
+    height: 30%;
+    align-self: center;
+    justify-self: center;
+    background-color: rgb(43, 107, 226);
+    border: 0;
+    cursor: pointer;
+}

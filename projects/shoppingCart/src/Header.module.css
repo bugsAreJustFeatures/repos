@@ -1,0 +1,50 @@
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.header {
+    /* border: thin solid white; */
+    display: grid;
+    grid-template-rows: 0.5fr 0.5fr;
+    border-bottom: thin solid grey;
+}
+
+.upperHeader {
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: thin solid grey;
+    margin-bottom: 1%;
+}
+
+.logoContainer {
+    grid-column: 1;
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+.basketContainer {
+    grid-column: 2;
+    display: flex;
+    justify-content: end;
+    padding-right: 3rem;
+}
+
+.lowerHeader {
+    grid-row: 2;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+
+}
+
+.homeBtn, .shopBtn {
+    transition: transform 250ms linear;
+}
+
+.homeBtn:hover, .shopBtn:hover {
+    transform: scale(1.15);
+    text-decoration: underline;
+}

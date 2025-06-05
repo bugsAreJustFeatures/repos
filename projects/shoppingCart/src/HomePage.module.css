@@ -1,0 +1,25 @@
+.message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 85vh;
+    /* border: thin solid white; */
+    text-align: center;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.transferBtn {
+    background-color: rgb(43, 107, 226);
+    border: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    transition: transform 200ms linear;
+}
+
+.transferBtn:hover {
+    cursor: pointer;
+    transform: scale(0.9);
+}
