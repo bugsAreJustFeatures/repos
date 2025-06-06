@@ -1,0 +1,41 @@
+.card {
+    display: grid;
+    grid-template-rows: 0.7fr 0.2fr 0.1fr;
+    height: 40vh;
+    width: 100%;
+    gap: 0.5rem;
+    background-color: white;
+    color: black;
+}
+
+.imageContainer {
+    grid-row: 1;   
+    margin-bottom: 1rem; 
+}
+
+.imageContainer > img {
+    min-width: 40%;
+    max-width: 50%;
+    object-fit: cover;
+}
+
+.amountContainer {
+    grid-row: 2;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.increaseBtn, .decreaseBtn {
+    width: 23%;
+    font-size: 1.5rem;
+
+}
+
+.addContainer {
+    grid-row: 3;
+}
+
+.addBtn {
+    width: 50%;
+    font-size: 1.2rem;
+}

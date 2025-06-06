@@ -11,15 +11,13 @@ import ErrorPage from './ErrorPage'
 function App() {
 
   const [count, setCount] = useState(0)
-
-  const increaseBasketNumber = () => setCount(a => a + 1)
   
   const PageTemplate = () => (
     <>
       <Header count={count} />
-      <main>
-        <Outlet />
-      </main>
+        <main>
+          <Outlet />
+        </main>
     </>
   )
 
@@ -34,7 +32,7 @@ function App() {
         },
         {
           path: "shop",
-          element: <ShopPage increaseBasketNumber={increaseBasketNumber} />
+          element: <ShopPage updateReciever={setCount} />
         },
         {
           path: "*",
