@@ -1,0 +1,13 @@
+<html>
+    <head>
+        <title>Index</title>
+    </head>
+    <body>
+        <a href="http://localhost:3000/new">form page</a>
+        <% messages.forEach(message => { %>
+          <strong> Name: </strong> <%= message.user %> <br>
+           <strong> Message: </strong> <%= message.text %> <br>
+           <strong> Time Added: </strong> <%= message.added %> <br> <br>
+        <% }) %>
+    </body>
+</html>
