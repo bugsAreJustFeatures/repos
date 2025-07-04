@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <%= title %>
+    </head>
+
+    <body>
+        <h2><%= title %></h2>
+        <form action="/:firstName/:lastName/foundUser" method="GET">
+            <label for="searchFirstName">First Name: </label>
+            <input type="text" name="searchFirstName" id="searchFirstName">
+
+            <label for="searchLastName">Last Name: </label>
+            <input type="text" name="searchLastName" id="searchLastName">
+
+            <button type="submit">Search</button>
+            <a href="/">home page</a>
+        </form>
+    </body>
+</html>

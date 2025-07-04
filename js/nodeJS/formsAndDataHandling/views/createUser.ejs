@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title><%= title %></title>
+  </head>
+<body>
+  <h1><%= title %></h1>
+  <%- include("partials/errors.ejs") %>
+  <form action="/create" method="POST">
+
+    <p>(* means required)</p>
+    <label for="firstName">*First Name: </label>
+    <input placeholder = "John" type="text" name="firstName" id="firstName" required>
+
+    <label for="lastName">*Last Name: </label>
+    <input placeholder="Smith" type="text" name="lastName" id="lastName" required>
+
+    <label for="email">*Email: </label>
+    <input placeholder="johnsmith@gmail.com" type="email" name="email" id="email" required>
+
+    <label for="age">Age: </label>
+    <input type="age" name="age" id="age">
+
+    <label for="bio">Bio: </label>
+    <input type="text" name="bio" id="bio">
+    
+    <button type="submit">Submit</button>
+  </form>
+  <a href="/">Back to home</a>
+</body>
+</html>
