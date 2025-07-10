@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>
+            Home Page
+        </title>
+
+        <body>
+            <a href="/edit">edit page</a> <br>
+            <a href="/categories">categories page</a>
+            <br><br>
+            <% data.forEach(row => { %>
+                    <ul>
+                        Animal Class: <%= row.animal_class %> <br>
+                        Species: <%= row.species_name %> <br>
+                        Originally From: <%= row.native_to %> <br>
+                        Breed: <%= row.animal_breed %> <br><br>
+
+                    </ul>
+            <% }) %>
+        </body>
+    </head>
+</html>
