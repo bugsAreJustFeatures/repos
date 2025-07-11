@@ -8,7 +8,11 @@
             <a href="/">Home page</a> <br>
             <a href="/edit">edit page</a>
             <br><br>
-            <%= data %>
+            <% data.forEach(row => { %>
+                    <ul>
+                        Animal Class: <%= row.animal_class %> <br>
+                    </ul>
+            <% }) %>
             
         </body>
     </head>

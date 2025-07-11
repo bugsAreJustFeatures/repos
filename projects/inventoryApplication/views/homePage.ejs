@@ -13,8 +13,16 @@
                         Animal Class: <%= row.animal_class %> <br>
                         Species: <%= row.species_name %> <br>
                         Originally From: <%= row.native_to %> <br>
-                        Breed: <%= row.animal_breed %> <br><br>
+                        Breed: <%= row.animal_breed %>
 
+                        <form action="/<%= row.id %>/delete" method="post">
+                            <button type="submit">Delete Animal</button>
+                        </form>
+
+                        <form action="/<%= row.id %>/edit-data" method="get">
+                            <button type="submit">Edit Animal Details</button>
+                        </form>
+                         <br>
                     </ul>
             <% }) %>
         </body>
