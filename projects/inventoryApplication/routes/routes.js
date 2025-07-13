@@ -1,12 +1,8 @@
 const express = require("express")
 const router = express.Router()
-const databaseControllers = require("../controllers/databaseControllers")
 const routeControllers = require("../controllers/routeController")
 
-// need to make use of routeController
-// need to place the functions in there
-// and then make sure these routes only call a function with the req.body at most rather than like POST("/")
-// OVERALL --- NEED TO REFACTOR ALL CODE --- //
+// --------------- INDEX PAGE ROUTES ----------------- //
 
 router.get("/", routeControllers.getIndexRoute)
 
@@ -28,5 +24,7 @@ router.post("/:id/edit-data", routeControllers.postEditDataRoute)
 // --------------- DELETE ROUTES ----------------- //
 
 router.post("/:id/delete", routeControllers.postDeleteRoute)
+
+// --------------- ROUTER EXPORT ----------------- //
 
 module.exports = router

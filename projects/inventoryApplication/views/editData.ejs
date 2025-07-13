@@ -8,24 +8,32 @@
             <a href="/">Home page</a> <br>
             <a href="/categories">categories page</a>
             <br><br>
-            <form action="/<%= id %>/edit-data" method="post">
+            <%= pleaseFixMessage %>
+            <br>
+            <br>
+            <% if (errors.length > 0) { %>
+                <% errors.map(err => { %>
+                    <%= err.msg %> <br><br>
+                <% }) %>
+            <% } %>
+            <form action="/" method="post">
                 <label for="animalClassInput">Animal Class: </label>
-                <input type="text" name="animalClassInput" id="animalClassInput" required>
+                <input value="<%= animalClassValue %> "type="text" name="animalClassInput" id="animalClassInput" required>
                 <br> <br>
 
                 <label for="animalSpeciesInput">Species: </label>
-                <input type="text" name="animalSpeciesInput" id="animalSpeciesInput" required>
+                <input value="<%= animalSpeciesValue %>" type="text" name="animalSpeciesInput" id="animalSpeciesInput" required>
                 <br><br>
 
                 <label for="animalNativeToInput">Native To (continent): </label>
-                <input type="text" name="animalNativeToInput" id="animalNativeToInput" required>
+                <input value="<%= animalNativeToValue %>" type="text" name="animalNativeToInput" id="animalNativeToInput" required>
                 <br><br>
 
                 <label for="animalBreedInput">Breed: </label>
-                <input type="text" name="animalBreedInput" id="animalBreedInput" required>
+                <input value="<%= animalBreedValue %>" type="text" name="animalBreedInput" id="animalBreedInput" required>
                 <br><br>
 
-                <button type="submit">Edit Animal</button>
+                <button type="submit">Add Animal</button>
             </form>
             
         </body>

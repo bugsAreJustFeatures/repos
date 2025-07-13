@@ -5,20 +5,18 @@ const alphaCheckMessage = `Please enter valid letter of A-Z or a-z`
 
 const validateUser = [
     body("animalClassInput").trim()
-        .isAlpha().withMessage(alphaCheckMessage)
+        .isAlpha().withMessage("Animal Class: " + alphaCheckMessage)
         .toLowerCase(),
     body("animalSpeciesInput").trim()
-        .isAlpha().withMessage(alphaCheckMessage)
+        .isAlpha().withMessage("Species: " + alphaCheckMessage)
         .toLowerCase(),
     body("animalNativeToInput").trim()
-        .isAlpha().withMessage(alphaCheckMessage)
+        .isAlpha().withMessage("Native To: " + alphaCheckMessage)
         .toLowerCase(),
     body("animalBreedInput").trim()
-        .isAlpha().withMessage(alphaCheckMessage)
+        .isAlpha().withMessage("Breed: " + alphaCheckMessage)
         .toLowerCase()
 ]
-
-// , errors: !validationResult(req) ? "Please Fix: " + validationResult(req) : ""} -- this is to tell errors when filling out a from
 
 exports.getIndexRoute = async (req, res) => {
         console.log("validation Result: ", validationResult(req))
@@ -32,15 +30,23 @@ exports.getIndexRoute = async (req, res) => {
 exports.postIndexRoute = [
     validateUser, 
     async (req, res) => {
+
+        const { errors } = validationResult(req)
+        console.log("errors: ", errors)
+
         let animalClass = req.body.animalClassInput;
         let animalSpecies = req.body.animalSpeciesInput;
         let animalNative = req.body.animalNativeToInput;
         let animalBreedInput = req.body.animalBreedInput;
         let imageURL = null // not using at the moment and only added for later if i want to implement images
     
-        await databaseControllers.sendFormDataToServer(animalClass, animalSpecies, animalNative, animalBreedInput, imageURL)
-    
-        res.redirect("/")
+        if (errors.length > 0) {
+            res.render("editPage", {pleaseFixMessage: errors ? "Please Fix: " : "", errors: errors ? errors : "", animalClassValue: animalClass, animalSpeciesValue: animalSpecies, animalNativeToValue: animalNative, animalBreedValue: animalBreedInput})
+        } else {
+          await databaseControllers.sendFormDataToServer(animalClass, animalSpecies, animalNative, animalBreedInput, imageURL)
+          res.redirect("/") 
+        }        
+        
     }
 ]
 
@@ -51,24 +57,34 @@ exports.getCategoriesRoute = async (req, res) => {
 }
 
 exports.getEditRoute = (req, res) => {
-    res.render("editPage", {data: ""})
-}
+        res.render("editPage", {pleaseFixMessage: "", errors: "", animalClassValue: "", animalSpeciesValue: "", animalNativeToValue: "", animalBreedValue: ""})
+    }
+
 
 exports.getEditDataRoute = (req, res) => {
-    res.render("editData", {id: req.params.id})
+    res.render("editData", {id: req.params.id, pleaseFixMessage: "", errors: "", animalClassValue: "", animalSpeciesValue: "", animalNativeToValue: "", animalBreedValue: ""})
 }
 
-exports.postEditDataRoute = async (req, res) => {
+exports.postEditDataRoute = [
+    validateUser, 
+    async (req, res) => {
     let id = req.params.id
     let animalClass = req.body.animalClassInput;
     let animalSpecies = req.body.animalSpeciesInput;
     let animalNative = req.body.animalNativeToInput;
     let animalBreedInput = req.body.animalBreedInput;
 
-    await databaseControllers.editRowFromServer(id, animalClass, animalSpecies, animalNative, animalBreedInput)
+    const { errors } = validationResult(req)
+    if (errors.length > 0) {
+        res.render("editData", {id: req.params.id, pleaseFixMessage: errors ? "Please Fix: " : "", errors: errors ? errors : "", animalClassValue: animalClass, animalSpeciesValue: animalSpecies, animalNativeToValue: animalNative, animalBreedValue: animalBreedInput})
+    } else {
+      await databaseControllers.editRowFromServer(id, animalClass, animalSpecies, animalNative, animalBreedInput)
+      res.redirect("/")  
+    }
 
-    res.redirect("/")
+    
 }
+]
 
 exports.postDeleteRoute = async (req, res) => {
     const id = req.params.id
