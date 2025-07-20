@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>
+            Sign Up 
+        </title>
+    </head>
+    <body>
+        <h3>Links</h3>
+        <a href="/">Go to home</a> <br>
+        <a href="/login">Login here!</a> <br>
+        <a href="/create">create a message</a> <br>
+        <a href="/view-my-messages">view your messages</a> <br>
+        <br><br>
+
+        <% if (message) { %>
+         <% if (message.length > 0) { %>
+            <% message.forEach(msg => { %>
+                <%= msg %>
+            <% }) %>
+        <% } %>   
+        <% } %>
+        
+        <form action="/sign-up" method="POST">
+            <label for="firstName">First Name: </label>
+            <input type="text" name="firstName" id="firstNameInput">
+            <br>
+            <label for="lastName">last Name: </label>
+            <input type="text" name="lastName" id="lastNameInput">
+            <br>
+            <label for="username">Username: </label>
+            <input type="text" name="username" id="usernameInput">
+            <br>
+            <label for="password">Password: </label>
+            <input type="text" name="password" id="passwordInput">
+            <br>
+            <label for="passwordConfirm">Confirm Password: </label>
+            <input type="text" name="passwordConfirm" id="passwordConfirmInput">
+            <br>
+            <button type="submit">Sign Up!</button>
+        </form>
+
+        this is sign up page
+    </body>
+</html>
