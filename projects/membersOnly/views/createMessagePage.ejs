@@ -10,8 +10,18 @@
         <a href="/login">Login here!</a> <br>
         <a href="/">go to home</a> <br>
         <a href="/view-my-messages">view your messages</a> <br>
+        <a href="/logout">Log Out</a>
+
         <br><br>
 
+
+        <form action="/create" method="post">
+            <strong><U><label for="messageInput">Type your message below</label></U></strong>
+            <br> <br>
+            <input type="text" name="messageInput" id="messageInput">
+            <br><br>
+            <button type="submit">Post message</button>
+        </form>
         this is create messages page
     </body>
 </html>

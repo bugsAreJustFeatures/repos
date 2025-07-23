@@ -15,7 +15,7 @@ const validateInput = [
 //-----worry about validation last------//
 
 //--------------------NEED TO IMPLEMENT ALL ROUTES FUINCTIONALITY HERE-------------------------//
-async function signUpPost(firstName, lastName, username, password, passwordConfirm) {
+async function signUpPost(firstName, lastName, username, password, passwordConfirm, adminOption) {
 
     // check passwords match
     const usernameCheck = await databaseController.searchUsername(username);
@@ -26,7 +26,7 @@ async function signUpPost(firstName, lastName, username, password, passwordConfi
     if (usernameCheck && passwordCheck) { //passwords are same and username doesnt exist yet
         try {
             console.log("Sending data...");
-            await databaseController.addUserToServer(firstName, lastName, username, password);
+            await databaseController.addUserToServer(firstName, lastName, username, password, adminOption);
             return falseMsg;
 
         } catch (err) {

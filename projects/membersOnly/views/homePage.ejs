@@ -10,8 +10,16 @@
         <a href="/login">Login here!</a> <br>
         <a href="/create">create a message</a> <br>
         <a href="/view-my-messages">view your messages</a> <br>
+        <a href="/logout">Log Out</a>
         <br><br>
 
-        this is home page
+        <% if (otherMessages.length > 0) { %>
+            <% otherMessages.forEach(msg => { %>
+                Created by: <%= msg.username %> 
+                <br>
+                Message: <%= msg.message %>
+                <br><br>
+            <% }) %>
+        <% } %>
     </body>
 </html>
