@@ -90,7 +90,7 @@ async function createRoutePost(req, res) {
 
     await databaseController.addMessageToServer(message, id);
 
-    res.redirect("createRouteGet");
+    res.redirect("create");
 };
 
 async function viewOwnMessagesRouteGet(req, res) {

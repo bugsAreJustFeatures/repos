@@ -5,14 +5,7 @@
         </title>
     </head>
     <body>
-        <h3>Links</h3>
-        <a href="/sign-up">Sign up here!</a> <br>
-        <a href="/">Go to home</a> <br>
-        <a href="/create">create a message</a> <br>
-        <a href="/view-my-messages">view your messages</a> 
-        <br>
-
-        <br><br>
+        <%- include ('./header.ejs'); %>
 
         <form action="/login" method="POST">
             <label for="username">Username: </label>

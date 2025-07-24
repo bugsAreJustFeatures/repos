@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const passport = require("passport");
 const routesController = require("../controllers/routesController");
-const databaseController = require("../controllers/databaseController");
 
 //--- HOME ROUTES ---//
 router.get("/", routesController.indexRouteGet);

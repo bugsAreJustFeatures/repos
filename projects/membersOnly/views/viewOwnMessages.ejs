@@ -5,18 +5,7 @@
         </title>
     </head>
     <body>
-        <h3>Links</h3>
-        <a href="/sign-up">Sign up here!</a> <br>
-        <a href="/login">Login here!</a> <br>
-        <a href="/create">create a message</a> <br>
-        <a href="/">Go to home</a> <br>
-
-         <% if (currentUser) { %>
-            hi there <%= currentUser.username %>
-            <a href="/logout">Log Out</a>
-        <% } %>
-
-        <br><br>
+        <%- include ('./header.ejs'); %>
 
         <% if (messages) { // need to make it so it only shows this when messages actually exists and then make the below form post to a route that queries the db and deletes the corresponding message via req.user.id%> 
             <h2><strong><u>Your messages</u></strong></h2>
