@@ -10,8 +10,11 @@
         <a href="/login">Login here!</a> <br>
         <a href="/">go to home</a> <br>
         <a href="/view-my-messages">view your messages</a> <br>
-        <a href="/logout">Log Out</a>
-
+        
+        <% if (currentUser) { %>
+            hi there <%= currentUser.username %>
+            <a href="/logout">Log Out</a>
+        <% } %>
         <br><br>
 
 

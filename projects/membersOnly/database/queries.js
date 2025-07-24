@@ -54,8 +54,7 @@ async function addMessage(msg, id) {
 
 async function getOwnMessages(id) {
     try {
-        const { rows } = await pool.query('SELECT messages.message FROM members LEFT JOIN messages ON members.id = messages.member_id WHERE members.id = $1;', [id]);
-        console.log(rows);
+        const { rows } = await pool.query('SELECT messages.message, messages.id FROM members LEFT JOIN messages ON members.id = messages.member_id WHERE members.id = $1 AND messages.message IS NOT NULL;', [id]);
         return rows;
     } catch (err) {
         console.log("Error whilst querying: ", err);
@@ -64,12 +63,20 @@ async function getOwnMessages(id) {
 
 async function getOtherMessages() {
     try {
-        const { rows } = await pool.query(`SELECT username, message FROM members LEFT JOIN messages ON members.id = messages.member_id ORDER BY username;`);
+        const { rows } = await pool.query(`SELECT username, message, messages.id FROM members LEFT JOIN messages ON members.id = messages.member_id WHERE message IS NOT NULL ORDER BY username ;`);
         return rows
     } catch (err) {
         console.log("Error whilst querying: ", err);
     }
 };
+
+async function deleteMessage(messageId) {
+    try {
+        await pool.query(`DELETE FROM messages WHERE id = $1;`, [messageId]);
+    } catch (err) {
+        console.log("Error whilst contacting server: ", err);
+    }
+}
 
 module.exports = {
     checkUserIsNew,
@@ -79,4 +86,5 @@ module.exports = {
     addMessage,
     getOwnMessages,
     getOtherMessages,
+    deleteMessage,
 }

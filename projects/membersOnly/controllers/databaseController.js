@@ -1,9 +1,7 @@
 const queries = require("../database/queries");
 const bcrypt = require("bcrypt");
 
-async function addUserToServer(firstName, lastName, username, password, adminOption) {
-    //hash password here with bcrypt here
-    
+async function addUserToServer(firstName, lastName, username, password, adminOption) {    
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         await queries.addUser(firstName, lastName, username, hashedPassword, adminOption);
@@ -53,10 +51,19 @@ async function getOtherMessagesFromServer() {
     }
 };
 
+async function deleteMessageFromServer(messageId) {
+    try {
+        await queries.deleteMessage(messageId);
+    } catch (err) {
+        console.log("Error whilst contacting query: ", err);
+    };
+};
+
 module.exports = {
     addUserToServer, 
     searchUsername,
     addMessageToServer,
     getOwnMessagesFromServer,
     getOtherMessagesFromServer,
+    deleteMessageFromServer,
 }

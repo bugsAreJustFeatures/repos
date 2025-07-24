@@ -10,21 +10,24 @@
         <a href="/login">Login here!</a> <br>
         <a href="/create">create a message</a> <br>
         <a href="/">Go to home</a> <br>
-        <a href="/logout">Log Out</a>
+
+         <% if (currentUser) { %>
+            hi there <%= currentUser.username %>
+            <a href="/logout">Log Out</a>
+        <% } %>
 
         <br><br>
 
         <% if (messages) { // need to make it so it only shows this when messages actually exists and then make the below form post to a route that queries the db and deletes the corresponding message via req.user.id%> 
-            hi there <%= currentUser.username %>
             <h2><strong><u>Your messages</u></strong></h2>
 
             <% messages.forEach((message, index) => { %>
 
-                <form action="/viewOwnMessages" method="post">
+                <%= index + 1 %>. <%= message.message %>
 
-                    <%= index + 1 %>. <%= message.message %>
+                <form action="/deleteOwnMessage" method="post">
+                    <input type="hidden" name="message_id" id="message_id" value="<%= message.id %>">
                     <button type="submit">Delete</button>
-                    
                     <br><br>
                 </form>
                 

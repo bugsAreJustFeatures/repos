@@ -4,32 +4,15 @@ const routesController = require("../controllers/routesController");
 const databaseController = require("../controllers/databaseController");
 
 //--- HOME ROUTES ---//
-router.get("/", async (req, res) => {
-    console.log(req.user)
-    const otherMessages = await databaseController.getOtherMessagesFromServer();
-    res.render("homePage", { otherMessages: otherMessages })
-})
+router.get("/", routesController.indexRouteGet);
 
 //--- SIGN UP ROUTES ---//
-router.get("/sign-up", (req, res) => {
-    res.render("signUpPage", { message: null })
-})
+router.get("/sign-up", routesController.signUpRouteGet);
 
-router.post("/sign-up", async (req, res) => {
-    // put this all into the controller function
-    const { firstName, lastName, username, password, passwordConfirm, adminOption } = req.body
-    const response = await routesController.signUpPost(firstName, lastName, username, password, passwordConfirm, adminOption);
-    if (response.length > 0) {
-        res.render("signUpPage", { message: response })
-    } else {
-        res.redirect("/")
-    }
-})
+router.post("/sign-up", routesController.signUpRoutePost);
 
 //--- LOGIN ROUTES ---//
-router.get("/login", (req, res) => {
-    res.render("loginPage")
-})
+router.get("/login", routesController.loginRouteGet);
 
 router.post(
     "/login",
@@ -39,41 +22,20 @@ router.post(
         
     }));
 
-
-
 //--- LOGOUT ROUTES ---//
-router.get("/logout", (req, res, next) => {
-    req.logout((err) => {
-        if (err) {
-            return next(err)
-        } else {
-            console.log("You have been logged out!")
-            res.redirect("/")
-        }
-    })
-})
+router.get("/logout", routesController.logoutRouteGet);
     
-
 //--- CREATE ROUTES ---//
-router.get("/create", (req, res) => {
-    console.log(req.user)
-    res.render("createMessagePage");
-}) 
+router.get("/create", routesController.createRouteGet);
 
-router.post("/create", async (req, res) => {
-    console.log(req.user);
-    let message = req.body.messageInput;
-    let id = req.user.id;
-    await databaseController.addMessageToServer(message, id);
-    res.redirect("/");
-})
+router.post("/create", routesController.createRoutePost);
 
 //--- VIEW-MY-MESSAGES ROUTES ---//
-router.get("/view-my-messages", async (req, res) => {
-        console.log(req.user)
+router.get("/view-my-messages", routesController.viewOwnMessagesRouteGet);
 
-    const ownMessages = await databaseController.getOwnMessagesFromServer(req.user.id); // need to loop through on ejs to dusplay each messages
-    res.render("viewOwnMessages", { messages: ownMessages });
-})
+//--- DELETE MESSAGE ROUTES ---//
+router.post("/deleteGlobalMessage", routesController.deleteGlobalMessageRoutePost);
+
+router.post("/deleteOwnMessage", routesController.deleteOwnMessageRoutePost);
 
 module.exports = router
