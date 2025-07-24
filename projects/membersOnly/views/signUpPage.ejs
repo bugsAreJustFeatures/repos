@@ -8,13 +8,14 @@
        
         <%- include ('./header.ejs'); %>
 
-        <% if (message) { %>
-         <% if (message.length > 0) { %>
-            <% message.forEach(msg => { %>
-                <%= msg %>
+         <% if (messages.length > 0) { %>
+            <% messages.forEach(msg => { %>
+                <li>
+                    <%= msg.msg %>
+                </li>
             <% }) %>
         <% } %>   
-        <% } %>
+        <br>
         
         <form action="/sign-up" method="POST">
             <label for="firstName">First Name: </label>

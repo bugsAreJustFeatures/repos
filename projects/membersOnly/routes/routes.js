@@ -8,7 +8,10 @@ router.get("/", routesController.indexRouteGet);
 //--- SIGN UP ROUTES ---//
 router.get("/sign-up", routesController.signUpRouteGet);
 
-router.post("/sign-up", routesController.signUpRoutePost);
+router.post("/sign-up", [
+    ...routesController.validateInput,
+    routesController.signUpRoutePost
+]);
 
 //--- LOGIN ROUTES ---//
 router.get("/login", routesController.loginRouteGet);

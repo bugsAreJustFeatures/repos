@@ -4,13 +4,51 @@ const databaseController = require("./databaseController");
 // length messages
 
 //-----worry about validation last------//
-const firstNameLengthMessage = `First name should be between 1 and 10 characters.`;
+const firstNameLengthMessage = `First name should be between 3 and 10 characters.`;
+const firstNameAlphaMessage = `First name should be A-Z and a-z characters.`;
 const lastNameLengthMessage = `Last name should be between 1 and 15 characters.`;
-const usernameLengthMessage = `Username should be between 1 and 12 characters long.`;
+const lastNameAlphaMessage = `Last name should be A-Z and a-z characters.`;
+const usernameLengthMessage = `Username should be between 3 and 12 characters long.`;
+const usernameAlphanumericMessage = `Username should be only numbers and letters.`;
 const passwordLengthMessage = `Password needs to be between 8 and 20 characters long.`;
+const passwordAlphanumericMessage = `Password needs to be numbers and letters only.`;
+const passwordsMatchMessage = `Passwords do not match.`;
+
+function passwordsMatch(value, { req }) {
+    return value === req.body.password;
+};
+
 // validation fields 
 const validateInput = [
-    body("firstName").trim().toLowerCase()
+    body("firstName").trim()
+        .isAlpha().withMessage(firstNameAlphaMessage)
+        .toLowerCase()
+        .isLength({
+            min: 3,
+            max: 10,
+        }).withMessage(firstNameLengthMessage),
+    body("lastName").trim()
+        .isAlpha().withMessage(lastNameAlphaMessage)
+        .toLowerCase()
+        .isLength({
+            min: 3,
+            max: 10,
+        }).withMessage(lastNameLengthMessage),
+    body("username").trim()
+        .isAlphanumeric().withMessage(usernameAlphanumericMessage)
+        .isLength({
+            min: 3,
+            max: 12,
+        }).withMessage(usernameLengthMessage),
+    body("password").trim()
+        .isAlphanumeric().withMessage(passwordAlphanumericMessage)
+        .isLength({
+            min: 8,
+            max: 20,
+        }).withMessage(passwordLengthMessage),
+    body("passwordConfirm").trim()
+        .custom(passwordsMatch).withMessage(passwordsMatchMessage),
+    body("adminOption").optional(),
 ];
 
 // Index Routes //
@@ -20,7 +58,7 @@ async function indexRouteGet(req, res) {
 }
 // Sign-up routes //
 function signUpRouteGet(req, res) {
-    res.render("signUpPage", { message: null });
+    res.render("signUpPage", { messages: [] });
 }
 
 async function signUpRoutePostHelper(firstName, lastName, username, password, passwordConfirm, adminOption) {
@@ -49,6 +87,12 @@ async function signUpRoutePostHelper(firstName, lastName, username, password, pa
 };
 
 async function signUpRoutePost(req, res) {
+
+    const errors = validationResult(req);
+    console.log(errors)
+    if (!errors.isEmpty()) {
+        return res.render("signUpPage", { messages: errors.array() })
+    }
 
     const { firstName, lastName, username, password, passwordConfirm, adminOption } = req.body;
 
@@ -115,7 +159,8 @@ async function deleteOwnMessageRoutePost(req, res) {
     res.redirect("/view-my-messages");
 }
  
-module.exports = {   
+module.exports = { 
+    validateInput,  
     indexRouteGet,
     signUpRouteGet,
     signUpRoutePost,
