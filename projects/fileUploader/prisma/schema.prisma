@@ -15,14 +15,14 @@ datasource db {
 } 
 
 model users {
-  id Int @id @default(autoincrement())
+  id Int @id @default(autoincrement()) //change to uuid()
   username String @unique
   password String 
   files_uploaded files[]
 }
 
 model files {
-  id Int @id @default(autoincrement())
+  id Int @id @default(autoincrement()) //change to uuid()
   title String
   link String
   uploaded_by users @relation(fields: [userId], references: [id])
