@@ -1,9 +1,12 @@
+// allow the use of prisma
 const { PrismaClient } = require("../generated/prisma");
 const prisma = new PrismaClient();
 
+// express validator
 const { validationResult, body } = require("express-validator");
 const bcrypt = require("bcrypt");
 
+// validation fields
 const signUpValidation = [
     body("username").trim()
         .isAlphanumeric().withMessage(`Username only accepts letters and numbers.`)
@@ -17,20 +20,24 @@ const signUpValidation = [
         }).withMessage(`Passwords do not match.`)
 ]
 
+// index route - the sign up page
 async function getIndexRoute(req, res) {
     console.log("hi")
     res.render("signUpPage", { errors: [] });
 }
 
+// posting sign up - making an account
 const postSignUpRoute = [ // need to use an array in order to validate it
     signUpValidation,
     async (req, res) => {
 
+    // check that form was filled out correctly
     const errors = validationResult(req);
 
+    // if the error array is not empty - there are errors so return them and make user refill form
     if (!errors.isEmpty()) {
-        console.log(errors)
-        res.render("signUpPage", { errors: errors.array()})
+        return res.render("signUpPage", { errors: errors.array()})
+
     } else {
         const { username, password, passwordConfirm } = req.body;
             
@@ -39,9 +46,10 @@ const postSignUpRoute = [ // need to use an array in order to validate it
             return res.render("signUpPage", { errors: [`Passwords do not match`]})
         }
         
-        //passwords are same, go through with hashing and place user into db
+        //passwords are same so carry out hashing
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        // after hasing add user to db, delete all other users for dev purposes - should be deleted upon time of release
         try {
             await prisma.users.deleteMany(); // this is to clear db, only use for development, delete when done
     
@@ -51,13 +59,15 @@ const postSignUpRoute = [ // need to use an array in order to validate it
                     password: hashedPassword,
                 }
             });
-
         } catch (err) {
             console.error(err);
+            await prisma.$disconnect();
         }
 
-        console.log(await prisma.users.findMany())
-        res.redirect("/")
+        console.log(await prisma.users.findMany()); // display all users, in this case the one i just made since im deleting all the previos ones at the top of the try block (line 53)
+        await prisma.$disconnect();
+        res.redirect("/");
+
     }
 }];
 
