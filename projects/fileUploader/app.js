@@ -2,13 +2,23 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const passport = require("passport");
-const session = require("express-session")
+const session = require("express-session");
+const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
+const { PrismaClient } = require("./generated/prisma");
 
 //session setup
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false, 
-    saveUninitialzed: false,
+    saveUninitialized: false,
+    store: new PrismaSessionStore(
+        new PrismaClient(),
+        {
+            checkPeriod: 2 * 60 * 1000, //ms
+            dbRecordIdIsSessionId: true,
+            dbRecordIdFunction: undefined,
+        }
+    ),
 }));
 
 //create the session space

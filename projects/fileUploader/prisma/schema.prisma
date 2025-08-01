@@ -28,3 +28,10 @@ model files {
   uploaded_by users @relation(fields: [userId], references: [id])
   userId Int
 }
+
+model session {
+  id String @id 
+  sid String @unique
+  data String 
+  expiresAt DateTime
+}
