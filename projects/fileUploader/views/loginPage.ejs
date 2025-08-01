@@ -1,1 +1,33 @@
-    
+<html>
+    <head>
+        <title>
+            Login
+        </title>
+    </head>
+    <body>
+
+        <% if (errors) { %>
+            <% errors.forEach((error) => { %>
+                <%= errors.msg %>
+            <% }) %>
+        <% } %>
+
+        <form action="/login" method="post">
+            <label for="username">Username: </label>
+            <input type="text" name="username" id="username" required>
+
+            <br><br>
+
+            <label for="password">Password: </label>
+            <input type="password" name="password" id="password" required>
+
+            <br><br>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <p>OR</p>
+
+        <a href="/signUp">Sign Up Here!</a>
+    </body>
+</html>

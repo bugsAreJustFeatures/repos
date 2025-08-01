@@ -5,6 +5,8 @@
         </title>
     </head>
     <body>
-        home
+        <% if (currentUser) { %>
+            Hello <%= currentUser.username %>
+        <% } %>
     </body>
 </html>

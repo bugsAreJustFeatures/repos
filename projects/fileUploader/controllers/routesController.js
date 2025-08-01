@@ -18,13 +18,12 @@ const signUpValidation = [
         .custom((passwordConfirm, { req }) => {
             return passwordConfirm === req.body.password
         }).withMessage(`Passwords do not match.`)
-]
+];
 
-// index route - the sign up page
-async function getIndexRoute(req, res) {
-    console.log("hi")
+// sign up routes
+async function getSignUpRoute(req, res) {
     res.render("signUpPage", { errors: [] });
-}
+};
 
 // posting sign up - making an account
 const postSignUpRoute = [ // need to use an array in order to validate it
@@ -49,10 +48,7 @@ const postSignUpRoute = [ // need to use an array in order to validate it
         //passwords are same so carry out hashing
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // after hasing add user to db, delete all other users for dev purposes - should be deleted upon time of release
         try {
-            await prisma.users.deleteMany(); // this is to clear db, only use for development, delete when done
-    
             await prisma.users.create({
                 data: {
                     username: username,
@@ -71,7 +67,19 @@ const postSignUpRoute = [ // need to use an array in order to validate it
     }
 }];
 
+//login routes
+function getLoginRoute(req, res) {
+    res.render("loginPage", { errors: [] });
+};
+
+//home page routes
+function getHomePage(req, res) {
+    res.render("homePage");
+};
+
 module.exports = {
-    getIndexRoute,
+    getSignUpRoute,
     postSignUpRoute,
+    getLoginRoute,
+    getHomePage,
 }
