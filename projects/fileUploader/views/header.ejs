@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>
+        </title>
+    </head>
+    <body>
+        <% if (currentUser) { %>
+            Hello <%= currentUser.username %>
+            |
+            <a href="/logout">Logout</a>
+            <br> <br>
+        <% } else { %>
+            <a href="/">Login Here</a>
+            |
+            <a href="/signUp">Sign Up</a>
+            <br><br>
+        <% } %>
+
+
+    </body>
+</html>

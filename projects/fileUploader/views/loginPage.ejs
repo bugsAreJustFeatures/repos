@@ -6,9 +6,11 @@
     </head>
     <body>
 
+        <%- include ("./header.ejs") %>
+
         <% if (errors) { %>
             <% errors.forEach((error) => { %>
-                <%= errors.msg %>
+                <%= error.msg %>
             <% }) %>
         <% } %>
 
@@ -25,9 +27,5 @@
 
             <button type="submit">Login</button>
         </form>
-
-        <p>OR</p>
-
-        <a href="/signUp">Sign Up Here!</a>
     </body>
 </html>

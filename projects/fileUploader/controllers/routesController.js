@@ -72,14 +72,37 @@ function getLoginRoute(req, res) {
     res.render("loginPage", { errors: [] });
 };
 
+function getLoginRedirectRoute(req, res) {
+    res.render("loginPage", { errors: [{ msg: `Invalid username or password` }]});
+}
+
+//logout routes
+function getLogoutRoute(req, res, next) {
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        } else {
+            res.redirect("/")
+        };
+    });
+};
+
 //home page routes
 function getHomePage(req, res) {
     res.render("homePage");
+};
+
+//upload routes
+function postUploadRoute(req, res) {
+    res.redirect("/home");
 };
 
 module.exports = {
     getSignUpRoute,
     postSignUpRoute,
     getLoginRoute,
+    getLoginRedirectRoute,
+    getLogoutRoute,
     getHomePage,
+    postUploadRoute,
 }
