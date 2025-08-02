@@ -15,13 +15,12 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-
 // sign up routes
 router.get("/signUp", routesController.getSignUpRoute);
 router.post("/signUpPost", routesController.postSignUpRoute);
 
 //login routes
-router.get("/", routesController.getLoginRoute);
+router.get("/", routesController.loginChecker, routesController.getLoginRoute);
 router.get("/loginRedirect", routesController.getLoginRedirectRoute);
 router.post("/login", passport.authenticate("local", {
     successRedirect: "/home",
@@ -35,6 +34,14 @@ router.get("/logout", routesController.getLogoutRoute);
 router.get("/home", routesController.getHomePage);
 
 //upload routes
-router.post("/upload", upload.single("fileUpload"), routesController.postUploadRoute)
+router.get("/upload", routesController.getUploadRoute);
+router.post("/upload", upload.single("fileUpload"), routesController.postUploadRoute);
+
+//create folder
+router.get("/createFolder", routesController.getCreateFolder);
+router.post("/createFolder", routesController.postCreateFolder);
+
+// view folder
+router.get("/:folderName", routesController.getFolderRoute)
 
 module.exports = router;    

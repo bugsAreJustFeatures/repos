@@ -18,6 +18,7 @@ model users {
   id Int @id @default(autoincrement()) //change to uuid()
   username String @unique
   password String 
+  folders folders[]
   files_uploaded files[]
 }
 
@@ -26,6 +27,13 @@ model files {
   title String
   link String
   uploaded_by users @relation(fields: [userId], references: [id])
+  userId Int
+}
+
+model folders {
+  id Int @id @default(autoincrement()) //change to uuid()
+  folder_name String 
+  create_by users @relation(fields: [userId], references: [id])
   userId Int
 }
 

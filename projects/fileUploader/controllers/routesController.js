@@ -74,7 +74,16 @@ function getLoginRoute(req, res) {
 
 function getLoginRedirectRoute(req, res) {
     res.render("loginPage", { errors: [{ msg: `Invalid username or password` }]});
-}
+};
+
+function loginChecker(req, res, next) { //checks if user is authorised
+    // req.session holds session info, passport is only created when user is authorised, so if it exists theres no need to go back to the login page and if the user tries to go there they get redirected to home
+    if (req.session.passport) {
+        return res.redirect("/home");
+    } else {
+        next();
+    };
+};
 
 //logout routes
 function getLogoutRoute(req, res, next) {
@@ -93,16 +102,75 @@ function getHomePage(req, res) {
 };
 
 //upload routes
-function postUploadRoute(req, res) {
-    res.redirect("/home");
+function getUploadRoute(req, res) {
+    res.render("uploadPage");
 };
+
+function postUploadRoute(req, res) {
+    res.redirect("/upload");
+};
+
+//create folder 
+function getCreateFolder(req, res) {
+    res.render("createFolder");
+};
+
+async function postCreateFolder(req, res) {
+    const folderName = req.body.folderName;
+    const id = req.session.passport.user;
+    let userFolders;
+
+    try {
+        await prisma.folders.create({
+            data: {
+                folder_name: folderName,
+                userId: id,
+            },
+        });
+    } catch (err) {
+        console.error(err);
+    };
+
+    try {
+        userFolders = await prisma.folders.findMany({
+            where: {
+                userId: id,
+            },
+        });
+    } catch (err) {
+        console.error(err);
+    };
+
+    console.log(userFolders)
+    res.render("homePage", { folders: userFolders ? userFolders : [] });
+};
+
+//view folder
+async function getFolderRoute(req, res) {
+    try {
+        await prisma.files.findMany({
+            where: {
+                // need to add link between folder and files table to see what files are apart of what folder and then can use either the name of the files have the folderId of what folders. add folderId fk in files folder
+            }
+        })
+    } catch (err) {
+        console.log("Error whilst getting folder route: ", err);
+    };
+
+    res.render("viewFolder", { folder: []})
+}
 
 module.exports = {
     getSignUpRoute,
     postSignUpRoute,
     getLoginRoute,
     getLoginRedirectRoute,
+    loginChecker,
     getLogoutRoute,
     getHomePage,
+    getUploadRoute,
     postUploadRoute,
+    getCreateFolder,
+    postCreateFolder,
+    getFolderRoute,
 }
