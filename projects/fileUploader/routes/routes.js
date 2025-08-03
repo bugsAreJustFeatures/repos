@@ -23,7 +23,7 @@ router.post("/signUpPost", routesController.postSignUpRoute);
 router.get("/", routesController.loginChecker, routesController.getLoginRoute);
 router.get("/loginRedirect", routesController.getLoginRedirectRoute);
 router.post("/login", passport.authenticate("local", {
-    successRedirect: "/home",
+    successRedirect: "/",
     failureRedirect: "/loginRedirect",
 }));
 

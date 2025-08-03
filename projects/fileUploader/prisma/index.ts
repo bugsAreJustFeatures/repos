@@ -5,17 +5,17 @@ const prisma = new PrismaClient();
 async function main() {
 
     //create user
-    // const newUser = await prisma.users.create({
+    // const newFile = await prisma.files.create({
     //     data: {
-    //         username: "Harry",
-    //         password: "sdkljfdsklfjdskl"
+    //         folderId: 36,
+    //         userId: 32,
     //     },
     // })
 
     //get users
-    const users = await prisma.users.findMany();
+    // const users = await prisma.users.findMany();
 
-    console.log(users)
+    // console.log(newFile)
 }
 
 main()

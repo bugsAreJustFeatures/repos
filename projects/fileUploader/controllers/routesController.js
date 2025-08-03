@@ -97,8 +97,22 @@ function getLogoutRoute(req, res, next) {
 };
 
 //home page routes
-function getHomePage(req, res) {
-    res.render("homePage");
+async function getHomePage(req, res) {
+    const id = req.session.passport.user;
+    let userFolders;
+
+    try {
+        userFolders = await prisma.folders.findMany({
+            where: {
+                userId: id,
+            },
+        });
+    } catch (err) {
+        console.error(err);
+    };
+
+    console.log(userFolders)
+    res.render("homePage", { folders: userFolders ? userFolders : [] });
 };
 
 //upload routes
@@ -118,8 +132,7 @@ function getCreateFolder(req, res) {
 async function postCreateFolder(req, res) {
     const folderName = req.body.folderName;
     const id = req.session.passport.user;
-    let userFolders;
-
+    
     try {
         await prisma.folders.create({
             data: {
@@ -131,34 +144,42 @@ async function postCreateFolder(req, res) {
         console.error(err);
     };
 
-    try {
-        userFolders = await prisma.folders.findMany({
-            where: {
-                userId: id,
-            },
-        });
-    } catch (err) {
-        console.error(err);
-    };
-
-    console.log(userFolders)
-    res.render("homePage", { folders: userFolders ? userFolders : [] });
+    res.redirect("/");
 };
 
 //view folder
 async function getFolderRoute(req, res) {
+    const folderName = req.params.folderName;
+    let findFolderId;
+    let folderFiles;
+
+    // getting folder id
     try {
-        await prisma.files.findMany({
+        findFolderId = await prisma.folders.findFirst({
             where: {
-                // need to add link between folder and files table to see what files are apart of what folder and then can use either the name of the files have the folderId of what folders. add folderId fk in files folder
-            }
-        })
+                folder_name: folderName,
+            },
+            select: {
+                id: true,
+            },
+        });
+        console.log("findFolderId: ", findFolderId)
     } catch (err) {
-        console.log("Error whilst getting folder route: ", err);
+        console.log("Error whilst getting folder during the folder route: ", err);
     };
 
-    res.render("viewFolder", { folder: []})
-}
+    //using folder id to see what files have that folder id as their parent folder, finding their parent folder thorugh this.
+    // try {
+    //     folderFiles = await prisma.files.findMany({
+    //         where: {
+    //             folderId: findFolderId,
+    //         },
+    //     });
+    // } catch (err) {
+    //     console.log(`Error whilst searching for files that have the parent folder: ${folderName}: `, err);
+    // };
+    res.render("viewFolder", { folder: folderFiles });
+};
 
 module.exports = {
     getSignUpRoute,
