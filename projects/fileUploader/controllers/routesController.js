@@ -111,7 +111,7 @@ async function getHomePage(req, res) {
         console.error(err);
     };
 
-    console.log(userFolders)
+    userFolders.forEach(folder => {console.log("The users folders: ", folder)})
     res.render("homePage", { folders: userFolders ? userFolders : [] });
 };
 
@@ -133,6 +133,8 @@ async function postCreateFolder(req, res) {
     const folderName = req.body.folderName;
     const id = req.session.passport.user;
     
+    console.log(`folderName: ${folderName}`);
+    console.log(`id: ${id}`);
     try {
         await prisma.folders.create({
             data: {
@@ -151,7 +153,7 @@ async function postCreateFolder(req, res) {
 async function getFolderRoute(req, res) {
     const folderName = req.params.folderName;
     let findFolderId;
-    let folderFiles;
+    let folderFiles = [];
 
     // getting folder id
     try {
@@ -163,22 +165,42 @@ async function getFolderRoute(req, res) {
                 id: true,
             },
         });
-        console.log("findFolderId: ", findFolderId)
+
+        //check the folder id exists otherwise return with nothing
+        if (!findFolderId) {
+            console.log(`The folder, ${folderName} could not be found.`);
+            return res.render("viewFolder", { folder: folderFiles });
+        };
     } catch (err) {
         console.log("Error whilst getting folder during the folder route: ", err);
     };
 
-    //using folder id to see what files have that folder id as their parent folder, finding their parent folder thorugh this.
-    // try {
-    //     folderFiles = await prisma.files.findMany({
-    //         where: {
-    //             folderId: findFolderId,
-    //         },
-    //     });
-    // } catch (err) {
-    //     console.log(`Error whilst searching for files that have the parent folder: ${folderName}: `, err);
-    // };
-    res.render("viewFolder", { folder: folderFiles });
+    //using folder id to see what files have that folder id as their parent folder
+    try {
+        folderFiles = await prisma.files.findMany({
+            where: {
+                folderId: findFolderId.id,
+            },
+        });
+
+        // check if there are any files actually existing
+        if (!folderFiles) {
+            console.log(`There were no files with the folderId of ${findFolderId.id}`)
+            return res.render("viewFolder", { folder: folderFiles });
+        };
+
+    } catch (err) {
+        console.log(`Error whilst searching for files that have the parent folder of, ${folderName}: `, err);
+    };
+
+    try {
+        if (!folderFiles) {
+            folderFiles = [`No files`]
+        }
+    } catch (err) {
+        console.log("Error whilst checking files exist: ", err);
+    }
+    return res.render("viewFolder", { files: folderFiles });
 };
 
 module.exports = {

@@ -15,6 +15,11 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+//favicon route - delete if i want an icon in tab
+router.get("/favicon.ico", (req, res) => {
+    res.status(204)
+});
+
 // sign up routes
 router.get("/signUp", routesController.getSignUpRoute);
 router.post("/signUpPost", routesController.postSignUpRoute);

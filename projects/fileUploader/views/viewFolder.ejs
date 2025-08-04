@@ -4,8 +4,15 @@
             Your folder
         </title>
         <body>
+            <%- include ("./header.ejs") %>
+            <br>
+            <br>
+            <% if (files) { %>
+                <% files.forEach(file => { %>
+                    <%= file %>
+                <% }) %>
+            <% } %>
             view folder
-            <a href="/upload">Upload a file</a>
         </body>
     </head>
 </html>
