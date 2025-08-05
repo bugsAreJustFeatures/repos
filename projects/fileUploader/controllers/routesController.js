@@ -135,25 +135,44 @@ async function getUploadRoute(req, res) {
 
 async function postUploadRoute(req, res) {
     const fileName = req.body.fileName;
+    const folderName = req.body.folderName;
     const fileSize = req.file.size;
     const fileLink = req.file.path; // i will get rid of this and make the link inside of the db come from a cloud provider where the file will be stored but for now this will be a placeholder of sorts since its required
     const wholeDate = new Date();
     const userId = req.user.id;
-    
+    let folderId;
     // console.log(`fileName: ${fileName}`);
     // console.log(`fileSize: ${fileSize} Bytes`);
-    // console.log(req)
+    console.log(folderName)
     
+    //get folderId from the inputed folder name from user
+    try {
+        folderId = await prisma.folders.findFirst({
+            where: {
+                folder_name: folderName,
+            },
+            select: {
+                id: true,
+            },
+        });
+    } catch (err) {
+        console.log("Error whilst getting folderId in the upload route: ", err);
+    };
     try {
         await prisma.files.create({
             data: {
                 link: fileLink,
-                
-            }
-        })
+                userId: userId,
+                folderId: folderId.id,
+                file_size: fileSize,
+                uploaded_date: wholeDate,
+                file_name: fileName,
+            },
+        });
     } catch (err) {
         console.log("Error whilst trying to upload file to database: ", err);
     };
+    // console.log(`folderId: ${folderId.id}`)
     res.redirect("/upload");
 };
 
