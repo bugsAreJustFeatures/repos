@@ -10,6 +10,17 @@
         <br><br>
         
         <form action="/upload" method="post" enctype="multipart/form-data">
+
+            <label for="folderName">Choose folder: </label>
+            <select name="folderName" id="folderName" required>
+                <option value="" disabled selected >Select One</option>
+                <% for (let i = 0; i < folders.length; i++) { %>
+                    <option value="<%= folders[i].folder_name %>"> <%= folders[i].folder_name %> </option>
+                <% } %>
+            </select>
+
+            <br><br>
+
             <label for="fileName">File Name: </label>
             <input type="text" name="fileName" id="fileName" required>
 

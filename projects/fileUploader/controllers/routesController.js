@@ -116,26 +116,44 @@ async function getHomePage(req, res) {
 };
 
 //upload routes
-function getUploadRoute(req, res) {
-    res.render("uploadPage");
+async function getUploadRoute(req, res) {
+    let userFolders;
+    try {
+        userFolders = await prisma.folders.findMany({
+            where: {
+                userId: req.user.id,
+            },
+        });
+    } catch (err) {
+        console.log("Error whilst getting folders during upload page: ", err);
+        return;
+    };
+
+    console.log(userFolders)
+    res.render("uploadPage", { folders: userFolders });
 };
 
 async function postUploadRoute(req, res) {
     const fileName = req.body.fileName;
     const fileSize = req.file.size;
-    const fileLink = req.file.path; // i will get rid of this and make the link inside of the db be a url form whereever i host it, but for now it will work
+    const fileLink = req.file.path; // i will get rid of this and make the link inside of the db come from a cloud provider where the file will be stored but for now this will be a placeholder of sorts since its required
     const wholeDate = new Date();
+    const userId = req.user.id;
+    
     // console.log(`fileName: ${fileName}`);
     // console.log(`fileSize: ${fileSize} Bytes`);
-    console.log(req)
+    // console.log(req)
     
-    // try {
-    //     await prisma.files.create({
-    //         data: {
-
-    //         }
-    //     })
-    // }
+    try {
+        await prisma.files.create({
+            data: {
+                link: fileLink,
+                
+            }
+        })
+    } catch (err) {
+        console.log("Error whilst trying to upload file to database: ", err);
+    };
     res.redirect("/upload");
 };
 
