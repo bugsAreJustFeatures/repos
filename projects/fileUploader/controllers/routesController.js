@@ -326,6 +326,52 @@ async function postDeleteFolder(req, res) {
     res.redirect("/");
 };
 
+function getEditFileRoute(req, res) {
+    res.render("editFilePage", { fileName: req.params.fileName });
+};
+
+async function postEditFileNameRoute(req, res) {
+    // console.log(req)
+    const userId = req.user.id;
+    const oldFileName = req.params.fileName;
+    const newFileName = req.body.newFileName;
+
+    try {
+        await prisma.files.updateMany({
+            where: {
+                userId: userId,
+                file_name: oldFileName,
+            },
+            data: {
+                file_name: newFileName,
+            },
+        });
+    } catch (err) {
+        console.log("Error whilst updating file name: ", err);
+        return;
+    };
+
+    res.redirect("/");
+};
+
+async function postFileDeleteRoute(req, res) {
+    const userId = req.user.id;
+    const fileName = req.params.fileName;
+
+    try {
+        await prisma.files.deleteMany({
+            where: {
+                userId: userId,
+                file_name: fileName,
+            },
+        });
+    } catch (err) {
+        console.log("Error whilst trying to delete file: ", err);
+        return;
+    };
+    res.redirect("/");
+};
+
 module.exports = {
     getSignUpRoute,
     postSignUpRoute,
@@ -342,4 +388,7 @@ module.exports = {
     getEditFolderRoute,
     postEditFolderName,
     postDeleteFolder,
+    getEditFileRoute,
+    postEditFileNameRoute,
+    postFileDeleteRoute,
 }

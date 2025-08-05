@@ -9,10 +9,16 @@
             <br>
             <% if (files) { %>
                 <% files.forEach(file => { %>
-                    Name: <%= file.title %> <br>
-                    Link: <a href="<%= file.link %>"> <%= file.link %> (placeholder for now) </a> <br>
+                    Name: <%= file.file_name %> <br>
+                    Link: <a href="<%= file.link %>"> <%= file.link %> (placeholder for now) </a>
+                    
+                    <form action="/<%= file.file_name %>/editFile" method="get">
+                        <button type="submit">Edit File</button>
+                    </form>
                 <% }) %>
             <% } %>
+
+            
         </body>
     </head>
 </html>

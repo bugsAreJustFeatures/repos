@@ -54,4 +54,9 @@ router.get("/:folderName/edit", routesController.getEditFolderRoute);
 router.post("/:folderName/editName", routesController.postEditFolderName);
 router.post("/:folderName/delete", routesController.postDeleteFolder);
 
+//edit file routes
+router.get("/:fileName/editFile", routesController.getEditFileRoute);
+router.post("/:fileName/editFileName", routesController.postEditFileNameRoute);
+router.post("/:fileName/fileDelete", routesController.postFileDeleteRoute);
+
 module.exports = router;    

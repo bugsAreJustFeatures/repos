@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>
+            Edit <%= fileName %> 
+        </title>
+    </head>
+    <body>
+        <form action="/<%= fileName %>/editFileName" method="post"> 
+            <label for="newFileName">New File Name: </label>
+            <input type="text" name="newFileName" id="newFileName">
+
+            <button type="submit">Change Name</button>
+        </form>
+
+        <form action="/<%= fileName %>/fileDelete" method="post">
+            BE AWARE, THIS ACTION IS DANGEROUS AND CANNOT BE REVERTED.
+
+            <button type="submit">DELETE FILE</button>
+        </form>
+    </body>
+</html>
