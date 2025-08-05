@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>
+            Edit "<%= folderName %>" Page
+        </title>
+    </head>
+    <body>
+        <form action="/<%= folderName %>/editName" method="post"> 
+            <label for="newFolderName">New Folder Name: </label>
+            <input type="text" name="newFolderName" id="newFolderName">
+
+            <br>
+
+            <button type="submit">Change Name</button>
+        </form>
+
+        <form action="/<%= folderName %>/delete" method="post">
+            BE AWARE, THIS ACTION IS DANGEROUS AND CANNOT BE REVERTED.
+
+            <button type="submit">DELETE FOLDER</button>
+        </form>
+    </body>
+</html>

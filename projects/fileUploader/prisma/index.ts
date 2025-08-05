@@ -5,17 +5,19 @@ const prisma = new PrismaClient();
 async function main() {
 
     //create user
-    // const newFile = await prisma.files.create({
-    //     data: {
-    //         folderId: 36,
-    //         userId: 32,
-    //     },
-    // })
+    const newFile = await prisma.files.create({
+        data: {
+            title: "file1",
+            link: "https://www.youtube.com/watch?v=aIbyceB8GOQ&t=391s",
+            folderId: 36,
+            userId: 32,
+        },
+    });
 
     //get users
     // const users = await prisma.users.findMany();
 
-    // console.log(newFile)
+    console.log(newFile)
 }
 
 main()

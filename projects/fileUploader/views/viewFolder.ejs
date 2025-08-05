@@ -9,10 +9,10 @@
             <br>
             <% if (files) { %>
                 <% files.forEach(file => { %>
-                    <%= file %>
+                    Name: <%= file.title %> <br>
+                    Link: <a href="<%= file.link %>"> <%= file.link %> (placeholder for now) </a> <br>
                 <% }) %>
             <% } %>
-            view folder
         </body>
     </head>
 </html>

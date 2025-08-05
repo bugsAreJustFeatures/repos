@@ -120,7 +120,22 @@ function getUploadRoute(req, res) {
     res.render("uploadPage");
 };
 
-function postUploadRoute(req, res) {
+async function postUploadRoute(req, res) {
+    const fileName = req.body.fileName;
+    const fileSize = req.file.size;
+    const fileLink = req.file.path; // i will get rid of this and make the link inside of the db be a url form whereever i host it, but for now it will work
+    const wholeDate = new Date();
+    // console.log(`fileName: ${fileName}`);
+    // console.log(`fileSize: ${fileSize} Bytes`);
+    console.log(req)
+    
+    // try {
+    //     await prisma.files.create({
+    //         data: {
+
+    //         }
+    //     })
+    // }
     res.redirect("/upload");
 };
 
@@ -153,7 +168,7 @@ async function postCreateFolder(req, res) {
 async function getFolderRoute(req, res) {
     const folderName = req.params.folderName;
     let findFolderId;
-    let folderFiles = [];
+    let folderFiles;
 
     // getting folder id
     try {
@@ -169,7 +184,7 @@ async function getFolderRoute(req, res) {
         //check the folder id exists otherwise return with nothing
         if (!findFolderId) {
             console.log(`The folder, ${folderName} could not be found.`);
-            return res.render("viewFolder", { folder: folderFiles });
+            return res.render("viewFolder", { files: folderFiles });
         };
     } catch (err) {
         console.log("Error whilst getting folder during the folder route: ", err);
@@ -186,21 +201,92 @@ async function getFolderRoute(req, res) {
         // check if there are any files actually existing
         if (!folderFiles) {
             console.log(`There were no files with the folderId of ${findFolderId.id}`)
-            return res.render("viewFolder", { folder: folderFiles });
+            folderFiles = [`No files could be found.`]
+            return res.render("viewFolder", { files: folderFiles });
         };
 
     } catch (err) {
         console.log(`Error whilst searching for files that have the parent folder of, ${folderName}: `, err);
     };
 
-    try {
-        if (!folderFiles) {
-            folderFiles = [`No files`]
-        }
-    } catch (err) {
-        console.log("Error whilst checking files exist: ", err);
-    }
+    // all went well, files and folder has been found
     return res.render("viewFolder", { files: folderFiles });
+};
+
+//edit folder routes
+function getEditFolderRoute(req, res) {
+    res.render("editFolderPage", { folderName: req.params.folderName });
+};
+
+async function postEditFolderName(req, res) {
+    const oldFolderName = req.params.folderName;
+    const newFolderName = req.body.newFolderName;
+    const id = req.user.id;
+
+    try {
+        await prisma.folders.updateMany({
+            where: {
+                folder_name: oldFolderName,
+                userId: id,
+            }, 
+            data: {
+                folder_name: newFolderName,
+            },
+        });
+    } catch (err) {
+        console.log(`Error whilst changing folder name for, ${oldFolderName}: `, err);
+        return;
+    };
+    return res.redirect("/");
+};
+
+async function postDeleteFolder(req, res) {
+    const folderName = req.params.folderName;
+    const id = req.user.id;
+    let findFolderId;
+
+    // find findFolderId to search files that have the parent folder and then delete them from files table
+    try {
+     findFolderId = await prisma.folders.findFirst({
+            where: {
+                folder_name: folderName,
+                userId: id,
+            }, 
+            select: {
+                id: true
+            },
+        });
+    } catch (err) {
+        console.log("Error whilst trying to find findFolderId: ", err);
+        return;
+    };
+
+    // use foundId to find and delete files belonging to that folder that has just been deleted
+    try {
+        await prisma.files.deleteMany({
+            where: {
+                folderId: findFolderId.id,
+            },
+        });
+    } catch (err) {
+        console.log("Error whilst trying to find and delete files via findFolderId: ", err);
+        return;
+    };
+
+    // delete folder from folders table
+    try {
+        await prisma.folders.deleteMany({
+            where: {
+                folder_name: folderName,
+                userId: id,
+            },
+        });
+    } catch (err) {
+        console.log("Error whilst trying to delete folder from server: ", err);
+        return;
+    };
+
+    res.redirect("/");
 };
 
 module.exports = {
@@ -216,4 +302,7 @@ module.exports = {
     getCreateFolder,
     postCreateFolder,
     getFolderRoute,
+    getEditFolderRoute,
+    postEditFolderName,
+    postDeleteFolder,
 }

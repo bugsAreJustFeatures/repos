@@ -47,6 +47,11 @@ router.get("/createFolder", routesController.getCreateFolder);
 router.post("/createFolder", routesController.postCreateFolder);
 
 // view folder
-router.get("/:folderName", routesController.getFolderRoute)
+router.get("/:folderName", routesController.getFolderRoute);
+
+//edit folder routes
+router.get("/:folderName/edit", routesController.getEditFolderRoute);
+router.post("/:folderName/editName", routesController.postEditFolderName);
+router.post("/:folderName/delete", routesController.postDeleteFolder);
 
 module.exports = router;    

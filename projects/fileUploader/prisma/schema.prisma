@@ -24,8 +24,10 @@ model users {
 
 model files {
   id Int @id @default(autoincrement()) //change to uuid()
-  title String
+  file_name String
   link String
+  file_size Int
+  uploaded_date DateTime
   folderId Int
   userId Int
   parent_folder folders @relation(fields: [folderId], references: [id])
@@ -34,10 +36,12 @@ model files {
 
 model folders {
   id Int @id @default(autoincrement()) //change to uuid()
-  folder_name String 
+  folder_name String
   userId Int
   contains_files files[]
   create_by users @relation(fields: [userId], references: [id])
+
+  @@unique([folder_name, userId])
 }
 
 model session {
