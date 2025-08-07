@@ -59,4 +59,7 @@ router.get("/:fileName/editFile", routesController.getEditFileRoute);
 router.post("/:fileName/editFileName", routesController.postEditFileNameRoute);
 router.post("/:fileName/fileDelete", routesController.postFileDeleteRoute);
 
+//download file routes
+router.post("/:fileName/download", routesController.postDownloadRoute);
+
 module.exports = router;    

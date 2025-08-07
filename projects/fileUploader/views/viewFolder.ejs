@@ -15,6 +15,10 @@
                     <form action="/<%= file.file_name %>/editFile" method="get">
                         <button type="submit">Edit File</button>
                     </form>
+                    
+                    <form action="/<%= file.link %>/download" method="post">
+                            <button type="submit">Download</button>
+                    </form>
                 <% }) %>
             <% } %>
 
