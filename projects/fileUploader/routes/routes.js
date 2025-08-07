@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
         cb(null, file.originalname)
     },
 });
-const upload = multer({ storage });
+const upload = multer({ storage: multer.memoryStorage() });
 
 //favicon route - delete if i want an icon in tab
 router.get("/favicon.ico", (req, res) => {

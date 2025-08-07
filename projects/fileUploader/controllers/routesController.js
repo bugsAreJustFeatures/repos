@@ -140,13 +140,13 @@ async function postUploadRoute(req, res) {
     const fileName = req.body.fileName;
     const folderName = req.body.folderName;
     const fileSize = req.file.size;
-    const fileLink = req.file.filename; // this gets updated when it is uploaded and is only the filename because i need to make a path on the cloud
+    const fileLink = req.file.originalname; // this gets updated when it is uploaded and is only the filename because i need to make a path on the cloud
     const wholeDate = new Date();
     const userId = req.user.id;
     let folderId;
+    console.log(req.file)
     // console.log(`fileName: ${fileName}`);
     // console.log(`fileSize: ${fileSize} Bytes`);
-    console.log(req.file)
     
     //get folderId from the inputed folder name from user
     try {
@@ -178,7 +178,9 @@ async function postUploadRoute(req, res) {
 
     // add to cloud bucket and change db links to be correct and link to the bucket
     try {
-        await cloudController.uploadFile(userId, fileLink, fileName);
+        console.log("Buffer: ")
+        console.log(req.file.buffer)
+        await cloudController.uploadFile(userId, fileLink, fileName, req.file);
     } catch (err) {
         console.log("Error whilst trying to upload file: ", err);
     }
@@ -387,13 +389,13 @@ async function postFileDeleteRoute(req, res) {
 };
 
 async function postDownloadRoute(req, res) {
-    const filePath = req.params.fileName;
-    console.log(filePath)
+    const fileName = req.params.fileName;
+    const userId = req.user.id;
 
     // upload to supabase 
     try {
-        await cloudController.downloadFile(filePath);
-        return res.redirect("/");
+        const url = await cloudController.downloadFile(userId, fileName);
+        return res.redirect(url);
     } catch (err) {
         console.log("Error whilst downloading file: ", err);
     };
