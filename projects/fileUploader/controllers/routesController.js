@@ -23,6 +23,22 @@ const signUpValidation = [
         }).withMessage(`Passwords do not match.`)
 ];
 
+const folderValidation = [
+    body("folderName").trim()
+        .isLength({
+            min: 1,
+            max: 40
+        }).withMessage(`Folder must have a name between 1 and 40 characters long.`)
+];
+
+const newFolderValidation = [
+    body("newFolderName").trim()
+        .isLength({
+            min: 1,
+            max: 40
+        }).withMessage(`Folder must have a name between 1 and 40 characters long.`)
+];
+
 // sign up routes
 async function getSignUpRoute(req, res) {
     res.render("signUpPage", { errors: [] });
@@ -176,26 +192,37 @@ async function postUploadRoute(req, res) {
 
 //create folder 
 function getCreateFolder(req, res) {
-    res.render("createFolder");
+    res.render("createFolder", { errors: [] });
 };
 
-async function postCreateFolder(req, res) {
-    const folderName = req.body.folderName;
-    const id = req.session.passport.user;
+const postCreateFolder = [
+    folderValidation,
+    async (req, res) => {
+    const errors = validationResult(req);
     
-    try {
-        await prisma.folders.create({
-            data: {
-                folder_name: folderName,
-                userId: id,
-            },
-        });
-    } catch (err) {
-        console.error(err);
-    };
+    if (!errors.isEmpty()) {
+        return res.render("createFolder", { errors: errors.array() });
 
-    res.redirect("/");
-};
+    } else {
+        const folderName = req.body.folderName;
+        const id = req.session.passport.user;
+        
+        try {
+            await prisma.folders.create({
+                data: {
+                    folder_name: folderName,
+                    userId: id,
+                },
+            });
+        } catch (err) {
+            console.error(err);
+        };
+
+        return res.redirect("/"); 
+    }
+    
+}
+];
 
 //view folder
 async function getFolderRoute(req, res) {
@@ -249,27 +276,38 @@ function getEditFolderRoute(req, res) {
     res.render("editFolderPage", { folderName: req.params.folderName });
 };
 
-async function postEditFolderName(req, res) {
-    const oldFolderName = req.params.folderName;
-    const newFolderName = req.body.newFolderName;
-    const id = req.user.id;
+const postEditFolderName = [
+    newFolderValidation, 
+    async (req, res) => {
+        
+        const errors = validationResult(req);
 
-    try {
-        await prisma.folders.updateMany({
-            where: {
-                folder_name: oldFolderName,
-                userId: id,
-            }, 
-            data: {
-                folder_name: newFolderName,
-            },
-        });
-    } catch (err) {
-        console.error(`Error whilst changing folder name for, ${oldFolderName}: `, err);
-        return;
-    };
-    return res.redirect("/");
-};
+        if (!errors.isEmpty()) {
+            return res.render("editFolderPage", { folderName: req.params.folderName, errors: errors.array() });
+
+        } else {
+            const oldFolderName = req.params.folderName;
+            const newFolderName = req.body.newFolderName;
+            const id = req.user.id;
+
+            try {
+                await prisma.folders.updateMany({
+                    where: {
+                        folder_name: oldFolderName,
+                        userId: id,
+                    }, 
+                    data: {
+                        folder_name: newFolderName,
+                    },
+                });
+            } catch (err) {
+                console.error(`Error whilst changing folder name for, ${oldFolderName}: `, err);
+                return;
+            };
+            return res.redirect("/");
+            };
+        },
+];
 
 async function postDeleteFolder(req, res) {
     const folderName = req.params.folderName;

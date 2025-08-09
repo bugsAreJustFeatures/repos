@@ -5,7 +5,18 @@
         </title>
     </head>
     <body>
+
+        <%- include ("./header.ejs"); %>
+
         <h1>Create New Folder</h1>
+
+        <% if (errors.length > 0) { %>
+            <% errors.forEach(err => { %> 
+                <li>
+                    <%= err.msg %>
+                </li>
+            <% }) %>
+        <% } %>
 
         <form action="/createFolder" method="post">
             <label for="folderName">Folder Name: </label>

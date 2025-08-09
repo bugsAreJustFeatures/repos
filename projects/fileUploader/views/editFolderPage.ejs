@@ -5,9 +5,20 @@
         </title>
     </head>
     <body>
+
+        <% if (errors.length > 0) { %>
+            <ul>
+                <% errors.forEach(err => { %>
+                        <li>
+                            <%= err.msg %>
+                        </li>
+                <% }) %>
+            </ul>
+        <% } %> 
+
         <form action="/<%= folderName %>/editName" method="post"> 
             <label for="newFolderName">New Folder Name: </label>
-            <input type="text" name="newFolderName" id="newFolderName">
+            <input type="text" name="newFolderName" id="newFolderName" required>
 
             <br>
 
