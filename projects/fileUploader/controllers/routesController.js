@@ -267,10 +267,6 @@ async function getFolderRoute(req, res) {
     } catch (err) {
         console.error(`Error whilst searching for files that have the parent folder of, ${folderName}: `, err);
     };
-
-    console.log(folderFiles.length())
-
-    // all went well, files and folder has been found
 };
 
 //edit folder routes
