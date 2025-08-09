@@ -413,7 +413,16 @@ async function postDownloadFile(req, res) {
         console.error("Error whilst routing the download: ", err);
         return;
     };
-}
+};
+
+async function postShareFile(req, res) {
+    try {
+        const getLink = await cloudController.getShareLink(req.params.storedPath);
+        return res.render("sharePage", { link: getLink.shareLink});
+    } catch (err) {
+        console.error("Error whilst get URL to share file: ", err);
+    };
+};
 
 module.exports = {
     getSignUpRoute,
@@ -435,4 +444,5 @@ module.exports = {
     postEditFileNameRoute,
     postFileDeleteRoute,
     postDownloadFile,
-}
+    postShareFile,
+};

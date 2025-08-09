@@ -21,7 +21,6 @@ async function uploadFileToCloud(userId, fileData) {
         };
 
         storedPath = data.path
-        // console.log(data)
         return data;
     } catch (err) {
         console.error("Unexpected Error: ", err)
@@ -34,7 +33,7 @@ async function downloadFileFromCloud(storedPath) {
     try {
         const { data, error } = await supabase.storage
         .from("files-bucket")
-        .createSignedUrl(storedPath, 60, {
+        .createSignedUrl(storedPath, 1, {
             download: true,
         });
 
@@ -49,7 +48,30 @@ async function downloadFileFromCloud(storedPath) {
     };
 };
 
+async function getShareLink(storedPath) {
+    // get signedUrl from supabase storage and return it 
+    try {   
+        const { data, error } = await supabase.storage
+        .from("files-bucket")
+        .createSignedUrl(storedPath, 600);
+
+        if (error) {
+            console.error("Error with supabase: ", error);
+            return;
+
+        } else {
+            return {
+                shareLink: data.signedUrl,
+            };
+        };
+    } catch (err) {
+        console.error("Unexpected error from querying supabase: ", err);
+        return;
+    };
+};
+
 module.exports = {
     uploadFileToCloud,
     downloadFileFromCloud,
+    getShareLink,
 };

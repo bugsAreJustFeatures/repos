@@ -63,6 +63,9 @@ router.post("/fileDelete/:fileName", routesController.postFileDeleteRoute);
 //download file route
 router.post("/download/:filePath", routesController.postDownloadFile);
 
+//share file route
+router.post("/share/:storedPath", routesController.postShareFile);
+
 // error page route
 router.get(/.*/, (req, res) => {
     return res.render("errorPage");
