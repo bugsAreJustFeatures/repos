@@ -3,16 +3,16 @@ const router = express.Router();
 const routesController = require("../controllers/routesController");
 const passport = require("passport");
 
-//multer diskStorage
+//multer diskStorage (commented out) and multer memoryStorage (in use)
 const multer = require("multer");
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "./uploads")
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.originalname)
-    },
-});
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, "./uploads")
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, file.originalname)
+//     },
+// });
 const upload = multer({ storage: multer.memoryStorage() });
 
 //favicon route - delete if i want an icon in tab
@@ -59,7 +59,7 @@ router.get("/:fileName/editFile", routesController.getEditFileRoute);
 router.post("/:fileName/editFileName", routesController.postEditFileNameRoute);
 router.post("/:fileName/fileDelete", routesController.postFileDeleteRoute);
 
-//download file routes
-router.post("/:fileName/download", routesController.postDownloadRoute);
+//download file route
+router.post("/:filePath/download", routesController.postDownloadFile);
 
 module.exports = router;    

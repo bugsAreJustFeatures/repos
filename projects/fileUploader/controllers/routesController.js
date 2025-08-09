@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 const { validationResult, body } = require("express-validator");
 const bcrypt = require("bcrypt");
 
-// connect to supabase cloud
+//supabase cloud controller
 const cloudController = require("../controllers/cloudController");
 
 // validation fields
@@ -63,11 +63,9 @@ const postSignUpRoute = [ // need to use an array in order to validate it
             await prisma.$disconnect();
         }
 
-        console.log(await prisma.users.findMany()); // display all users, in this case the one i just made since im deleting all the previos ones at the top of the try block (line 53)
         await prisma.$disconnect();
         res.redirect("/");
-
-    }
+    };
 }];
 
 //login routes
@@ -114,7 +112,6 @@ async function getHomePage(req, res) {
         console.error(err);
     };
 
-    userFolders.forEach(folder => {console.log("The users folders: ", folder)})
     res.render("homePage", { folders: userFolders ? userFolders : [] });
 };
 
@@ -128,11 +125,10 @@ async function getUploadRoute(req, res) {
             },
         });
     } catch (err) {
-        console.log("Error whilst getting folders during upload page: ", err);
+        console.error("Error whilst getting folders during upload page: ", err);
         return;
     };
 
-    console.log(userFolders)
     res.render("uploadPage", { folders: userFolders });
 };
 
@@ -140,13 +136,9 @@ async function postUploadRoute(req, res) {
     const fileName = req.body.fileName;
     const folderName = req.body.folderName;
     const fileSize = req.file.size;
-    const fileLink = req.file.originalname; // this gets updated when it is uploaded and is only the filename because i need to make a path on the cloud
     const wholeDate = new Date();
     const userId = req.user.id;
     let folderId;
-    console.log(req.file)
-    // console.log(`fileName: ${fileName}`);
-    // console.log(`fileSize: ${fileSize} Bytes`);
     
     //get folderId from the inputed folder name from user
     try {
@@ -159,33 +151,26 @@ async function postUploadRoute(req, res) {
             },
         });
     } catch (err) {
-        console.log("Error whilst getting folderId in the upload route: ", err);
+        console.error("Error whilst getting folderId in the upload route: ", err);
+        return;
     };
     try {
+        const uploadFile = await cloudController.uploadFileToCloud(req.user.id, req.file);
+
         await prisma.files.create({
             data: {
-                link: fileLink,
                 userId: userId,
                 folderId: folderId.id,
                 file_size: fileSize,
                 uploaded_date: wholeDate,
                 file_name: fileName,
+                path: uploadFile.path,
             },
         });
     } catch (err) {
-        console.log("Error whilst trying to upload file to database: ", err);
+        console.error("Error whilst trying to upload file to database: ", err);
+        return;
     };
-
-    // add to cloud bucket and change db links to be correct and link to the bucket
-    try {
-        console.log("Buffer: ")
-        console.log(req.file.buffer)
-        await cloudController.uploadFile(userId, fileLink, fileName, req.file);
-    } catch (err) {
-        console.log("Error whilst trying to upload file: ", err);
-    }
-
-    // console.log(`folderId: ${folderId.id}`)
     res.redirect("/upload");
 };
 
@@ -198,8 +183,6 @@ async function postCreateFolder(req, res) {
     const folderName = req.body.folderName;
     const id = req.session.passport.user;
     
-    console.log(`folderName: ${folderName}`);
-    console.log(`id: ${id}`);
     try {
         await prisma.folders.create({
             data: {
@@ -233,11 +216,10 @@ async function getFolderRoute(req, res) {
 
         //check the folder id exists otherwise return with nothing
         if (!findFolderId) {
-            console.log(`The folder, ${folderName} could not be found.`);
             return res.render("viewFolder", { files: folderFiles });
         };
     } catch (err) {
-        console.log("Error whilst getting folder during the folder route: ", err);
+        console.error("Error whilst getting folder during the folder route: ", err);
     };
 
     //using folder id to see what files have that folder id as their parent folder
@@ -250,19 +232,15 @@ async function getFolderRoute(req, res) {
 
         // check if there are any files actually existing
         if (!folderFiles) {
-            console.log(`There were no files with the folderId of ${findFolderId.id}`)
             folderFiles = [`No files could be found.`]
             return res.render("viewFolder", { files: folderFiles });
         };
 
     } catch (err) {
-        console.log(`Error whilst searching for files that have the parent folder of, ${folderName}: `, err);
-        return;
+        console.error(`Error whilst searching for files that have the parent folder of, ${folderName}: `, err);
     };
 
     // all went well, files and folder has been found
-    // console.log("User Files (below): ")
-    // folderFiles.map(file => {console.log(file)})
     return res.render("viewFolder", { files: folderFiles });
 };
 
@@ -287,7 +265,7 @@ async function postEditFolderName(req, res) {
             },
         });
     } catch (err) {
-        console.log(`Error whilst changing folder name for, ${oldFolderName}: `, err);
+        console.error(`Error whilst changing folder name for, ${oldFolderName}: `, err);
         return;
     };
     return res.redirect("/");
@@ -310,7 +288,7 @@ async function postDeleteFolder(req, res) {
             },
         });
     } catch (err) {
-        console.log("Error whilst trying to find findFolderId: ", err);
+        console.error("Error whilst trying to find findFolderId: ", err);
         return;
     };
 
@@ -322,7 +300,7 @@ async function postDeleteFolder(req, res) {
             },
         });
     } catch (err) {
-        console.log("Error whilst trying to find and delete files via findFolderId: ", err);
+        console.error("Error whilst trying to find and delete files via findFolderId: ", err);
         return;
     };
 
@@ -335,7 +313,7 @@ async function postDeleteFolder(req, res) {
             },
         });
     } catch (err) {
-        console.log("Error whilst trying to delete folder from server: ", err);
+        console.error("Error whilst trying to delete folder from server: ", err);
         return;
     };
 
@@ -347,7 +325,6 @@ function getEditFileRoute(req, res) {
 };
 
 async function postEditFileNameRoute(req, res) {
-    // console.log(req)
     const userId = req.user.id;
     const oldFileName = req.params.fileName;
     const newFileName = req.body.newFileName;
@@ -363,7 +340,7 @@ async function postEditFileNameRoute(req, res) {
             },
         });
     } catch (err) {
-        console.log("Error whilst updating file name: ", err);
+        console.error("Error whilst updating file name: ", err);
         return;
     };
 
@@ -382,24 +359,21 @@ async function postFileDeleteRoute(req, res) {
             },
         });
     } catch (err) {
-        console.log("Error whilst trying to delete file: ", err);
+        console.error("Error whilst trying to delete file: ", err);
         return;
     };
     res.redirect("/");
 };
 
-async function postDownloadRoute(req, res) {
-    const fileName = req.params.fileName;
-    const userId = req.user.id;
-
-    // upload to supabase 
+async function postDownloadFile(req, res) {
     try {
-        const url = await cloudController.downloadFile(userId, fileName);
-        return res.redirect(url);
+        const file = await cloudController.downloadFileFromCloud(req.params.filePath);
+        return res.redirect(file)
     } catch (err) {
-        console.log("Error whilst downloading file: ", err);
+        console.error("Error whilst routing the download: ", err);
+        return;
     };
-};
+}
 
 module.exports = {
     getSignUpRoute,
@@ -420,5 +394,5 @@ module.exports = {
     getEditFileRoute,
     postEditFileNameRoute,
     postFileDeleteRoute,
-    postDownloadRoute,
+    postDownloadFile,
 }

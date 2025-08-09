@@ -11,7 +11,8 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("CLOUD_DIRECT_URL")
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 } 
 
 model users {
@@ -25,7 +26,7 @@ model users {
 model files {
   id Int @id @default(autoincrement()) //change to uuid()
   file_name String
-  link String
+  path String
   file_size Int
   uploaded_date DateTime
   folderId Int
