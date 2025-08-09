@@ -259,7 +259,8 @@ async function getFolderRoute(req, res) {
 
         // check if there are any files actually existing
         if (!folderFiles) {
-            folderFiles = [`No files could be found.`]
+            return res.render("viewFolder", { files: folderFiles });
+        } else {
             return res.render("viewFolder", { files: folderFiles });
         };
 
@@ -267,8 +268,9 @@ async function getFolderRoute(req, res) {
         console.error(`Error whilst searching for files that have the parent folder of, ${folderName}: `, err);
     };
 
+    console.log(folderFiles.length())
+
     // all went well, files and folder has been found
-    return res.render("viewFolder", { files: folderFiles });
 };
 
 //edit folder routes

@@ -7,7 +7,7 @@
             <%- include ("./header.ejs") %>
             <br>
             <br>
-            <% if (files) { %>
+            <% if (files.length > 0) { %>
                 <% files.forEach(file => { %>
                     Name: <%= file.file_name %> <br>                    
                     <form action="/editFile/<%= file.file_name %>" method="get">
@@ -22,9 +22,9 @@
                         <button type="submit">Download</button>
                     </form>
                 <% }) %>
-            <% }; %>
-
-            
+            <% } else { %>
+                <h2>No files could be found - Go to the upload page and choose this folder to get started!</h2>
+            <% } %>
         </body>
     </head>
 </html>
