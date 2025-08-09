@@ -44,6 +44,7 @@ const routes = require("./routes/routes");
 app.use("/", routes);
 
 //setup local server
-app.listen(3000, () => {
-    console.log("Im a server thats running");
-})
+let PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log("App is running");
+});
