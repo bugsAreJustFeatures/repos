@@ -273,7 +273,7 @@ async function getFolderRoute(req, res) {
 
 //edit folder routes
 function getEditFolderRoute(req, res) {
-    res.render("editFolderPage", { folderName: req.params.folderName });
+    res.render("editFolderPage", { folderName: req.params.folderName, errors: [] });
 };
 
 const postEditFolderName = [

@@ -10,15 +10,15 @@
             <% if (files) { %>
                 <% files.forEach(file => { %>
                     Name: <%= file.file_name %> <br>                    
-                    <form action="/<%= file.file_name %>/editFile" method="get">
+                    <form action="/editFile/<%= file.file_name %>" method="get">
                         <button type="submit">Edit File</button>
                     </form>
                     
-                    <form action="/<%= file.path %>/share" method="post">
+                    <form action="/share/<%= file.path %>" method="post">
                         <button type="submit">Share</button>
                     </form>
 
-                    <form action="/<%= file.path %>/download" method="post">
+                    <form action="/download/<%= file.path %>" method="post">
                         <button type="submit">Download</button>
                     </form>
                 <% }) %>

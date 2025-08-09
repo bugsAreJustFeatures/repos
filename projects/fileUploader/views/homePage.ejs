@@ -11,9 +11,9 @@
         <% if (folders) { %>
             <% for (let i = 0; i < folders.length; i++) { %>
                 <br> <br>
-                    <a href="/<%= folders[i].folder_name %>"> <%= folders[i].folder_name %> </a>
+                    <a href="/viewFolder/<%= folders[i].folder_name %>"> <%= folders[i].folder_name %> </a>
 
-                    <form action="/<%= folders[i].folder_name %>/edit" method="get">
+                    <form action="/edit/<%= folders[i].folder_name %>" method="get">
                         <button type="submit">Edit Folder</button>
                     </form>
             <% } %>

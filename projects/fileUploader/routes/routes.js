@@ -20,6 +20,7 @@ router.get("/favicon.ico", (req, res) => {
     res.status(204)
 });
 
+
 // sign up routes
 router.get("/signUp", routesController.getSignUpRoute);
 router.post("/signUpPost", routesController.postSignUpRoute);
@@ -47,19 +48,25 @@ router.get("/createFolder", routesController.getCreateFolder);
 router.post("/createFolder", routesController.postCreateFolder);
 
 // view folder
-router.get("/:folderName", routesController.getFolderRoute);
+router.get("/viewFolder/:folderName", routesController.getFolderRoute);
 
 //edit folder routes
-router.get("/:folderName/edit", routesController.getEditFolderRoute);
-router.post("/:folderName/editName", routesController.postEditFolderName);
-router.post("/:folderName/delete", routesController.postDeleteFolder);
+router.get("/edit/:folderName", routesController.getEditFolderRoute);
+router.post("/editName/:folderName", routesController.postEditFolderName);
+router.post("/delete/:folderName", routesController.postDeleteFolder);
 
 //edit file routes
-router.get("/:fileName/editFile", routesController.getEditFileRoute);
-router.post("/:fileName/editFileName", routesController.postEditFileNameRoute);
-router.post("/:fileName/fileDelete", routesController.postFileDeleteRoute);
+router.get("/editFile/:fileName", routesController.getEditFileRoute);
+router.post("/editFileName/:fileName", routesController.postEditFileNameRoute);
+router.post("/fileDelete/:fileName", routesController.postFileDeleteRoute);
 
 //download file route
-router.post("/:filePath/download", routesController.postDownloadFile);
+router.post("/download/:filePath", routesController.postDownloadFile);
+
+// error page route
+router.get(/.*/, (req, res) => {
+    return res.render("errorPage");
+});
+
 
 module.exports = router;    
