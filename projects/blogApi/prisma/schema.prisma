@@ -15,9 +15,9 @@ datasource db {
 }
 
 model users {
-  id Int @id @default(autoincrement())
+  id Int @id @default(autoincrement()) // change to uuid
 
-  username String 
+  username String //make unique
   password String
 
   posts_by_user posts []
@@ -25,7 +25,7 @@ model users {
 }
 
 model posts {
-  id Int @id @default(autoincrement())
+  id Int @id @default(autoincrement()) // change to uuid
 
   post_title String
   post_contents String
@@ -40,7 +40,7 @@ model posts {
 }
 
 model comments {
-  id Int @id @default(autoincrement())
+  id Int @id @default(autoincrement()) // change to uuid
 
   commment_title String?
   comment_contents String
