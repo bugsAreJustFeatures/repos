@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const passport = require("passport");
 const session = require("express-session");
-const createSession = require("./controllers/passportController");
+const passportController = require("./controllers/passportController");
 
 // config for session
 app.use(session({
@@ -15,13 +15,20 @@ app.use(session({
 //initialise the session
 app.use(passport.session())
 
-// tell express the view engine 
-app.set("view engine", "ejs");
 // tell express to allow the use of encoded values, such as from forms (req.body)
 app.use(express.urlencoded({ extended: true }));
 
 // create the session with passport in module
-createSession(passport);
+passportController.createSession(passport);
+
+// allow use of currentUser
+app.use("/", (req, res, next) => {
+    res.locals.currentUser = req.user;
+    next();
+});
+
+// get jwt after authorising user
+passportController.authoriseWithJWT(passport);
 
 //tell express where the routes are and what to do with each url request
 const routes = require("./routes/routes");
