@@ -10,10 +10,19 @@ import routes from "./routes/routes.js";
 import passport from "passport";
 import {authenticateUserWithJwt, createSessionWithUser} from "./controllers/passportController.js";
 
+import cors from "cors";
+const PORT = process.env.PORT || 3000;
+
 // create express app
 const app = express();
+
+//allow frontend to communicate across ports
+app.use(cors({
+    origin: "http://localhost:5173", // this is react port and makes it so only this port can communicate, limiting chance of an attack
+}));
+
+//allow use of json
 app.use(express.json())// enable json reading in the express routes
-const PORT = process.env.PORT || 3000;
 
 //create session with user details
 app.use(session({
@@ -24,10 +33,6 @@ app.use(session({
 app.use(passport.session());
 createSessionWithUser(passport);
 
-// app.use("/", (req, res, next) => {
-//     console.log("headers.authorization: ", req.headers.authorization);
-//     next();
-// })
 // check jwt is authentic
 authenticateUserWithJwt(passport)
 
@@ -36,8 +41,8 @@ app.use("/", (req, res, next) => {
     next();
 })
 
-// tell express where routes are located
-app.use("/", routes)
+// tell express where routes are located, and then what to do when a request with /api gets called
+app.use("/api", routes)
 
 // make server
 app.listen(PORT, () => {
