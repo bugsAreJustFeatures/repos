@@ -1,20 +1,39 @@
-import { useState } from 'react'
 import './App.css'
 
-function App() {
-  return (
-    <>
-      <form action="/login" method="get">
-        <label htmlFor="username">Username: </label>
-        <input type="text" name="username" id="username" value="123" />
-        <br />
-        <label htmlFor="password">Password: </label>
-        <input type="text" name="password" id="password" value="123" />
+import { BrowserRouter as Router, Route, useRoutes } from 'react-router-dom'
 
-        <button type='submit'>Login</button>
-      </form>
-    </>
-  )
+import Navbar from './Navbar';
+import HomePage from './HomePage';
+import LoginPage from './LoginPage';
+import Settings from './Settings';
+import BlogsPage from './BlogsPage';
+
+function App() {
+  const routes = useRoutes([
+    {
+      path: "/",
+      element: < Navbar />,
+      children: [
+        {
+          index: true, 
+          element: <HomePage />,
+        },
+        {
+          path: "/login",
+          element: <LoginPage />,
+        },
+        {
+          path: "/settings",
+          element: <Settings />,
+        },
+        {
+          path: "/blogs",
+          element: <BlogsPage />,
+        },
+      ],
+    },
+  ]);
+  return routes
 }
 
 export default App
