@@ -6,11 +6,11 @@ export default defineConfig({
   root: __dirname,
   plugins: [react()],
   build: {
-    outDir: `../dist`,
+    outDir: "../dist",
   },
   server: {
     proxy: {
-      "/api": "http://localhost:3000",
+      "/api": "http://localhost/3000",
     },
   },
 });
