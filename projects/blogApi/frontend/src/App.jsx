@@ -7,6 +7,9 @@ import HomePage from './HomePage';
 import SignUpPage from './SignUpPage';
 import LoginPage from './LoginPage';
 import MyBlogs from './MyBlogs';
+import Settings from './Settings';
+import SignOutPage from './SignOutPage';
+import CreateBlog from './CreateBlog';
 
 function App() {
 
@@ -29,6 +32,18 @@ function App() {
       {
         path: "/my-blogs",
         element: <MyBlogs />,
+      },
+      {
+        path: "/settings",
+        element: <Settings />,
+      },
+      {
+        path: "/sign-out",
+        element: <SignOutPage />,
+      },
+      {
+        path: "/createBlog",
+        element: <CreateBlog />,
       },
     ],
   },

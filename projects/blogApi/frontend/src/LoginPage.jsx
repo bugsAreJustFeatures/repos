@@ -18,9 +18,6 @@ export default function LoginPage() {
             return;
         }
     
-        console.log(username)
-        console.log(password)
-
         try {
             const response = await fetch("/api/login", {
                 method: "POST",
@@ -33,7 +30,6 @@ export default function LoginPage() {
                 }),
             });
 
-            // console.log("slfjdslk: ", response)
 
             if (!response.ok) {
                 throw new Error("API problem");
@@ -41,6 +37,7 @@ export default function LoginPage() {
 
             const data = await response.json();
             localStorage.setItem("token", data.token);
+
             navigate("/my-blogs");
         } catch (err) {
             console.error("Unexpected Error occured: ", err);

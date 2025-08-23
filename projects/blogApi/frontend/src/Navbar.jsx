@@ -18,6 +18,20 @@ export default function Navbar() {
 
             <Link to={"/my-blogs"}>My Blogs</Link>
 
+            | 
+
+            <Link to={"/createBlog"}>Create blog</Link>
+
+            |
+
+            <Link to={"/settings"}>Settings</Link>
+
+            | 
+
+            <Link to={"/sign-out"}>Sign Out (sort of)</Link>
+
+
+            <br /><br />
             <Outlet />
         </>
     );
