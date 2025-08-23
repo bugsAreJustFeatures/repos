@@ -11,6 +11,9 @@ export default function Settings() {
     };
 
     return (
+        <>
         <h1>Settings</h1>
+        <p>This page is just to test the jwt at the moment</p>
+        </>
     )
 };
