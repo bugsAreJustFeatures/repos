@@ -8,27 +8,27 @@ export default function Navbar() {
 
             |
 
-            <Link to={"/sign-up"}>Sign Up</Link>
+            <Link to={"/sign-up"}> Sign Up </Link>
 
             |
 
-            <Link to={"/login"}>Login</Link>
+            <Link to={"/login"}> Login </Link>
 
             |
 
-            <Link to={"/my-blogs"}>My Blogs</Link>
+            <Link to={"/my-blogs"}> My Blogs </Link>
 
             | 
 
-            <Link to={"/createBlog"}>Create blog</Link>
+            <Link to={"/createBlog"}> Create blog </Link>
 
             |
 
-            <Link to={"/settings"}>Settings</Link>
+            <Link to={"/settings"}> Settings </Link>
 
             | 
 
-            <Link to={"/sign-out"}>Sign Out (sort of)</Link>
+            <Link to={"/sign-out"}> Sign Out </Link>
 
 
             <br /><br />

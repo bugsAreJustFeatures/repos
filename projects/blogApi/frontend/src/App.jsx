@@ -10,6 +10,7 @@ import MyBlogs from './MyBlogs';
 import Settings from './Settings';
 import SignOutPage from './SignOutPage';
 import CreateBlog from './CreateBlog';
+import ViewBlog from './ViewBlog';
 
 function App() {
 
@@ -44,6 +45,10 @@ function App() {
       {
         path: "/createBlog",
         element: <CreateBlog />,
+      },
+      {
+        path: "/my-blogs/:blogName",
+        element: <ViewBlog />,
       },
     ],
   },

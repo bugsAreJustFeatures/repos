@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function MyBlogs() {
 
@@ -21,10 +22,12 @@ export default function MyBlogs() {
                     },
                 });
     
-                // something wrong with api call
+                // user is not signed in 
                 if (response.status == 401) {
                     setAuthError(true);
                     return;
+
+                //  user is signed in but an error occured
                 } else if (!response.ok) {
                     throw new Error("API Error");
                 };
@@ -50,19 +53,22 @@ export default function MyBlogs() {
     } else if (!blogs) {
         return <p>Loading...</p>
     } else if (blogs.length < 1) { // fetch was successful but returned no blogs, user has no blogs
-        return <p>No blogs could be found.</p>
+        return (
+            <>
+                <h3>You have no blogs.</h3>
+                <p>Start creating today!</p>
+            </>
+        );
     };
 
     return (
         <>
             {blogs.map((blog, index) => (
                 <div key={index}>
-                    <p>created on: {blog.creation_time} (GMT)</p>
-                    <p> {blog.is_posted} </p>
-                    <p> {blog.post_title} </p>
-                    <p> {blog.post_content} </p>
+                    <Link to={`/my-blogs/${blog.post_title}`}> {blog.post_title} - {blog.is_posted ? "Posted" : "Not Posted"} </Link>
                 </div>
             ))}
         </>
     );
 };
+

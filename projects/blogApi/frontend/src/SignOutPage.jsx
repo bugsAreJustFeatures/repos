@@ -4,12 +4,33 @@ export default function SignOutPage() {
 
     const navigate = useNavigate();
 
-    setTimeout(() => {
-        localStorage.removeItem("token");
-        navigate("/")
-    }, 2000)
+    async function logOutUser() {
+        try {
+            const response = await fetch("/api/log-out", {
+                method: "POST",
+            });
 
-    return (
-        <h1>Signing out...</h1>
-    )
+            console.log(response);
+
+            if (!response.ok) {
+                throw new Error("Could not log user out.");
+            };
+
+            setTimeout(() => {
+                localStorage.removeItem("token");
+                navigate("/");
+            }, 2000)
+
+            
+
+        } catch (err) {
+            console.error("Unexpected error: ", err);
+            return;
+        };
+    };
+
+    logOutUser();
+
+    return <h1>Signing out...</h1>
+
 };
