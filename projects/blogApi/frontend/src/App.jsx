@@ -11,6 +11,7 @@ import Settings from './Settings';
 import SignOutPage from './SignOutPage';
 import CreateBlog from './CreateBlog';
 import ViewBlog from "./ViewBlog";
+import EditBlog from './EditBlog';
 
 function App() {
 
@@ -49,6 +50,10 @@ function App() {
       {
         path: "/view-blogs/:blogName",
         element: <ViewBlog />,
+      },
+      {
+        path: "/edit-blog/:blogName",
+        element: <EditBlog />,
       },
     ],
   },

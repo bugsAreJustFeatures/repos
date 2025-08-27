@@ -294,6 +294,53 @@ async function postSaveBlogRoute(req, res) {
     };
 };
 
+async function postEditBlogRoute(req, res) {
+    const currentBlogTitle = req.params.blogName;
+    const newBlogTitle = req.body.newBlogTitle;
+    const newBlogContent = req.body.newBlogContent;
+
+    let postId;
+
+    // find postId since the update "where" clause only accepts one field 
+    try {
+        postId = await prisma.posts.findFirst({
+            where: {
+                userId: req.user.id,
+                post_title: currentBlogTitle,
+            },
+            select: {
+                id: true,
+            },
+        });
+
+        if (!postId) {
+            return res.status(404).json({ err: "Could not find user's post "});
+        };
+    } catch (err) {
+        res.status(500).json({ err });
+    };
+
+    try {
+        const updateBlog = await prisma.posts.update({
+            where: {
+                id: postId.id,
+            },
+            data: {
+                post_title: newBlogTitle,
+                post_content: newBlogContent,
+            },
+        });
+
+        if (!updateBlog) {
+            res.status(404).json({msg: "Failed update on blog"})
+        };
+
+        return res.status(201).json({ msg: "Successful update on blog "});
+    } catch (err) {
+        return res.status(500).json({err: err});
+    };
+};
+
 export {
     postSignUpRoute,
     postLoginRoute,
@@ -304,5 +351,6 @@ export {
     postCreateCommentRoute,
     getMyBlogsRoute,
     postPostBlogRoute,
-    postSaveBlogRoute
+    postSaveBlogRoute,
+    postEditBlogRoute,
 }

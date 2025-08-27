@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function MyBlogs() {
 
-    // state of the fetched blogs
-    const [blogs, setBlogs] = useState(null);
-    
-    // error if user is not authorised
-    const [authError, setAuthError] = useState(false);
+    // state variables
+    const [blogs, setBlogs] = useState(null); // holds blogs and their data after fetching
+    const [authError, setAuthError] = useState(false); // is used to show a message if an error has occured
+
+    // use to navigate to edit blog page
+    const navigate = useNavigate();
 
     // useEffect to fetch blogs
     useEffect(() => {
@@ -47,6 +49,12 @@ export default function MyBlogs() {
         fetchBlogs();
     }, []);
 
+    function handleClick(blogName) {
+
+        // console.log(blogName)
+        navigate(`/edit-blog/${blogName}`);
+    };
+
     // fetch has not completed 
     if (authError) {
         return <p> Please login or sign up to view blogs </p>;
@@ -63,9 +71,17 @@ export default function MyBlogs() {
 
     return (
         <>
+        {/* loop through blogs */}
             {blogs.map((blog, index) => (
                 <div key={index}>
-                    <Link to={`/view-blogs/${blog.post_title}`}> {blog.post_title} - {blog.is_posted ? "Posted" : "Not Posted"} </Link>
+                    {/* give each one a link that sends them to the page to view the blog and show whether or not it is posted */}
+                    <Link to={`/view-blogs/${blog.post_title}`}>
+                        {blog.post_title} - {blog.is_posted ? "Posted" : "Not posted" }
+                    </Link>
+                    {/* if it is posted then dont show the "edit button" else do show */}
+                    {!blog.is_posted && (
+                        <button onClick={() => {handleClick(blog.post_title)}}>Edit Blog</button>
+                    )}
                 </div>
             ))}
         </>
