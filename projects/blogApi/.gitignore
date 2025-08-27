@@ -27,4 +27,4 @@ plan.txt
 *.sln
 *.sw?
 
-/backend/generated/
+/backend/generated/prisma/
