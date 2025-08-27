@@ -8,7 +8,7 @@ export default function ViewBlog() {
     const [comments, setComments] = useState(null); // holding comments data after fetching
     const [updateComments, setUpdateComments] = useState(false); // boolean variable to reset comments after a new one has been made
     const [displayCommentForm, setDisplayCommentForm] = useState(false); // boolean variable that is used to display the comment form if user clicks the "create comment" button
-    const [errorMessage, setErrorMessage] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null); // change to boolean and do it like i did in the home page
 
     // get blog name from param in url in react router
     const { blogName } = useParams();
@@ -18,7 +18,7 @@ export default function ViewBlog() {
         async function getBlog() {
             try {
                 // fetch blog data
-                const response = await fetch(`/api/my-blogs/${blogName}`, {
+                const response = await fetch(`/api/view-blogs/${blogName}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -30,6 +30,7 @@ export default function ViewBlog() {
                 if (!response.ok) {
                     throw new Error("Response from server was bad");
                 };
+
                 
                 // make data readable by browser and update the state with it
                 const data = await response.json()
@@ -50,7 +51,7 @@ export default function ViewBlog() {
         async function getBlogComments() {
             try {
                 // fetch comments for blog
-                const response = await fetch(`/api/my-blogs/${blogName}/comments`, {
+                const response = await fetch(`/api/view-blogs/${blogName}/comments`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -58,6 +59,9 @@ export default function ViewBlog() {
                     },
                 });
                 
+
+                console.log("fetch blog comments: ", response)
+
                 // check fetch was ok
                 if (!response.ok) {
                     throw new Error("Error whilst getting comments");
@@ -102,6 +106,7 @@ export default function ViewBlog() {
                     commentContent: commentContent,
                 }),
             });
+
 
             // check adding comment went well
             if (!response.ok) {
@@ -157,9 +162,15 @@ export default function ViewBlog() {
             {/* check if there are any comments, if there is then loop through and display otherwise just show a h3 tag message */}
             {comments.length > 0 ? comments.map((comment, index) => (
                 <div key={index}>
-                    {/* {comment.comment_title}  ---This is just to remind myself how to access the title later on-- */}
-                    {comment.comment_content}
+                    User: {comment.users.username} <br />
+                    Comment Title: {comment.comment_title} <br />
+                    {/* ---This is just to remind myself how to access the title later on-- */}
+                    Comment: {comment.comment_content}
+                    <br />
+                    <br />
+
                 </div>
+                
             )) : <h3>Be the first to add a comment on this blog!</h3>}
         </>
     );

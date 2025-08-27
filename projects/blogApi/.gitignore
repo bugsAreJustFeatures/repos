@@ -11,6 +11,10 @@ node_modules
 dist
 dist-ssr
 *.local
+.gitignore
+plan.txt
+/backend/.env
+
 
 # Editor directories and files
 .vscode/*
@@ -23,10 +27,4 @@ dist-ssr
 *.sln
 *.sw?
 
-# my secret files
-.gitignore
-*.env
-plan.txt
-/backend/generated/prisma
-
-
+/generated/prisma

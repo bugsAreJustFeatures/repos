@@ -18,7 +18,7 @@ const app = express();
 
 //allow frontend to communicate across ports
 app.use(cors({
-    origin: "http://localhost:5173", // this is react port and makes it so only this port can communicate, limiting chance of an attack
+    origin: "http://localhost:5173/", // this is react port and makes it so only this port can communicate, limiting chance of an attack
 }));
 
 //allow use of json
@@ -36,13 +36,13 @@ createSessionWithUser(passport);
 // check jwt is authentic
 authenticateUserWithJwt(passport)
 
-app.use("/", (req, res, next) => {
+app.use("/api", (req, res, next) => {
     res.locals.currentUser = req.user;
     next();
-})
+});
 
 // tell express where routes are located, and then what to do when a request with /api gets called
-app.use("/api", routes)
+app.use("/api", routes);
 
 // make server
 app.listen(PORT, () => {

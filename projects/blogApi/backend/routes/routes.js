@@ -1,14 +1,37 @@
 import express from "express";
-const router = express().router;
+const router = express.Router();
 
-import { getBlogsRoute, postLoginRoute } from "../controllers/routesController.js";
+import { postSignUpRoute, getMyBlogsRoute, postLoginRoute, getGetBlogRoute, getGetCommentsRoute, postPostBlogRoute, postSaveBlogRoute, postLogoutRoute, postCreateCommentRoute, getGetPublishedRoute } from "../controllers/routesController.js";
+
 import passport from "passport";
 
-//----- login routes -----//
-router.post("/login", postLoginRoute); // i use passport.authenticate("local") in the function
+//----- signup routes -----//
+router.post("/sign-up", postSignUpRoute);
 
-//----- blogs routes -----//
-router.get("/blogs",  passport.authenticate("jwt", {session: false }), getBlogsRoute);
+//----- login routes -----//
+router.post("/login", postLoginRoute); // i use passport in the function
+
+//----- logout routes -----//
+router.post("/log-out", postLogoutRoute); 
+
+router.get("/getPublishedBlogs", passport.authenticate("jwt", { session: false }), getGetPublishedRoute);
+
+//----- my-blog routes -----//
+router.get("/my-blogs",  passport.authenticate("jwt", { session: false }), getMyBlogsRoute);
+
+router.get("/view-blogs/:blogName", passport.authenticate("jwt", { session: false }), getGetBlogRoute);
+
+router.get("/view-blogs/:blogName/comments", passport.authenticate("jwt", { session: false }), getGetCommentsRoute);
+
+//----- create comment routes -----//
+router.post("/createComment", passport.authenticate("jwt", { session: false }), postCreateCommentRoute);
+
+//----- publish blog routes -----//
+router.post("/postBlog", passport.authenticate("jwt", { session: false }), postPostBlogRoute);
+
+//----- save blog routes -----//
+router.post("/saveBlog", passport.authenticate("jwt", { session: false }), postSaveBlogRoute);
+
 
 
 export default router

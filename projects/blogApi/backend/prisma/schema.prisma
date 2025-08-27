@@ -10,9 +10,9 @@ datasource db {
 
 model comments {
   id               Int      @id @default(autoincrement())
-  creation_time    DateTime
-  commment_title   String?
-  comment_contents String
+  creation_time    DateTime @default(now())
+  comment_title   String?
+  comment_content String
   userId           Int
   postId           Int
   posts            posts    @relation(fields: [postId], references: [id])
@@ -21,13 +21,15 @@ model comments {
 
 model posts {
   id            Int        @id @default(autoincrement())
-  post_contents String
-  creation_time DateTime
+  post_content String
+  creation_time DateTime   @default(now())
   last_modified DateTime?
   userId        Int
   post_title    String
   topics        String?
   comments      comments[]
+  is_posted     Boolean @default(false)
+
   users         users      @relation(fields: [userId], references: [id])
 }
 

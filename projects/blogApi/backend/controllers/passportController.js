@@ -9,7 +9,7 @@ import jwt from "jsonwebtoken";
 
 const options = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: "secret", // change to env
+    secretOrKey: process.env.JWT_SECRET,
 }
 
 function createSessionWithUser(passport) {
@@ -76,10 +76,8 @@ function authenticateUserWithJwt(passport) {
             });
 
             if (user) { // user exists and authenticate with jwt
-                console.log("All good")
                 return done(null, user);
             } else { // no user was found and cannot authenticate user
-                console.log("No user foind")
                 return done(null, false);
             };
         } catch (err) {

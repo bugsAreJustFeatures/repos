@@ -65,7 +65,7 @@ export default function MyBlogs() {
         <>
             {blogs.map((blog, index) => (
                 <div key={index}>
-                    <Link to={`/my-blogs/${blog.post_title}`}> {blog.post_title} - {blog.is_posted ? "Posted" : "Not Posted"} </Link>
+                    <Link to={`/view-blogs/${blog.post_title}`}> {blog.post_title} - {blog.is_posted ? "Posted" : "Not Posted"} </Link>
                 </div>
             ))}
         </>
