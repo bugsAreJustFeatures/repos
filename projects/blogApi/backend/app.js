@@ -36,11 +36,6 @@ createSessionWithUser(passport);
 // check jwt is authentic
 authenticateUserWithJwt(passport)
 
-app.use("/api", (req, res, next) => {
-    res.locals.currentUser = req.user;
-    next();
-});
-
 // tell express where routes are located, and then what to do when a request with /api gets called
 app.use("/api", routes);
 

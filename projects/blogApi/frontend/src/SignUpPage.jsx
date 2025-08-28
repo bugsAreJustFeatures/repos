@@ -1,6 +1,9 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function signUpPage() {
+
+    const [validationErrors, setValidationErrors] = useState(null);
 
     const navigate = useNavigate();
 
@@ -25,28 +28,42 @@ export default function signUpPage() {
             });
             
             const data = await response.json();
+                console.log("response was not ok: ", data);
 
             if (!response.ok) {
-                console.log("response was not ok: ", data);
+
+                if (data.validationErrors) {
+                    setValidationErrors(data.validationErrors);
+                    return;
+                };
                 return;
+            } else {
+                navigate("/login");
             };
 
-            // console.log(data)
-
-            navigate("/login")
         } catch (err) {
             console.log("Unexepected error: ", err);
         };
-    }   
+    };   
 
     return (
         <>
             <form onSubmit={handleForm}>
+
+                {validationErrors && (
+                    validationErrors.map((err, index) => (
+                        <div key={index}>
+                            {err.msg}
+                            <br /> <br />
+                        </div>
+                    ))
+                )}
+
                 <label htmlFor="username">Enter a Username: </label>
-                <input type="text" name="username" id="username" required defaultValue={"1234"}/>
+                <input type="text" name="username" id="username" required defaultValue={"1"}/>
                 <br />
                 <label htmlFor="password">Enter a Password: </label>
-                <input type="password" name="password" id="password" required defaultValue={"1234"}/>
+                <input type="password" name="password" id="password" required defaultValue={"1"}/>
                 <br />
                 <label htmlFor="passwordConfirm">Confirm Password: </label>
                 <input type="password" name="passwordConfirm" id="passwordConfirm" required defaultValue={"1234"}/>

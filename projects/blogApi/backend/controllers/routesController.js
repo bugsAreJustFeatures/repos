@@ -4,49 +4,97 @@ import jwt from "jsonwebtoken";
 import { PrismaClient } from "../generated/prisma/index.js";
 const prisma = new PrismaClient();
 
-async function postSignUpRoute(req, res) { 
+import { validationResult, body } from "express-validator";
+
+const signUpValidation = [
+    body("username")
+        .trim()
+        .isLength({ min: 3, max: 15}).withMessage("Username needs to be 3 and 15 characters long")
+        .isAlphanumeric().withMessage("Username can only contain A-Z, a-z, 0-9"),
+    body("password")
+        .trim()
+        .isLength({ min: 5, max: 30 }).withMessage("Password can only be between 5 and 30 character long")
+        .matches(/^[\x21-\x7E]+$/).withMessage("Password can only contain letters, numbers, symbols"), // this regex code allows letters, symbols and numbers but not spaces
+    body("passwordConfirm")
+        .trim()
+        .custom((passwordConfirm, { req }) => { //custom validator that checks if passwords match, if false it then adds the fail message to validation results which i will loop through later on
+            return passwordConfirm === req.body.password;
+        }).withMessage("Passwords do not match."),
+];
+
+const createOrEditBlogValidation = [
+    body("blogTitle")
+        .trim()
+        .isAscii().withMessage("Title can only include letters, numbers and symbols. ")
+        .isLength({ min: 5, max: 50 }).withMessage("Title has to be between 5 and 50 characters long. "),
+    body("blogContent")
+        .trim()
+        .isAscii().withMessage("Blog can only contain letter, numbers and symbols. ")
+        .isLength({ min: 100, max: 1000 }).withMessage("Blog can only be between 100 and 1000 characters long. "),
+];
+
+const createCmmentValidation = [
+    body("commentTitle")
+        .trim()
+        .optional({ checkFalsy: true })
+        .isAscii().withMessage("Comment title can only contain letter, numbers and symbols. ")
+        .isLength({ max: 20 }).withMessage("Comment title can only be between 1 and 20 characters long. "),
+    body("commentContent")
+        .trim()
+        .isAscii("Comment can only contain letter, numbers and symbols. ")
+        .isLength({ min: 1, max: 200 }).withMessage("Comment must only be between 1 and 200 characters long. "),
+];
+
+const postSignUpRoute = [
+    signUpValidation,
+    async (req, res) => { 
+
+    // the result of validation
+    const result = validationResult(req);
+
+    // if there are errors
+    if (!result.isEmpty()) {
+        return res.status(400).json({ msg: "Form was not field out correctly ", validationErrors: result.array() });
+    };
     
     const username = req.body.username;
     const password = req.body.password;
     const passwordConfirm = req.body.passwordConfirm;
 
     try {
-
         if (password !== passwordConfirm) {// use bcrypt compare later on
             return res.status(401).json({ error: "Passwords do not match" });
         };
-
         const addUser = await prisma.users.create({
             data: {
                 username,
                 password,
             },
         });
-
         console.log("add user: ", addUser)
-
         if (!addUser) {
             throw new Error("Server request went wrong")
         }
-
         res.status(201).json({ msg: "User has been signed up", "welcome": `Welcome ${username}!`});
         return;
     } catch (err) {
         res.status(406).json({ error: "User could not be added "});
         console.error("Error whilst signing user up: ", err);
     };
-};
+    },
+];
+
 
 function postLoginRoute(req, res, next) {
     // use local strategy and dont just redirect but login user and then issue a jwt just before 
-    passport.authenticate("local", { session: false }, (err, user) => {
+    passport.authenticate("local", { session: true }, (err, user) => {
         // no user could be found using local strategy
         if (err || !user) {
             return res.status(401).json({message: "invalid details entered"});
         };
 
         // create a login session and when its done and returns a user in the form of req.user when completed
-        req.login(user, { session: false }, (err) => {
+        req.login(user, { session: true }, (err) => {
             if (err) {
                 return res.status(500).json({message: "login failed"});
             };
@@ -57,7 +105,6 @@ function postLoginRoute(req, res, next) {
                 process.env.JWT_SECRET);
 
             // return jwt in the form of token and then log user in
-            console.log(req.user)
             return res.json({token});
         });
 
@@ -69,10 +116,14 @@ function postLoginRoute(req, res, next) {
 function postLogoutRoute(req, res) {
     req.logout((err) => {
         if (err) {
-            throw new Error("Error whilst logging out: ", err);
+            return res.status(500).json({ msg: "User could not be signed out. ", err });
+        } else {
+            // destroys parts of session that i want -  in this case its the cookies
+            req.session.destroy(() => {
+                res.clearCookie("connect.sid");
+                return res.status(201).json({ msg: "User logged out" });
+            });
         };
-
-        return res.status(201).json({ msg: "User logged out" });
     });
 };
 
@@ -177,10 +228,6 @@ async function postCreateCommentRoute(req, res) {
     const commentTitle = req.body.commentTitle;
     const commentContent = req.body.commentContent;
 
-    console.log(blogName)
-    console.log(commentTitle)
-    console.log(commentContent)
-
     let getBlogId;
 
     try {
@@ -253,10 +300,20 @@ async function getMyBlogsRoute(req, res) {
     };
 };
 
-async function postPostBlogRoute(req, res) {
+const postPostBlogRoute = [
+
+    createOrEditBlogValidation,
+    async (req, res) => {
+
+    const result = validationResult(req);
+
+    if (!result.isEmpty()) {
+        return res.status(400).json({ msg: "Blog was not created corrected ", validationErrors: result.array() });
+    };
+
     const blogTitle = req.body.blogTitle;
     const blogContent = req.body.blogContent;
-
+    
     try {
         const addBlog = await prisma.posts.create({
             data: {
@@ -266,33 +323,46 @@ async function postPostBlogRoute(req, res) {
                 is_posted: true,
             },
         });
-
+    
         return res.status(201).json({ msg: "Blog has been posted.", post: addBlog });
     } catch (err) {
         // console.error("Unexpected Error: ", err);
         res.status(500).json({ error: "Blog could not be posted." });
     };
-};
+    },
+];
 
-async function postSaveBlogRoute(req, res) {
-    const blogTitle = req.body.blogTitle;
-    const blogContent = req.body.blogContent;
 
-    try {
-        const addBlog = await prisma.posts.create({
-            data: {
-                post_content: blogContent,
-                userId: req.user.id,
-                post_title: blogTitle,
-            },
-        });
+const postSaveBlogRoute = [
+    createOrEditBlogValidation,
 
-        return res.status(201).json({ msg: "Blog has been saved.", post: addBlog });
-    } catch (err) {
-        // console.error("Unexpected Error: ", err);
-        return res.status(500).json({ error: "Blog could not be saved." });
-    };
-};
+    async (req, res) => {
+
+        const result = validationResult(req);
+
+        if(!result.isEmpty()){
+            return res.status(400).json({ msg: "Blog was not created corretly ", validationErrors: result.array() });
+        };
+
+        const blogTitle = req.body.blogTitle;
+        const blogContent = req.body.blogContent;
+    
+        try {
+            const addBlog = await prisma.posts.create({
+                data: {
+                    post_content: blogContent,
+                    userId: req.user.id,
+                    post_title: blogTitle,
+                },
+            });
+    
+            return res.status(201).json({ msg: "Blog has been saved.", post: addBlog });
+        } catch (err) {
+            // console.error("Unexpected Error: ", err);
+            return res.status(500).json({ error: "Blog could not be saved." });
+        };
+    },
+];
 
 async function postEditBlogRoute(req, res) {
     const currentBlogTitle = req.params.blogName;

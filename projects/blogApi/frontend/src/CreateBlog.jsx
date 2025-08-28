@@ -1,4 +1,8 @@
+import { useState } from "react";
+
 export default function CreateBlog() {
+
+    const [validationErrors, setValidationErrors] = useState(null);
 
     async function handleForm(e) {
         e.preventDefault();
@@ -21,17 +25,16 @@ export default function CreateBlog() {
             });
 
             console.log(localStorage.getItem("token"))
-            console.log(response);
-
 
             if (!response.ok) {
-                throw new Error("Error whilst handling blog")
-            }
-
-            response = await response.json();
-
-            console.log(response);
-
+                const data = await response.json();
+                if(data.validationErrors) {
+                    setValidationErrors(data.validationErrors);
+                    return
+                } else {
+                    throw new Error("Error whilst handling blog")
+                };
+            };
         } catch (err) {
             console.error("Unexpected error occured: ", err);
         };
@@ -40,6 +43,14 @@ export default function CreateBlog() {
 
     return (
         <>
+
+            {validationErrors && (
+                validationErrors.map((err, index) => (
+                    <div key={index}>
+                        {err.msg}
+                    </div>
+                ))
+            )}
             <form onSubmit={handleForm}>
                 <label htmlFor="blogTitle">Title: </label>
                 <input type="text" name="blogTitle" id="blogTitle" />

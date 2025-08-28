@@ -14,8 +14,6 @@ router.post("/login", postLoginRoute); // i use passport in the function
 //----- logout routes -----//
 router.post("/log-out", postLogoutRoute); 
 
-router.get("/getPublishedBlogs", passport.authenticate("jwt", { session: false }), getGetPublishedRoute);
-
 //----- my-blog routes -----//
 router.get("/my-blogs",  passport.authenticate("jwt", { session: false }), getMyBlogsRoute);
 
@@ -23,6 +21,9 @@ router.get("/my-blogs",  passport.authenticate("jwt", { session: false }), getMy
 router.get("/view-blogs/:blogName", passport.authenticate("jwt", { session: false }), getGetBlogRoute);
 
 router.get("/view-blogs/:blogName/comments", passport.authenticate("jwt", { session: false }), getGetCommentsRoute);
+
+//----- get published blogs (for home page) routes -----//
+router.get("/getPublishedBlogs", passport.authenticate("jwt", { session: false }), getGetPublishedRoute);
 
 //----- create comment routes -----//
 router.post("/createComment", passport.authenticate("jwt", { session: false }), postCreateCommentRoute);

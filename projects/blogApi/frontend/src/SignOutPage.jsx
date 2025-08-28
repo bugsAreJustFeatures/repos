@@ -10,11 +10,12 @@ export default function SignOutPage() {
                 method: "POST",
             });
 
-            console.log(response);
 
             if (!response.ok) {
                 throw new Error("Could not log user out.");
             };
+
+            console.log(await response.json());
 
             setTimeout(() => {
                 localStorage.removeItem("token");
