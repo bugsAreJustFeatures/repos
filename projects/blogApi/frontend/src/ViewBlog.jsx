@@ -9,6 +9,7 @@ export default function ViewBlog() {
     const [updateComments, setUpdateComments] = useState(false); // boolean variable to reset comments after a new one has been made
     const [displayCommentForm, setDisplayCommentForm] = useState(false); // boolean variable that is used to display the comment form if user clicks the "create comment" button
     const [errorMessage, setErrorMessage] = useState(null); // change to boolean and do it like i did in the home page
+    const [validationErrors, setValidationErrors] = useState(null);
 
     // get blog name from param in url in react router
     const { blogName } = useParams();
@@ -30,7 +31,6 @@ export default function ViewBlog() {
                 if (!response.ok) {
                     throw new Error("Response from server was bad");
                 };
-
                 
                 // make data readable by browser and update the state with it
                 const data = await response.json()
@@ -110,12 +110,18 @@ export default function ViewBlog() {
 
             // check adding comment went well
             if (!response.ok) {
+                const data = await response.json();
+                if (data.validationErrors) {
+                    setValidationErrors(data.validationErrors);
+                    return;
+                };
                 throw new Error("API Error");
+            } else {
+                // update state so that it resets comments and refetches them (it then includes the newly made comment) and then hides the create comment form
+                setUpdateComments(true);
+                setDisplayCommentForm(false);
             };
 
-            // update state so that it resets comments and refetches them (it then includes the newly made comment) and then hides the create comment form
-            setUpdateComments(true);
-            setDisplayCommentForm(false);
         } catch (err) {
             // server side error occured
             // console.error("Unexpected error: ", err);
@@ -147,13 +153,21 @@ export default function ViewBlog() {
 
             <button onClick={() => {setDisplayCommentForm(true)}}>Create comment</button>
 
+            {validationErrors && 
+                    validationErrors.map((err, index) => (
+                        <div key={index}>
+                            {err.msg}
+                            <br /><br />
+                        </div>
+                    ))}
+
             {displayCommentForm && (
                 <form onSubmit={handleCommentForm}> 
                     <label htmlFor="commentTitle">Comment Title: </label>
-                    <input type="text" name="commentTitle" id="commentTitle" placeholder="(optional)" defaultValue={"my comment title"}/>
+                    <input type="text" name="commentTitle" id="commentTitle" placeholder="(optional)" defaultValue={"m"}/>
                     <br />
                     <label htmlFor="commentContent">Your Comment: </label>
-                    <textarea name="commentContent" id="commentContent" required defaultValue={"my comment"}/>
+                    <textarea name="commentContent" id="commentContent"/>
                     <br />
                     <button type="submit">Add comment</button>
                 </form>
@@ -163,8 +177,8 @@ export default function ViewBlog() {
             {comments.length > 0 ? comments.map((comment, index) => (
                 <div key={index}>
                     User: {comment.users.username} <br />
-                    Comment Title: {comment.comment_title} <br />
-                    {/* ---This is just to remind myself how to access the title later on-- */}
+                    {comment.comment_title ? `Comment Title: ${comment.comment_title}` : ""}
+                    {comment.comment_title ? <br /> : ""}
                     Comment: {comment.comment_content}
                     <br />
                     <br />

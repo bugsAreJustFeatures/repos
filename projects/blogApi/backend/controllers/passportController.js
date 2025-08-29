@@ -5,7 +5,8 @@ const prisma = new PrismaClient();
 
 // import passport from "passport"
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
-import jwt from "jsonwebtoken";
+
+import { compare } from "bcrypt";
 
 const options = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -23,21 +24,25 @@ function createSessionWithUser(passport) {
                     },
                 });
 
+                console.log("This should be the user: ", user)
+
                 // no user in db with username so could redirect to signup page
                 if (!user) {
-                    return done(null, false, { errors: `Invalid username entered` });
+                    return done(null, false, { msg: `Invalid username entered` });
                 };
 
-                // check passwords match - uncomment when i want to use encrypted passwords
-                // // // // // const match = await bcrypt.compare(password, user.password);
-                if (password !== user.password) {
-                    return done(null, false, { errors: `Invalid password entered` });
+                // check passwords match
+                const match = await compare(password, user.password);
+
+                if (!match) {
+                    return done(null, false, { msg: `Invalid password entered` });
+
                 } else {
                     // details match and user exists
                     return done(null, user)
                 };
             } catch (err) {
-                console.error(`Error whilst finding user in database: `, err); // get rid when in prod
+                console.error(`Error whilst finding user in database: `, err);
                 return done(err);
             };
         }),
@@ -50,7 +55,7 @@ function createSessionWithUser(passport) {
 
     passport.deserializeUser(async (id, done) => {
         try {
-            const user = prisma.users.findFirst({
+            const user = await prisma.users.findFirst({
                 where: {
                     id: id,
                 },

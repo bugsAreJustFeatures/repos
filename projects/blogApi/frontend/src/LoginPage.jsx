@@ -5,20 +5,17 @@ export default function LoginPage() {
 
     const navigate = useNavigate();
 
-    const [username, setUsername] = useState(null);
-    const [password, setPassword] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
 
     async function handleForm(e) {
         e.preventDefault();
 
-        setUsername(e.target.username.value);
-        setPassword(e.target.password.value);
-
-        if (!username || !password) {
-            return;
-        }
+        const username = e.target.username.value;
+        const password = e.target.password.value;
     
         try {
+
+            console.log(username + " " + password)
             const response = await fetch("/api/login", {
                 method: "POST",
                 headers: {
@@ -30,15 +27,19 @@ export default function LoginPage() {
                 }),
             });
 
-
-            if (!response.ok) {
-                throw new Error("API problem");
-            };
-
             const data = await response.json();
-            localStorage.setItem("token", data.token);
+            if (!response.ok) {
+                if (data.inputErr) {
+                    setErrorMessage(data.inputErr);
+                    return;
+                } else {
+                    throw new Error("API problem");
+                }
+            } else {
+                localStorage.setItem("token", data.token);
+                navigate("/");
+            }
 
-            navigate("/my-blogs");
         } catch (err) {
             console.error("Unexpected Error occured: ", err);
         };
@@ -46,14 +47,23 @@ export default function LoginPage() {
     };
 
     return (
-        <form onSubmit={handleForm}>
-            <label htmlFor="username">Username: </label>
-            <input type="text" name="username" id="username" defaultValue={"123"}/>
-            <br />
-            <label htmlFor="password">Password: </label>
-            <input type="password" name="password" id="password" defaultValue={"123"}/>
-            <br />
-            <button type="submit">login</button>
-        </form>
+
+        <>
+            {errorMessage && (
+                <div>
+                    {errorMessage}
+                </div>
+            )}
+
+            <form onSubmit={(e) => {handleForm(e)}}>
+                <label htmlFor="username">Username: </label>
+                <input type="text" name="username" id="username" defaultValue={"yyharryboy"}/>
+                <br />
+                <label htmlFor="password">Password: </label>
+                <input type="password" name="password" id="password" defaultValue={"123456"} />
+                <br />
+                <button type="submit">login</button>
+            </form>
+        </>
     )
 };

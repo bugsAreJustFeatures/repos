@@ -6,6 +6,8 @@ const prisma = new PrismaClient();
 
 import { validationResult, body } from "express-validator";
 
+import { hash, compare } from "bcrypt";
+
 const signUpValidation = [
     body("username")
         .trim()
@@ -33,7 +35,7 @@ const createOrEditBlogValidation = [
         .isLength({ min: 100, max: 1000 }).withMessage("Blog can only be between 100 and 1000 characters long. "),
 ];
 
-const createCmmentValidation = [
+const createCommentValidation = [
     body("commentTitle")
         .trim()
         .optional({ checkFalsy: true })
@@ -42,12 +44,17 @@ const createCmmentValidation = [
     body("commentContent")
         .trim()
         .isAscii("Comment can only contain letter, numbers and symbols. ")
-        .isLength({ min: 1, max: 200 }).withMessage("Comment must only be between 1 and 200 characters long. "),
+        .isLength({ min: 1, max: 200 }).withMessage("Comment can only be between 1 and 200 characters long. "),
 ];
 
 const postSignUpRoute = [
     signUpValidation,
     async (req, res) => { 
+    
+    const username = req.body.username;
+    const password = req.body.password;
+    const hashedPassword = await hash(password, 10);
+    console.log("just made: ", hashedPassword)
 
     // the result of validation
     const result = validationResult(req);
@@ -56,30 +63,37 @@ const postSignUpRoute = [
     if (!result.isEmpty()) {
         return res.status(400).json({ msg: "Form was not field out correctly ", validationErrors: result.array() });
     };
-    
-    const username = req.body.username;
-    const password = req.body.password;
-    const passwordConfirm = req.body.passwordConfirm;
 
     try {
-        if (password !== passwordConfirm) {// use bcrypt compare later on
-            return res.status(401).json({ error: "Passwords do not match" });
-        };
-        const addUser = await prisma.users.create({
-            data: {
-                username,
-                password,
+        const usernameExists = await prisma.users.findFirst({
+            where: {
+                username: username,
             },
         });
-        console.log("add user: ", addUser)
-        if (!addUser) {
-            throw new Error("Server request went wrong")
-        }
-        res.status(201).json({ msg: "User has been signed up", "welcome": `Welcome ${username}!`});
-        return;
+
+        if (usernameExists) {
+            return res.status(400).json({ msg: "Username already exists" });
+        };
     } catch (err) {
-        res.status(406).json({ error: "User could not be added "});
-        console.error("Error whilst signing user up: ", err);
+        return res.status(500).json({ err, line: 77 });
+    };
+
+    try {
+        console.log("just before add: ", hashedPassword)
+        const addUser = await prisma.users.create({
+            data: {
+                username: username,
+                password: hashedPassword,
+            },
+        });
+
+        if (!addUser) {
+            return res.status(400).json({ msg: "User could not be added, try again "});
+        };
+
+        return res.status(201).json({ msg: "User has been signed up" });
+    } catch (err) {
+        return res.status(500).json({ err, line: 94 });
     };
     },
 ];
@@ -90,13 +104,14 @@ function postLoginRoute(req, res, next) {
     passport.authenticate("local", { session: true }, (err, user) => {
         // no user could be found using local strategy
         if (err || !user) {
-            return res.status(401).json({message: "invalid details entered"});
+            return res.status(500).json({ err, line: 106 });
         };
+        
 
         // create a login session and when its done and returns a user in the form of req.user when completed
         req.login(user, { session: true }, (err) => {
             if (err) {
-                return res.status(500).json({message: "login failed"});
+                return res.status(500).json({ err, line: 112 });
             };
         
             // issue a jwt 
@@ -107,7 +122,6 @@ function postLoginRoute(req, res, next) {
             // return jwt in the form of token and then log user in
             return res.json({token});
         });
-
 
         // call authenticate function
     })(req, res, next); 
@@ -223,7 +237,17 @@ async function getGetCommentsRoute(req, res) {
     };
 };
 
-async function postCreateCommentRoute(req, res) {
+const postCreateCommentRoute = [
+    
+    createCommentValidation, 
+    async (req, res) => {
+
+    const result = validationResult(req);
+
+    if (!result.isEmpty()) {
+        return res.status(400).json({ msg: "Comment was not created correctly ", validationErrors: result.array() });
+    };
+
     const blogName = req.body.blogName;
     const commentTitle = req.body.commentTitle;
     const commentContent = req.body.commentContent;
@@ -269,7 +293,8 @@ async function postCreateCommentRoute(req, res) {
     } catch (err) {
         res.status(500).json({err, line: 181});
     };
-};
+    },
+]
 
 async function getMyBlogsRoute(req, res) {
 

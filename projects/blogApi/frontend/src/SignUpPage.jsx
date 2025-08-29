@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function signUpPage() {
+export default function SignUpPage() {
 
     const [validationErrors, setValidationErrors] = useState(null);
+    const [usernameError, setUsernameError] = useState(null);
 
     const navigate = useNavigate();
 
@@ -26,18 +27,25 @@ export default function signUpPage() {
                     passwordConfirm,
                 }),
             });
-            
-            const data = await response.json();
-                console.log("response was not ok: ", data);
 
+            const data = await response.json();
+            
             if (!response.ok) {
 
                 if (data.validationErrors) {
                     setValidationErrors(data.validationErrors);
+
+                } else if (data.msg) {
+                    setUsernameError(data.msg);
+
+                } else {
+                    console.log("good request", data)
                     return;
-                };
-                return;
+                }
             } else {
+                setValidationErrors(null);
+                setUsernameError(null);
+
                 navigate("/login");
             };
 
@@ -59,14 +67,22 @@ export default function signUpPage() {
                     ))
                 )}
 
+                {usernameError && (
+                    <div>
+                        {usernameError}
+                        <br />
+                        <br />
+                    </div>
+                )}
+
                 <label htmlFor="username">Enter a Username: </label>
-                <input type="text" name="username" id="username" required defaultValue={"1"}/>
+                <input type="text" name="username" id="username" required defaultValue={"harryboy"}/>
                 <br />
                 <label htmlFor="password">Enter a Password: </label>
-                <input type="password" name="password" id="password" required defaultValue={"1"}/>
+                <input type="password" name="password" id="password" required defaultValue={"123456"}/>
                 <br />
                 <label htmlFor="passwordConfirm">Confirm Password: </label>
-                <input type="password" name="passwordConfirm" id="passwordConfirm" required defaultValue={"1234"}/>
+                <input type="password" name="passwordConfirm" id="passwordConfirm" required defaultValue={"123456"}/>
                 <br />
                 <button type="submit">Sign Up</button>
             </form>
