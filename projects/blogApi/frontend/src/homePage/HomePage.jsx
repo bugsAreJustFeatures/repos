@@ -11,7 +11,7 @@ export default function HomePage() {
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        async function getPostedBlogs() {
+        async function getPublishedBlogs() {
 
             try {
 
@@ -43,7 +43,7 @@ export default function HomePage() {
             };
         };
 
-        getPostedBlogs();
+        getPublishedBlogs();
     }, []);
 
     if (!blogs && !localStorage.getItem("token")) {
@@ -60,7 +60,7 @@ export default function HomePage() {
             {blogs && blogs.map((blog, index) => (
 
                 <div key={index} className={styles.blogs}>
-                    <Link to={`/view-blogs/${blog.post_title}`} className={styles.link}>
+                    <Link to={`/view-blogs/${blog.blog_title}`} className={styles.link}>
                         <div className={styles.blog}>
                             <div className={styles.authorAndDate}>
                                 <div className={styles.author}>
@@ -83,7 +83,7 @@ export default function HomePage() {
                             <div className={styles.titleAndSummary}>
                                 <div className={styles.titleWrapper}>
                                     <p className={styles.title}>
-                                        {blog.post_title}
+                                        {blog.blog_title}
                                     </p>
                                 </div>
 

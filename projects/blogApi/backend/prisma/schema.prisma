@@ -14,21 +14,21 @@ model comments {
   comment_title   String?
   comment_content String
   userId           Int
-  postId           Int
-  posts            posts    @relation(fields: [postId], references: [id])
+  blogId           Int
+  blogs            blogs    @relation(fields: [blogId], references: [id])
   users            users    @relation(fields: [userId], references: [id])
 }
 
-model posts {
+model blogs {
   id            Int        @id @default(autoincrement())
-  post_content String
+  blog_content String
   creation_time DateTime   @default(now())
   last_modified DateTime?
   userId        Int
-  post_title    String
+  blog_title    String
   topics        String?
   comments      comments[]
-  is_posted     Boolean @default(false)
+  is_published     Boolean @default(false)
 
   users         users      @relation(fields: [userId], references: [id])
 }
@@ -38,5 +38,5 @@ model users {
   username String
   password String
   comments comments[]
-  posts    posts[]
+  blogs    blogs[]
 }

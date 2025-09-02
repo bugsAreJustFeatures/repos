@@ -76,12 +76,12 @@ export default function MyBlogs() {
         {/* loop through blogs */}
             {blogs.map((blog, index) => (
                 <div key={index} className={styles.blogs}>
-                    {/* give each one a link that sends them to the page to view the blog and show whether or not it is posted */}
-                    <Link to={`/view-blogs/${blog.post_title}`}>
+                    {/* give each one a link that sends them to the page to view the blog and show whether or not it is published */}
+                    <Link to={`/view-blogs/${blog.blog_title}`}>
                     <div className={styles.blog}>
-                        {blog.post_title} - {blog.is_posted ? "Posted" : "Not posted" }
-                        {!blog.is_posted && (
-                            <button onClick={() => {handleClick(blog.post_title)}}>Edit Blog</button>
+                        {blog.blog_title} - {blog.is_published ? "Published" : "Not published" }
+                        {!blog.is_published && (
+                            <button onClick={() => {handleClick(blog.blog_title)}}>Edit Blog</button>
                         )}
                     </div>
                     </Link>

@@ -73,10 +73,10 @@ export default function EditBlog() {
         <>
             <form onSubmit={(e) => {handleFormSubmit(e)}}>
                 <label htmlFor="blogTitle">Title: </label>
-                <input type="text" name="blogTitle" id="blogTitle" defaultValue={blog.post_title} />
+                <input type="text" name="blogTitle" id="blogTitle" defaultValue={blog.blog_title} />
                 <br />
                 <label htmlFor="blogContent">Your Blog: </label>
-                <textarea name="blogContent" id="blogContent" defaultValue={blog.post_content}></textarea>
+                <textarea name="blogContent" id="blogContent" defaultValue={blog.blog_content}></textarea>
                 <br />
                 <button type="submit">Update Blog</button>
             </form>

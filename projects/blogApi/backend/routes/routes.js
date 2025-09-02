@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 
-import { postSignUpRoute, getMyBlogsRoute, postLoginRoute, getGetBlogRoute, getGetCommentsRoute, postPostBlogRoute, postSaveBlogRoute, postLogoutRoute, postCreateCommentRoute, getGetPublishedRoute, postEditBlogRoute } from "../controllers/routesController.js";
+import { postSignUpRoute, getMyBlogsRoute, postLoginRoute, getGetBlogRoute, getGetCommentsRoute, postPublishBlogRoute, postSaveBlogRoute, postLogoutRoute, postCreateCommentRoute, getGetPublishedRoute, postEditBlogRoute } from "../controllers/routesController.js";
 
 import passport from "passport";
 
@@ -29,7 +29,7 @@ router.get("/getPublishedBlogs", passport.authenticate("jwt", { session: false }
 router.post("/createComment", passport.authenticate("jwt", { session: false }), postCreateCommentRoute);
 
 //----- publish blog routes -----//
-router.post("/postBlog", passport.authenticate("jwt", { session: false }), postPostBlogRoute);
+router.post("/publishBlog", passport.authenticate("jwt", { session: false }), postPublishBlogRoute);
 
 //----- save blog routes -----//
 router.post("/saveBlog", passport.authenticate("jwt", { session: false }), postSaveBlogRoute);

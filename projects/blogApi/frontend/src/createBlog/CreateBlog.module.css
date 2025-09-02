@@ -26,7 +26,7 @@ input, textarea, button {
     height: 50vh;
 }
 
-#postBtn {
+#publishBtn {
     cursor: pointer;
 }
 

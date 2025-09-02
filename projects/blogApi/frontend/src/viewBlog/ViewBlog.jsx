@@ -142,11 +142,11 @@ export default function ViewBlog() {
     return (
         // blog details
         <div id={styles.wrapper}>
-            {blog.post_title}
+            {blog.blog_title}
 
             <br />
 
-            {blog.post_content}
+            {blog.blog_content}
 
             <br /><br /><br /><br /><br />
 

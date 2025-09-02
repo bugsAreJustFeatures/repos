@@ -11,7 +11,7 @@ export default function CreateBlog() {
 
         let blogOption;
 
-        e.nativeEvent.submitter.name == "postBtn" ? blogOption = "postBlog" : blogOption = "saveBlog";
+        e.nativeEvent.submitter.name == "publishBtn" ? blogOption = "publishBlog" : blogOption = "saveBlog";
 
         try {
             let response = await fetch(`/api/${blogOption}`, {
@@ -63,7 +63,7 @@ export default function CreateBlog() {
                 <label htmlFor="blogContent" id={styles.contentLabel}>Write your blog: </label>
                 <textarea name="blogContent" id={styles.contentField}></textarea>
 
-                <button type="submit" name="postBtn" id={styles.postBtn}>Post Blog</button>
+                <button type="submit" name="publishBtn" id={styles.publishBtn}>Publish Blog</button>
                 <button type="submit" name="saveBtn" id={styles.saveBtn}>Save Blog</button>
             </form>
         </div>

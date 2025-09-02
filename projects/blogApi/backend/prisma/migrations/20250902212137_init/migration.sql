@@ -1,27 +1,27 @@
 -- CreateTable
 CREATE TABLE "public"."comments" (
     "id" SERIAL NOT NULL,
-    "creation_time" TIMESTAMP(3) NOT NULL,
-    "commment_title" TEXT,
+    "creation_time" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "comment_title" TEXT,
     "comment_content" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
-    "postId" INTEGER NOT NULL,
+    "blogId" INTEGER NOT NULL,
 
     CONSTRAINT "comments_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "public"."posts" (
+CREATE TABLE "public"."blogs" (
     "id" SERIAL NOT NULL,
-    "post_content" TEXT NOT NULL,
+    "blog_content" TEXT NOT NULL,
     "creation_time" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "last_modified" TIMESTAMP(3),
     "userId" INTEGER NOT NULL,
-    "post_title" TEXT NOT NULL,
+    "blog_title" TEXT NOT NULL,
     "topics" TEXT,
-    "is_posted" BOOLEAN NOT NULL DEFAULT false,
+    "is_published" BOOLEAN NOT NULL DEFAULT false,
 
-    CONSTRAINT "posts_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "blogs_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -34,10 +34,10 @@ CREATE TABLE "public"."users" (
 );
 
 -- AddForeignKey
-ALTER TABLE "public"."comments" ADD CONSTRAINT "comments_postId_fkey" FOREIGN KEY ("postId") REFERENCES "public"."posts"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "public"."comments" ADD CONSTRAINT "comments_blogId_fkey" FOREIGN KEY ("blogId") REFERENCES "public"."blogs"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."comments" ADD CONSTRAINT "comments_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "public"."posts" ADD CONSTRAINT "posts_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "public"."blogs" ADD CONSTRAINT "blogs_userId_fkey" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

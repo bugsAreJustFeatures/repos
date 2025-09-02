@@ -142,12 +142,12 @@ function postLogoutRoute(req, res) {
 
 async function getGetPublishedRoute(req, res) {
     try {
-        const getBlogs = await prisma.posts.findMany({
+        const getBlogs = await prisma.blogs.findMany({
             where: {
-                is_posted: true,
+                is_published: true,
             },
             select: {
-                post_title: true,
+                blog_title: true,
                 creation_time: true,
                 last_modified: true,
                 users: {
@@ -177,9 +177,9 @@ async function getGetBlogRoute(req, res) {
     };
 
     try {
-        const getBlog = await prisma.posts.findFirst({
+        const getBlog = await prisma.blogs.findFirst({
             where: {
-                post_title: blogName,
+                blog_title: blogName,
             },
         });
 
@@ -194,9 +194,9 @@ async function getGetCommentsRoute(req, res) {
     let blogId;
 
     try {
-        blogId = await prisma.posts.findFirst({
+        blogId = await prisma.blogs.findFirst({
             where: {
-                post_title: blogName,
+                blog_title: blogName,
             },
             select: {
                 id: true,
@@ -210,7 +210,7 @@ async function getGetCommentsRoute(req, res) {
     try {
         const getComments = await prisma.comments.findMany({
             where: {
-                postId: blogId.id,
+                blogId: blogId.id,
             },
             select: {
                 creation_time: true,
@@ -225,7 +225,7 @@ async function getGetCommentsRoute(req, res) {
         });
 
         if (getComments.length < 1) {
-            return res.status(201).json({ msg: "Successful search, post has no comments", comments: []});
+            return res.status(201).json({ msg: "Successful search, blog has no comments", comments: []});
         };
 
         return res.status(201).json({ msg: "Successful search", comments: getComments });
@@ -252,9 +252,9 @@ const postCreateCommentRoute = [
     let getBlogId;
 
     try {
-        getBlogId = await prisma.posts.findFirst({
+        getBlogId = await prisma.blogs.findFirst({
             where: {
-                post_title: blogName,
+                blog_title: blogName,
             },
             select: {
                 id: true,
@@ -275,7 +275,7 @@ const postCreateCommentRoute = [
         const addComment = await prisma.comments.create({
             data: {
                 userId: req.user.id,
-                postId: getBlogId.id,
+                blogId: getBlogId.id,
                 comment_title: commentTitle,
                 comment_content: commentContent,
             },
@@ -301,14 +301,14 @@ async function getMyBlogsRoute(req, res) {
     };
 
     try {
-        const getBlogs = await prisma.posts.findMany({
+        const getBlogs = await prisma.blogs.findMany({
             where: {
                 userId: req.user.id,
             },
             select: {
                 creation_time: true,
-                post_title: true,
-                is_posted: true,
+                blog_title: true,
+                is_published: true,
             },
         });
 
@@ -322,7 +322,7 @@ async function getMyBlogsRoute(req, res) {
     };
 };
 
-const postPostBlogRoute = [
+const postPublishBlogRoute = [
 
     createOrEditBlogValidation,
     async (req, res) => {
@@ -337,19 +337,19 @@ const postPostBlogRoute = [
     const blogContent = req.body.blogContent;
     
     try {
-        const addBlog = await prisma.posts.create({
+        const addBlog = await prisma.blogs.create({
             data: {
-                post_content: blogContent,
+                blog_content: blogContent,
                 userId: req.user.id,
-                post_title: blogTitle,
-                is_posted: true,
+                blog_title: blogTitle,
+                is_published: true,
             },
         });
     
-        return res.status(201).json({ msg: "Blog has been posted.", post: addBlog });
+        return res.status(201).json({ msg: "Blog has been published.", blog: addBlog });
     } catch (err) {
         // console.error("Unexpected Error: ", err);
-        res.status(500).json({ error: "Blog could not be posted." });
+        res.status(500).json({ error: "Blog could not be published." });
     };
     },
 ];
@@ -370,15 +370,15 @@ const postSaveBlogRoute = [
         const blogContent = req.body.blogContent;
     
         try {
-            const addBlog = await prisma.posts.create({
+            const addBlog = await prisma.blogs.create({
                 data: {
-                    post_content: blogContent,
+                    blog_content: blogContent,
                     userId: req.user.id,
-                    post_title: blogTitle,
+                    blog_title: blogTitle,
                 },
             });
     
-            return res.status(201).json({ msg: "Blog has been saved.", post: addBlog });
+            return res.status(201).json({ msg: "Blog has been saved.", blog: addBlog });
         } catch (err) {
             // console.error("Unexpected Error: ", err);
             return res.status(500).json({ error: "Blog could not be saved." });
@@ -391,35 +391,35 @@ async function postEditBlogRoute(req, res) {
     const newBlogTitle = req.body.newBlogTitle;
     const newBlogContent = req.body.newBlogContent;
 
-    let postId;
+    let blogId;
 
-    // find postId since the update "where" clause only accepts one field 
+    // find blogId since the update "where" clause only accepts one field 
     try {
-        postId = await prisma.posts.findFirst({
+        blogId = await prisma.blogs.findFirst({
             where: {
                 userId: req.user.id,
-                post_title: currentBlogTitle,
+                blog_title: currentBlogTitle,
             },
             select: {
                 id: true,
             },
         });
 
-        if (!postId) {
-            return res.status(404).json({ err: "Could not find user's post "});
+        if (!blogId) {
+            return res.status(404).json({ err: "Could not find user's blog "});
         };
     } catch (err) {
         res.status(500).json({ err });
     };
 
     try {
-        const updateBlog = await prisma.posts.update({
+        const updateBlog = await prisma.blogs.update({
             where: {
-                id: postId.id,
+                id: blogId.id,
             },
             data: {
-                post_title: newBlogTitle,
-                post_content: newBlogContent,
+                blog_title: newBlogTitle,
+                blog_content: newBlogContent,
             },
         });
 
@@ -442,7 +442,7 @@ export {
     getGetCommentsRoute,
     postCreateCommentRoute,
     getMyBlogsRoute,
-    postPostBlogRoute,
+    postPublishBlogRoute,
     postSaveBlogRoute,
     postEditBlogRoute,
 }
