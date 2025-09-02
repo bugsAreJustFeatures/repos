@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import styles from "./CreateBlog.module.css";
+
 export default function CreateBlog() {
 
     const [validationErrors, setValidationErrors] = useState(null);
@@ -42,7 +44,7 @@ export default function CreateBlog() {
 
 
     return (
-        <>
+        <div id={styles.wrapper}>
 
             {validationErrors && (
                 validationErrors.map((err, index) => (
@@ -51,18 +53,19 @@ export default function CreateBlog() {
                     </div>
                 ))
             )}
-            <form onSubmit={handleForm}>
-                <label htmlFor="blogTitle">Title: </label>
-                <input type="text" name="blogTitle" id="blogTitle" />
+
+            <form onSubmit={handleForm} id={styles.createBlogForm}>
+                <label htmlFor="blogTitle" id={styles.titleLabel}>Title: </label>
+                <input type="text" name="blogTitle" id={styles.titleField} />
 
                 <br /><br />
 
-                <label htmlFor="blogContent">Write your blog: </label>
-                <textarea name="blogContent" id="blogContent"></textarea>
+                <label htmlFor="blogContent" id={styles.contentLabel}>Write your blog: </label>
+                <textarea name="blogContent" id={styles.contentField}></textarea>
 
-                <button type="submit" name="postBtn">Post Blog</button>
-                <button type="submit" name="saveBtn">Save Blog</button>
+                <button type="submit" name="postBtn" id={styles.postBtn}>Post Blog</button>
+                <button type="submit" name="saveBtn" id={styles.saveBtn}>Save Blog</button>
             </form>
-        </>
+        </div>
     )
 };

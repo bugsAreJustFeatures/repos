@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import styles from "./LoginPage.module.css"
+
 export default function LoginPage() {
 
     const navigate = useNavigate();
@@ -15,7 +17,6 @@ export default function LoginPage() {
     
         try {
 
-            console.log(username + " " + password)
             const response = await fetch("/api/login", {
                 method: "POST",
                 headers: {
@@ -28,9 +29,10 @@ export default function LoginPage() {
             });
 
             const data = await response.json();
+            console.log(data)
             if (!response.ok) {
-                if (data.inputErr) {
-                    setErrorMessage(data.inputErr);
+                if (data.err) {
+                    setErrorMessage(data.err);
                     return;
                 } else {
                     throw new Error("API problem");
@@ -48,22 +50,23 @@ export default function LoginPage() {
 
     return (
 
-        <>
+        <div id={styles.wrapper}>
+
             {errorMessage && (
-                <div>
+                <div id={styles.errorMessage}>
                     {errorMessage}
                 </div>
             )}
 
-            <form onSubmit={(e) => {handleForm(e)}}>
-                <label htmlFor="username">Username: </label>
-                <input type="text" name="username" id="username" defaultValue={"yyharryboy"}/>
+            <form onSubmit={(e) => {handleForm(e)}} id={styles.loginForm}>
+                <label htmlFor="username" id={styles.usernameLabel}>Username: </label>
+                <input type="text" name="username" id={styles.usernameField} defaultValue={"yyharryboy"}/>
                 <br />
-                <label htmlFor="password">Password: </label>
-                <input type="password" name="password" id="password" defaultValue={"123456"} />
+                <label htmlFor="password" id={styles.passwordLabel}>Password: </label>
+                <input type="password" name="password" id={styles.passwordField} defaultValue={"123456"} />
                 <br />
-                <button type="submit">login</button>
+                <button type="submit" id={styles.submitBtn}>login</button>
             </form>
-        </>
+        </div>
     )
 };

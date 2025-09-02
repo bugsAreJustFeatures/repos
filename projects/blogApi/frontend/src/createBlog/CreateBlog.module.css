@@ -1,0 +1,35 @@
+input, textarea, button {
+    color: black;
+}
+
+#wrapper {
+    margin: 5rem 15rem;
+    
+}
+
+#createBlogForm {
+    display: grid;
+    grid-template-rows: 0.1fr 0.8fr 0.1fr;
+    gap: 1.25rem;
+    justify-items: center;
+}
+
+#titleLabel {
+}
+
+#titleField {
+ 
+}
+
+#contentField {
+    width: 80vw;
+    height: 50vh;
+}
+
+#postBtn {
+    cursor: pointer;
+}
+
+#saveBtn {
+    cursor: pointer;
+}

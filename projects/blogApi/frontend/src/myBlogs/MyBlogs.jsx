@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
+import styles from "./MyBlogs.module.css";
+
 export default function MyBlogs() {
 
     // state variables
@@ -41,7 +43,7 @@ export default function MyBlogs() {
                 setBlogs(data.blogs);
 
             } catch (err) { // something went wrong that was not with the api
-                console.error("Unexpected error: ", err);
+                // console.error("Unexpected error: ", err);
             };
         };
     
@@ -62,29 +64,30 @@ export default function MyBlogs() {
         return <p>Loading...</p>
     } else if (blogs.length < 1) { // fetch was successful but returned no blogs, user has no blogs
         return (
-            <>
+            <div id={styles.noBlogsContainer}>
                 <h3>You have no blogs.</h3>
                 <p>Start creating today!</p>
-            </>
+            </div>
         );
     };
 
     return (
-        <>
+        <div id={styles.wrapper}>
         {/* loop through blogs */}
             {blogs.map((blog, index) => (
-                <div key={index}>
+                <div key={index} className={styles.blogs}>
                     {/* give each one a link that sends them to the page to view the blog and show whether or not it is posted */}
                     <Link to={`/view-blogs/${blog.post_title}`}>
+                    <div className={styles.blog}>
                         {blog.post_title} - {blog.is_posted ? "Posted" : "Not posted" }
+                        {!blog.is_posted && (
+                            <button onClick={() => {handleClick(blog.post_title)}}>Edit Blog</button>
+                        )}
+                    </div>
                     </Link>
-                    {/* if it is posted then dont show the "edit button" else do show */}
-                    {!blog.is_posted && (
-                        <button onClick={() => {handleClick(blog.post_title)}}>Edit Blog</button>
-                    )}
                 </div>
             ))}
-        </>
+        </div>
     );
 };
 

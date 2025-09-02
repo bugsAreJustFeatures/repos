@@ -101,13 +101,12 @@ const postSignUpRoute = [
 
 function postLoginRoute(req, res, next) {
     // use local strategy and dont just redirect but login user and then issue a jwt just before 
-    passport.authenticate("local", { session: true }, (err, user) => {
+    passport.authenticate("local", { session: true }, (err, user, info) => {
         // no user could be found using local strategy
         if (err || !user) {
-            return res.status(500).json({ err, line: 106 });
+            return res.status(500).json({ err: info.msg, line: 106 });
         };
         
-
         // create a login session and when its done and returns a user in the form of req.user when completed
         req.login(user, { session: true }, (err) => {
             if (err) {
@@ -162,8 +161,6 @@ async function getGetPublishedRoute(req, res) {
         if (!getBlogs) {
             return res.status(500).json({ msg: "Error whilst serching database for blogs" });
         };
-
-        console.log("getBlogs: ", getBlogs);
 
         res.status(201).json({ msg: "Blog search was a success ", blogs: getBlogs });
     } catch (err) {

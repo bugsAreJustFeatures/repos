@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import styles from "./SignUp.module.css";
+
 export default function SignUpPage() {
 
     const [validationErrors, setValidationErrors] = useState(null);
@@ -55,37 +57,39 @@ export default function SignUpPage() {
     };   
 
     return (
-        <>
-            <form onSubmit={handleForm}>
+        <div id={styles.wrapper}>
 
+            <div id={styles.errorWrapper}>
                 {validationErrors && (
-                    validationErrors.map((err, index) => (
-                        <div key={index}>
-                            {err.msg}
-                            <br /> <br />
-                        </div>
-                    ))
-                )}
+                        validationErrors.map((err, index) => (
+                            <div id={styles.errorMsgWrapper}>
+                                <div key={index} className={styles.errorMsg}>
+                                    {err.msg}
+                                </div>
+                                <br /><br />
+                            </div>
+                        ))
+                    )}
 
                 {usernameError && (
-                    <div>
+                    <div id={styles.usernameError}>
                         {usernameError}
-                        <br />
-                        <br />
                     </div>
                 )}
+            </div>
 
-                <label htmlFor="username">Enter a Username: </label>
-                <input type="text" name="username" id="username" required defaultValue={"harryboy"}/>
+            <form onSubmit={handleForm} id={styles.signUpForm}>
+                <label htmlFor="username" id={styles.usernameLabel}>Enter a Username: </label>
+                <input type="text" name="username" id={styles.usernameField} required defaultValue={"harryboy"}/>
                 <br />
-                <label htmlFor="password">Enter a Password: </label>
-                <input type="password" name="password" id="password" required defaultValue={"123456"}/>
+                <label htmlFor="password" id={styles.passwordLabel}>Enter a Password: </label>
+                <input type="password" name="password" id={styles.passwordField} required defaultValue={"123456"}/>
                 <br />
-                <label htmlFor="passwordConfirm">Confirm Password: </label>
-                <input type="password" name="passwordConfirm" id="passwordConfirm" required defaultValue={"123456"}/>
+                <label htmlFor="passwordConfirm" id={styles.passwordConfirmLabel}>Confirm Password: </label>
+                <input type="password" name="passwordConfirm" id={styles.passwordConfirmField} required defaultValue={"123456"}/>
                 <br />
-                <button type="submit">Sign Up</button>
+                <button type="submit" id={styles.submitBtn}>Sign Up</button>
             </form>
-        </>
+        </div>
     )
 };

@@ -1,0 +1,71 @@
+input, button {
+    color: black;
+}
+
+#wrapper {
+    margin: 15rem;
+    /* border: thin solid white; */
+    display: grid;
+    justify-items: center;
+    grid-template-columns: repeat(2, 0.5fr);
+    grid-template-rows: 0.3fr 0.7fr;
+    text-align: center;
+}
+
+#errorWrapper {
+    grid-row: 1;
+    grid-column: span 2;
+    padding: 3rem;
+}
+
+#signUpForm {
+    grid-row: 2;
+    grid-column: span 2;
+    grid-template-rows: 0.3fr repeat(3, 0.2fr) 0.1fr;   
+    display: grid;
+    gap: 1.25rem;
+}
+
+#usernameLabel {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+#usernameField {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+#passwordLabel {
+    grid-column: 1;
+    grid-row: 3;
+}
+
+#passwordField {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+#passwordConfirmLabel {
+    grid-column: 1;
+    grid-row: 4;
+}   
+
+#passwordConfirmField {
+    grid-column: 2;
+    grid-row: 4;
+}
+
+#submitBtn {
+    grid-column: span 2;
+    grid-row: 5;
+    margin: auto;   
+    border: none;
+    cursor: pointer;
+}
+
+#submitBtn:hover {
+    background-color: chocolate;
+    color: white;
+}
+

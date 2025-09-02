@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import styles from "./ViewBlog.module.css";
+
 export default function ViewBlog() {
 
     // state variables
@@ -139,7 +141,7 @@ export default function ViewBlog() {
     // main return statement if blog fetch, comment fetch, comments are more than 0, then this will show
     return (
         // blog details
-        <>
+        <div id={styles.wrapper}>
             {blog.post_title}
 
             <br />
@@ -186,6 +188,6 @@ export default function ViewBlog() {
                 </div>
                 
             )) : <h3>Be the first to add a comment on this blog!</h3>}
-        </>
+        </div>
     );
 };

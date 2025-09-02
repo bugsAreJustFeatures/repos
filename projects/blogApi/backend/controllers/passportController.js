@@ -24,8 +24,6 @@ function createSessionWithUser(passport) {
                     },
                 });
 
-                console.log("This should be the user: ", user)
-
                 // no user in db with username so could redirect to signup page
                 if (!user) {
                     return done(null, false, { msg: `Invalid username entered` });

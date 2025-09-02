@@ -1,17 +1,17 @@
-import './App.css'
+import { useRoutes } from 'react-router-dom'
 
-import { Outlet, Route, BrowserRouter as Router, useRoutes } from 'react-router-dom'
+import Navbar from './navBar/Navbar';
+import HomePage from './homePage/HomePage';
+import SignUpPage from './signUp/SignUpPage';
+import LoginPage from './login/LoginPage';
+import MyBlogs from './myBlogs/MyBlogs';
+import Settings from './settings/Settings';
+import SignOutPage from './signOut/SignOutPage';
+import CreateBlog from './createBlog/CreateBlog';
+import ViewBlog from "./viewBlog/ViewBlog";
+import EditBlog from './editBlog/EditBlog';
 
-import Navbar from './Navbar';
-import HomePage from './HomePage';
-import SignUpPage from './SignUpPage';
-import LoginPage from './LoginPage';
-import MyBlogs from './MyBlogs';
-import Settings from './Settings';
-import SignOutPage from './SignOutPage';
-import CreateBlog from './CreateBlog';
-import ViewBlog from "./ViewBlog";
-import EditBlog from './EditBlog';
+import "./App.css";
 
 function App() {
 
