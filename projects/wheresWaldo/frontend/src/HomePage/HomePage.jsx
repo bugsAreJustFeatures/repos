@@ -1,40 +1,44 @@
 import styles from "./HomePage.module.css"
 import image from "../assets/waldo1.jpg"
-import { useState } from "react";
 
 export default function HomePage() {
 
-    let offsetTop;
-    let offsetLeft;
-
     function handleImageClick(e) {
 
-        offsetTop = e.target.offsetTop;
-        offsetLeft = e.target.offsetLeft;
+        // --NOTE-- //
+        // if the page is resized after being clicked then the box will move since
+        // im placing it on the page and using the page coords to place it but dont 
+        // worry since there will only be one box showing at a time and i will have 
+        // already have recorded where the user has clicked on the image which is all
+        // i really need, also user can just re-click where they want to if they 
+        // resize page 
 
-        const pageX = e.clientX;
-        const pageY = e.clientY;
+        // amount of margin (offset) being appied to image itself
+        const offsetTop = e.target.offsetTop; 
+        const offsetLeft = e.target.offsetLeft;
+        
+        // click coords on user's page
+        const pageX = e.clientX; // where user clicked on x axis of page
+        const pageY = e.clientY; // where user clicked on y axis of page
 
-        const x = pageX - offsetLeft;
-        const y = pageY - offsetTop;
+        // click coords on image (what i want to record)
+        const clickOnImageX = pageX - offsetLeft; 
+        const clickOnImageY = pageY - offsetTop; 
 
-        console.log("x: ", x)
-        console.log("y: ", y)
+        // box that is placed where user has clicked to display menu to select character
+        const selectCharacterBox = document.createElement("div");
+        selectCharacterBox.id = styles.selectCharacterBox;
+        selectCharacterBox.style.left = `${pageX}px`;
+        selectCharacterBox.style.top = `${pageY}px`;
+        e.target.offsetParent.appendChild(selectCharacterBox);
+
+        // debugging 
+        // console.logs
+        console.log("x-axis on image: ", clickOnImageX)
+        console.log("y-axis on image: ", clickOnImageY)
         console.log("pageX: ", pageX)
         console.log("pageY: ", pageY)
-
-        // console.log(x, y)
         console.log(e)
-
-        const dot = document.createElement("div");
-        dot.style.borderRadius = "50%";
-        dot.style.backgroundColor = "black";
-        dot.style.width = "30px";
-        dot.style.height = "30px";
-        dot.style.position = "absolute";
-        dot.style.left = `${pageX - 30 / 2}px`; // im placing the top left of the circle (div) so i need to half both the height and length that its been pushed away with so that its the middle, just like a circumference and a radius
-        dot.style.top = `${pageY - 30 / 2}px`;
-        e.target.offsetParent.appendChild(dot);
     };
 
 
