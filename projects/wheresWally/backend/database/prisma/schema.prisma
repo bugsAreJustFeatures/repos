@@ -30,7 +30,7 @@ model characters {
 
 model scenes {
   id Int @id @default(autoincrement())
-
+  sceneName String
   characters characters[] @relation("charactersScenes")
   positions positions[]
 }
@@ -39,7 +39,8 @@ model positions {
   id Int @id @default(autoincrement())
   sceneId Int
   characterId Int
-  character_postition String
+  character_position_x Int
+  character_position_y Int
 
   character characters @relation(fields: [characterId], references: [id])
   scene scenes @relation(fields: [sceneId], references: [id])
