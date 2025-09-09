@@ -18,6 +18,7 @@ CREATE TABLE "public"."characters" (
 -- CreateTable
 CREATE TABLE "public"."scenes" (
     "id" SERIAL NOT NULL,
+    "sceneName" TEXT NOT NULL,
 
     CONSTRAINT "scenes_pkey" PRIMARY KEY ("id")
 );
@@ -27,7 +28,7 @@ CREATE TABLE "public"."positions" (
     "id" SERIAL NOT NULL,
     "sceneId" INTEGER NOT NULL,
     "characterId" INTEGER NOT NULL,
-    "character_postition_x" INTEGER NOT NULL,
+    "character_position_x" INTEGER NOT NULL,
     "character_position_y" INTEGER NOT NULL,
 
     CONSTRAINT "positions_pkey" PRIMARY KEY ("id")

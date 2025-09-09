@@ -37,6 +37,7 @@
             setImageClickX(clickOnImageX);
             setImageClickY(clickOnImageY);
             setIsThereBox(true);
+            console.log(clickOnImageX, clickOnImageY)
         };
 
         // form that handles sumbitting character selection form
@@ -101,6 +102,9 @@
 
         return (
             <div id={styles.wrapper}>
+
+                <h1 id={styles.sceneName}>Beach Club</h1>
+
                 <div id={styles.announcementBanner}>
 
                     {foundCharacter && (

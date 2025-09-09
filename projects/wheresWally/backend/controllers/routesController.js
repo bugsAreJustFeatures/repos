@@ -7,7 +7,6 @@ async function postCheckResults(req, res, next) {
     const resultY = req.body.resultY;
     const sceneNumber = parseInt(req.params.sceneNumber, 10); // need to do this because its passed through json.stringify and prisma expects an integer for the column
     const character = req.body.character;
-    console.log(character)
 
     try {
         const checkCharacter = await prisma.characters.findFirst({
@@ -18,6 +17,7 @@ async function postCheckResults(req, res, next) {
                 id: true,
             },
         });
+        console.log(checkCharacter)
 
         const checkPosition = await prisma.positions.findFirst({
             where: {
@@ -29,6 +29,7 @@ async function postCheckResults(req, res, next) {
                 character_position_y: true,
             },
         });
+    console.log("hi")
 
         // create variables for storing db coordinates
         const storedX = checkPosition.character_position_x;
@@ -36,8 +37,8 @@ async function postCheckResults(req, res, next) {
 
         //check if where the user clicked was within the allowed boundaries around the point i have stored in db
         // how big is the area that users can click on image to be correct
-        const rangeX = 60;
-        const rangeY = 100;
+        const rangeX = 50;
+        const rangeY = 50;
         // furthest they can be away either left (x-axis) or down (y-axis)
         const lowerBoundaryX = storedX - rangeX;
         const lowerBoundaryY = storedY - rangeY;
