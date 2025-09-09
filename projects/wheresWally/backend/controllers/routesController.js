@@ -7,6 +7,7 @@ async function postCheckResults(req, res, next) {
     const resultY = req.body.resultY;
     const sceneNumber = parseInt(req.params.sceneNumber, 10); // need to do this because its passed through json.stringify and prisma expects an integer for the column
     const character = req.body.character;
+    console.log(character)
 
     try {
         const checkCharacter = await prisma.characters.findFirst({
@@ -49,11 +50,11 @@ async function postCheckResults(req, res, next) {
 
         // check if the checks passed or failed
         if (checkX && checkY) { // checks passed and user found the character
-            return res.status(200).json({ msg: `success` });
+            return res.status(200).json({ msg: `success`, foundCharacter: character });
         } else {
             return res.status(200).json({ msg: `fail` });
         };
-        
+
     } catch (err) { // internal error 
         return res.status(500).json({ msg: "Server error", err });
     };

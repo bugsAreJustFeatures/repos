@@ -24,6 +24,7 @@ dist-ssr
 *.sw?
 
 # What i have added
-./.gitignore
-/backend/.env
-/backend/generated/prisma
+/backend/database/.env
+/backend/database/generated/prisma
+/toDo.txt
+
