@@ -1,0 +1,53 @@
+#wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#waldoImageContainer {
+    height: 600px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+}
+
+.scene {
+    height: 100%;
+    width: auto;
+    background-size: contain;
+}
+
+#selectCharacterBox {
+    width: 10%;
+    height: 6%;
+    position: absolute;
+    border: 1px solid black;
+    background-color: blue;
+}
+
+#selectCharacterForm {
+    
+}
+
+#selectField {
+
+}
+
+#wallyOption {
+
+}
+
+#waldoOption {
+    
+}
+
+#announcementBanner {
+    
+}
+
+#foundCharacterMessage {
+}
