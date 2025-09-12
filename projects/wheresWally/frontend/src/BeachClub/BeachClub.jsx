@@ -127,8 +127,14 @@
 
                     // check if all characters have been found and if so game is complete
                     if ((knownCharacters.length + 1 ) == characterList.length) {
-                        setFinishTime(Date.now());
+                        setFinishTime(Date.now()); // store current time as finish time
+                        
+                        // update state so that the game is finished and there is only "congrats" message shown
                         setIsGameFinished(true);
+                        setFoundCharacter(null);
+                        setAlreadyKnown(null);
+                        setAlreadyKnownCharacter(null);
+                        setFoundCharacter(null);
                     };
                     
                 } else {
@@ -180,20 +186,26 @@
                 <div id={styles.announcementBanner}>
 
                     {foundCharacter && (
-                        <div id={styles.foundCharacterMessageWrapper}>
+                        <div class={styles.gameMessage}>
                                 <p>You Found {latestFind}!</p> 
                         </div>
                     )}
 
                     {notFoundCharacter && (
-                        <div id={styles.notFoundCharacterMessageWrapper}>
+                        <div class={styles.gameMessage}>
                                 <p>Unlucky, but no one is there sadly. Have another go!</p>
                         </div>
                     )}
 
                     {alreadyKnown && (
-                        <div id={styles.notFoundCharacterMessageWrapper}>
+                        <div class={styles.gameMessage}>
                                 <p>You found {alreadyKnownCharacter} here already!</p>
+                        </div>
+                    )}
+
+                    {isGameFinished && (
+                        <div class={styles.gameMessage}>
+                            <p>&#x1F389;CONGRATULATIONS! YOU FOUND EVERYONE!&#x1F389;</p>
                         </div>
                     )}
 
@@ -216,7 +228,6 @@
                                 </form>
                             </div>
                         </div>
-                        <p>&#x1F389;CONGRATULATIONS! YOU FOUND EVERYONE!&#x1F389;</p>
                     </div>
 
                 ) : <div id={styles.waldoImageContainer}>
