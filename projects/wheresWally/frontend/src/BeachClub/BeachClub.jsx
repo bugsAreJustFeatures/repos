@@ -19,15 +19,14 @@
         const [alreadyKnownCharacter, setAlreadyKnownCharacter] = useState(null); // use to show that the user has already searched there and found someone instead of searching db again - but this has the character name 
         const [isGameFinished, setIsGameFinished] = useState(false); // use to send request to check timer when all character have been found
         const [finishTime, setFinishTime] = useState(null); // use to keep track of when the user found all characters
-        const [timeToComplete, setTimeToComplete] = useState(null); // will be set to how long it took user to game
-
+        const [totalSeconds, setTotalSeconds] = useState(0); // total amount of seconds the user is taking
         const navigate = useNavigate(); // used to send user back to home page after completing game
         const characterList = ["Wally"]; // list of characters
         
 
+        // useEffect hook to start backend timer when user loads page
         useEffect(() => {
-
-            async function startTimer() {
+            async function startBackendTimer() {
                 try {
                     const response = await fetch("/api/start-timer", {
                         method: "POST",
@@ -51,8 +50,29 @@
                 };
             };
 
-            startTimer();
+            startBackendTimer();
         }, []);
+
+        // useEffect hook that starts frontend timer on mount and then dynamically changes the state to create a live timer
+        useEffect(() => {
+
+            // check if game is finished, if so stop timing
+            if (isGameFinished) {
+                return;
+            };
+
+            const interval = setInterval(() => {
+                setTotalSeconds(last => last + 1);
+            }, 1000);
+
+            return () => clearInterval(interval);
+        }, [isGameFinished]);
+
+        // work out timer from total number of seconds
+        const secondTimer = totalSeconds % 10; // remainder of seconds such as 100 seconds % 10 = 0
+        const tenSecondTimer = Math.floor((totalSeconds % 60) / 10); // remainder of 10 seconds such as 100 seconds = 40 seconds (4 for tenSecondTimer)
+        const minuteTimer = Math.floor((totalSeconds % 600) / 60); // remainder of 60 seconds, 100 seconds = 1.6r (round down via math.floor to 1)
+        const tenMinuteTimer = Math.floor((totalSeconds % 3600) / 600) // remainder of 60 minutes, 100 seconds = 0.16r (round down to 0 via math.floor)
 
         // function that handles the click on image, displays box where user clicked
         function handleImageClick(e) {
@@ -168,7 +188,6 @@
                 });
                 // if the request was not ok
                 if (!finishGame.ok) {
-                    console.log(await finishGame.json())
                     console.error("Could not finish game");
                 };
 
@@ -182,6 +201,26 @@
             <div id={styles.wrapper}>
 
                 <h1 id={styles.sceneName}>Beach Club</h1>
+
+                <div id={styles.timerWrapper}>
+                    <div id={styles.timer}>
+                        <div id={styles.tenMinuteTimer}>
+                            <p>{tenMinuteTimer}</p>
+                        </div>
+                        <div id={styles.minuteTimer}>
+                            <p>{minuteTimer}</p>
+                        </div>
+                        <div id={styles.timerSeperator}>
+                            <p>:</p>
+                        </div>
+                        <div id={styles.tenSecondTimer}>
+                            <p>{tenSecondTimer}</p>
+                        </div>
+                        <div id={styles.secondTimer}>
+                            <p>{secondTimer}</p>
+                        </div>
+                    </div>
+                </div>
 
                 <div id={styles.announcementBanner}>
 
@@ -215,8 +254,25 @@
                 {isGameFinished ? (
                     <div id={styles.finishedGameWrapper}>
                         <div id={styles.timeAndFormWrapper}>
-                            <div id={styles.timeWrapper}>
-                                <p>Your Time: {timeToComplete} </p>
+                            <div id={styles.showFinalTimeWrapper}>
+                                <p>Your Time:</p>
+                                <div id={styles.showFinalTime}>
+                                    <div id={styles.showFinalTenMinute}>
+                                        <p>{tenMinuteTimer}</p>
+                                    </div>
+                                    <div id={styles.showFinalMinute}>
+                                        <p>{minuteTimer}</p>
+                                    </div>
+                                    <div id={styles.showFinalSeperator}>
+                                        <p>:</p>
+                                    </div>
+                                    <div id={styles.showFinalTenSecond}>
+                                        <p>{tenSecondTimer}</p>
+                                    </div>
+                                    <div id={styles.showFinalSecond}>
+                                        <p>{secondTimer}</p>
+                                    </div>
+                                </div>
                             </div>
 
                             <div id={styles.formWrapper}>

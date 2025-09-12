@@ -29,6 +29,14 @@
     background-color: blue;
 }
 
+#timer {
+    display: flex;
+}
+
+#showFinalTime {
+    display: flex;
+}
+
 #selectCharacterForm {
     
 }
