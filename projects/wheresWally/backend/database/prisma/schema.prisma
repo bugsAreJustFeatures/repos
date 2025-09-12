@@ -16,8 +16,14 @@ datasource db {
 
 model users {
   id Int @id @default(autoincrement())
-  username String? @unique
-  time_to_complete DateTime 
+  username String @unique
+  beach_club BigInt?
+}
+
+model game_sessions {
+  id Int @id @default(autoincrement())
+  userId String @unique  // change to temp_id  
+  start_time BigInt?
 }
 
 model characters {
@@ -30,7 +36,7 @@ model characters {
 
 model scenes {
   id Int @id @default(autoincrement())
-  sceneName String
+  scene_name String
   characters characters[] @relation("charactersScenes")
   positions positions[]
 }

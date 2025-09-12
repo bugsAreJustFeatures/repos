@@ -24,25 +24,25 @@
 
             async function startTimer() {
                 try {
-                    const startTimer = await fetch("/api/startTimer", {
+                    const response = await fetch("/api/start-timer", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
+                            "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
                         },
-                        body: JSON.stringify({
-                            // this is where i would send req.user.id
-                        }),
                     });
 
-                    console.log(startTimer);
+                    // console.log(startTimer);
+                    const data = await response.json();
+                    console.log(data);
+
                     // went wrong
-                    if (!startTimer.ok) {
-                        console.log(await startTimer.json());
+                    if (!response.ok) {
                         console.error("request to start timer was bad, cannot time you");
                         return;
                     };
                 } catch (err) {
-                    console.error("error with timer backend", err);
+                    console.error("error with timer backend: ", err);
                 };
             };
 
@@ -59,14 +59,12 @@
             async function finishGame() {
 
                 try {
-                    const finishGame = await fetch("/api/finishGame", {
+                    const finishGame = await fetch("/api/finish-game", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
+                            "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
                         },
-                        body: JSON.stringify({
-                            // i will send data here such as req.user.id
-                        }),
                     });
 
                     console.log(finishGame);
@@ -128,11 +126,12 @@
                     method: "post",
                     headers: {
                         "Content-Type": "application/json",
+                        "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
                     },
                     body: JSON.stringify({
                         resultX: imageClickX,
                         resultY: imageClickY,
-                        character
+                        character,
                     }),
                 });
 

@@ -1,10 +1,16 @@
 //import dotenv and use config 
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ path: "./database/.env" });
 
 // main imports
 import express from "express";
 import cors from "cors";
+
+// jwt and passport imports
+import passport from "passport";
+import authoriseWithJwt from "./controllers/jwt.js";
+
+// routes imports
 import routes from "./routes/routes.js"
 
 // create express server
@@ -16,6 +22,8 @@ app.use(cors({
     origin: "http://localhost:5173",
 }));
 app.use(express.json());
+// authorise jwt
+authoriseWithJwt(passport);
 // tell express where routes are
 app.use("/api", routes);
 

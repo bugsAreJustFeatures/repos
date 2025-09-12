@@ -1,10 +1,19 @@
 -- CreateTable
 CREATE TABLE "public"."users" (
     "id" SERIAL NOT NULL,
-    "username" TEXT,
-    "time_to_complete" TIMESTAMP(3) NOT NULL,
+    "username" TEXT NOT NULL,
+    "beach_club" INTEGER,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."game_sessions" (
+    "id" SERIAL NOT NULL,
+    "userId" INTEGER NOT NULL,
+    "start_time" TIMESTAMP(3),
+
+    CONSTRAINT "game_sessions_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -18,7 +27,7 @@ CREATE TABLE "public"."characters" (
 -- CreateTable
 CREATE TABLE "public"."scenes" (
     "id" SERIAL NOT NULL,
-    "sceneName" TEXT NOT NULL,
+    "scene_name" TEXT NOT NULL,
 
     CONSTRAINT "scenes_pkey" PRIMARY KEY ("id")
 );
