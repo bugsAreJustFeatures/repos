@@ -1,6 +1,7 @@
     import styles from "./BeachClub.module.css"
     import image from "../assets/waldo1.jpg"
     import { useEffect, useState } from "react";
+    import { useNavigate } from "react-router-dom";
 
     export default function BeachClub() {
 
@@ -17,8 +18,12 @@
         const [alreadyKnown, setAlreadyKnown] = useState(false); // use to show that the user has already searched there and found someone instead of searching db again
         const [alreadyKnownCharacter, setAlreadyKnownCharacter] = useState(null); // use to show that the user has already searched there and found someone instead of searching db again - but this has the character name 
         const [isGameFinished, setIsGameFinished] = useState(false); // use to send request to check timer when all character have been found
+        const [finishTime, setFinishTime] = useState(null); // use to keep track of when the user found all characters
+        const [timeToComplete, setTimeToComplete] = useState(null); // will be set to how long it took user to game
 
-        const characterList = ["Wally"];
+        const navigate = useNavigate(); // used to send user back to home page after completing game
+        const characterList = ["Wally"]; // list of characters
+        
 
         useEffect(() => {
 
@@ -49,38 +54,6 @@
             startTimer();
         }, []);
 
-        useEffect(() => {
-
-            // exit the useEffect if game is not finished (its on mount)
-            if (!isGameFinished) {
-                return;
-            };
-
-            async function finishGame() {
-
-                try {
-                    const finishGame = await fetch("/api/finish-game", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
-                        },
-                    });
-
-                    console.log(finishGame);
-                    // if the request was not ok
-                    if (!finishGame.ok) {
-                        console.log(await finishGame.json())
-                        console.error("Could not finish game");
-                    };
-                } catch (err) {
-                    console.error("Error happened in finishGame: ", err);
-                };
-            };
-
-            finishGame();
-        }, [isGameFinished])
-
         // function that handles the click on image, displays box where user clicked
         function handleImageClick(e) {
             // amount of margin (offset) being appied to image itself - used to work out where the image is on screen
@@ -104,7 +77,7 @@
         };
 
         // form that handles sumbitting character selection form
-        async function handleForm(e) {
+        async function handleSelectCharacterForm(e) {
             // stop resetting page 
             e.preventDefault(); 
 
@@ -154,6 +127,7 @@
 
                     // check if all characters have been found and if so game is complete
                     if ((knownCharacters.length + 1 ) == characterList.length) {
+                        setFinishTime(Date.now());
                         setIsGameFinished(true);
                     };
                     
@@ -165,6 +139,36 @@
 
             } catch (err) { // internal error for dev
                 throw new Error("Something went wrong: ", err);
+            };
+        };
+
+        async function handleSumbitUsernameForm(e) {
+            // stop form resetting page
+            e.preventDefault();
+
+            const username = e.target.usernameInput.value; // username that user inputted
+                
+            try {
+                const finishGame = await fetch("/api/finish-game", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${localStorage.getItem("accessToken")}`,
+                    },
+                    body: JSON.stringify({
+                        username,
+                        finishTime,
+                    }),
+                });
+                // if the request was not ok
+                if (!finishGame.ok) {
+                    console.log(await finishGame.json())
+                    console.error("Could not finish game");
+                };
+
+                navigate("/"); // navigate back to home page after submitting username
+            } catch (err) {
+                console.error("Error happened in finishGame: ", err);
             };
         };
 
@@ -196,29 +200,41 @@
                     
                 </div>
 
-                {isGameFinished && (
-                    <div id={styles.finishedGameMessageWrapper}>
+                {isGameFinished ? (
+                    <div id={styles.finishedGameWrapper}>
+                        <div id={styles.timeAndFormWrapper}>
+                            <div id={styles.timeWrapper}>
+                                <p>Your Time: {timeToComplete} </p>
+                            </div>
+
+                            <div id={styles.formWrapper}>
+                                <form onSubmit={(e) => {handleSumbitUsernameForm(e)}} id={styles.timeForm}>
+                                    <label htmlFor="usernameInput" id={styles.usernameInputLabel}>Username:</label>
+                                    <input type="text" name="usernameInput" id={styles.usernameInput} required placeholder="Required" />
+
+                                    <button type="submit" id={styles.usernameSubmitBtn}>Sumbit Time</button>
+                                </form>
+                            </div>
+                        </div>
                         <p>&#x1F389;CONGRATULATIONS! YOU FOUND EVERYONE!&#x1F389;</p>
                     </div>
-                )}
 
-                <div id={styles.waldoImageContainer}>
-                    <img onClick={(e) => {handleImageClick(e)}} src={image} alt="a where's wally image" className={styles.scene} />
-
-                {/* only display box if user has clicked on image and stops multiple displaying */}
-                    {isThereBox && (
-                        <div id={styles.selectCharacterBox} style={{left: `${pageClickX}px`, top: `${pageclickY}px`}}>
-                            <form id={styles.selectCharacterForm} onSubmit={(e) => {handleForm(e)}}>
-                                <select name="selectField" id={styles.selectField}>
-                                    <option value="Wally" id={styles.wallyOption}> Wally </option>
-                                    <option value="Harry" id={styles.wallyOption}> harry </option>
-                                </select>
-
-                                <button type="submit">Confirm Character</button>
-                            </form>
-                        </div>
-                    )}
-                </div>
+                ) : <div id={styles.waldoImageContainer}>
+                        <img onClick={(e) => {handleImageClick(e)}} src={image} alt="a where's wally image" className={styles.scene} />
+            
+                            {isThereBox && (
+                                <div id={styles.selectCharacterBox} style={{left: `${pageClickX}px`, top: `${pageclickY}px`}}>
+                                    <form id={styles.selectCharacterForm} onSubmit={(e) => {handleSelectCharacterForm(e)}}>
+                                        <select name="selectField" id={styles.selectField}>
+                                            <option value="Wally" id={styles.wallyOption}> Wally </option>
+                                        </select>
+                            
+                                        <button type="submit">Confirm Character</button>
+                                    </form>
+                                </div>
+                            )}
+                    </div>
+                }
             </div>  
         )
     };

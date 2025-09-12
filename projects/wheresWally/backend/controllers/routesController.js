@@ -129,17 +129,16 @@ async function postStartTimer(req, res, next) {
 
 async function postFinishGame(req, res, next) {
 
-    // !!!!!! ----- these will need to be changed such as username will come from a form filled out by user and scene name will be passed through request body------ !!!!!!!
-
+    // extract body elements
     const sceneName = "beach_club"; // change to req.body.sceneName + "_time";
-    const username = "abcde"; // change to req.body.username via request body
+    const username = req.body.username; // change to req.body.username via request body
+    const finishTime = req.body.finishTime; // the time at which the user finished
 
     // get jwt and decode from authorization header
     const bearerJwt = req.get("Authorization"); // get bearer jwt from the headers
     const accessToken = bearerJwt.split(" ")[1]; // split via space and get the element at index 1, which is jwt
     const decoded = jwt.verify(accessToken, process.env.JWT_SECRET); // decode the jwt
     const tempId = decoded.id; //  get temp id from jwt
-    const finishTime = Date.now(); // the time at which the user finished
 
     try {
         // find the time that the scene was started at - will need to reset db every now and again to delete all the started sessions that have not been completed

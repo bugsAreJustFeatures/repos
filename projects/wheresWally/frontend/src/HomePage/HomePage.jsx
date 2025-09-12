@@ -17,10 +17,7 @@ export default function HomePage () {
                 });
 
                 // watch response
-                console.log(response);
                 const data = await response.json();
-                console.log(data);
-
                 // response was not ok
                 if (!response.ok) {
                     console.error("Something went wrong")
