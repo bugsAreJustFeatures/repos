@@ -130,8 +130,8 @@ async function postStartTimer(req, res, next) {
 async function postFinishGame(req, res, next) {
 
     // extract body elements
-    const sceneName = "beach_club"; // change to req.body.sceneName + "_time";
-    const username = req.body.username; // change to req.body.username via request body
+    const sceneName = "beach_club"; // change to req.body.sceneName;
+    const username = req.body.username; // via request body
     const finishTime = req.body.finishTime; // the time at which the user finished
 
     // get jwt and decode from authorization header
@@ -141,6 +141,19 @@ async function postFinishGame(req, res, next) {
     const tempId = decoded.id; //  get temp id from jwt
 
     try {
+
+        // check that username is not already existing
+        const userExists = await prisma.users.findFirst({
+            where: {
+                username,
+            },
+        });
+
+        // tell frontend that username already exists
+        if (userExists) {
+            return res.status(409).json({ msg: "Username already exists, please choose another one." });
+        };
+
         // find the time that the scene was started at - will need to reset db every now and again to delete all the started sessions that have not been completed
         const startTime = await prisma.game_sessions.findFirst({
             where: {

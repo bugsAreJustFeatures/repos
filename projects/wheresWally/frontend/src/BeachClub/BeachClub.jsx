@@ -20,6 +20,10 @@
         const [isGameFinished, setIsGameFinished] = useState(false); // use to send request to check timer when all character have been found
         const [finishTime, setFinishTime] = useState(null); // use to keep track of when the user found all characters
         const [totalSeconds, setTotalSeconds] = useState(0); // total amount of seconds the user is taking
+        const [usernameClash, setUsernameClash] = useState(false); // use to know if username already exists in database
+
+
+
         const navigate = useNavigate(); // used to send user back to home page after completing game
         const characterList = ["Wally"]; // list of characters
         
@@ -175,7 +179,7 @@
             const username = e.target.usernameInput.value; // username that user inputted
                 
             try {
-                const finishGame = await fetch("/api/finish-game", {
+                const response = await fetch("/api/finish-game", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -186,12 +190,21 @@
                         finishTime,
                     }),
                 });
-                // if the request was not ok
-                if (!finishGame.ok) {
-                    console.error("Could not finish game");
-                };
 
-                navigate("/"); // navigate back to home page after submitting username
+                // if the response did not have a status code of 200
+                if (!response.ok) {
+
+                    // check if the username already existing caused it to fail
+                    if (response.status == 409) {
+                        setUsernameClash(true);
+                    };
+                    // put error into console
+                    console.error("Could not finish game");
+
+                } else { // navigate back to home page after submitting username successfully
+                    navigate("/");
+                }
+
             } catch (err) {
                 console.error("Error happened in finishGame: ", err);
             };
@@ -225,25 +238,25 @@
                 <div id={styles.announcementBanner}>
 
                     {foundCharacter && (
-                        <div class={styles.gameMessage}>
+                        <div className={styles.gameMessage}>
                                 <p>You Found {latestFind}!</p> 
                         </div>
                     )}
 
                     {notFoundCharacter && (
-                        <div class={styles.gameMessage}>
+                        <div className={styles.gameMessage}>
                                 <p>Unlucky, but no one is there sadly. Have another go!</p>
                         </div>
                     )}
 
                     {alreadyKnown && (
-                        <div class={styles.gameMessage}>
+                        <div className={styles.gameMessage}>
                                 <p>You found {alreadyKnownCharacter} here already!</p>
                         </div>
                     )}
 
                     {isGameFinished && (
-                        <div class={styles.gameMessage}>
+                        <div className={styles.gameMessage}>
                             <p>&#x1F389;CONGRATULATIONS! YOU FOUND EVERYONE!&#x1F389;</p>
                         </div>
                     )}
@@ -274,6 +287,12 @@
                                     </div>
                                 </div>
                             </div>
+
+                            {usernameClash && (
+                                <div id={styles.usernameClashWrapper}>
+                                    <p>Username already exists, please choose another one.</p>
+                                </div>
+                            )}
 
                             <div id={styles.formWrapper}>
                                 <form onSubmit={(e) => {handleSumbitUsernameForm(e)}} id={styles.timeForm}>
