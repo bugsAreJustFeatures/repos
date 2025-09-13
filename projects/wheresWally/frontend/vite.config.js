@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+const PORT = process.env.PORT || 3000;
+
 // https://vite.dev/config/
 export default defineConfig({
   root: __dirname,
@@ -11,7 +13,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:3000",
+        target: `http://localhost:${PORT}`,
         changeOrigin: true,
       },
     },
