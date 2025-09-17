@@ -43,6 +43,10 @@ export default function HomePage() {
         // prevent default form behaviour
         e.preventDefault();
 
+        const username = e.target.registerUsername.value;
+        const password = e.target.registerPassword.value;
+        const confirmPassword = e.target.registerConfirmPassword.value;
+
         try {
             const response = await fetch("/api/register", {
                 method: "POST",
@@ -56,6 +60,8 @@ export default function HomePage() {
                     confirmPassword,
                 }),
             });
+
+            console.log(response)
 
             if (!response.ok) {
                 console.error("Could not register user, issue with API!");
