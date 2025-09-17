@@ -1,0 +1,9 @@
+1. make a basic form for now that allows me to log in and register 
+    a. use backend passport local and then jwt to remain logged in
+    b. this should display different things using the "signedIn" state variable ive made
+
+2. then make it so when user is logged in the home page should be able to display messages and friends
+    a. for now just make sure i can fetch them dont worry about styling and design
+    b. i will come back to the home page when designing with css to make it show the design i drew the other day
+
+3. figure this out later... just focus on 1 and 2 for now
