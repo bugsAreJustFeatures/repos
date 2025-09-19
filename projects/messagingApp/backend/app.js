@@ -20,7 +20,7 @@ app.use(cors({
 app.use(express.json());
 
 // tell express where to find routes and what to append the routes onto
-app.use("/api/", router);
+app.use("/api", router);
 
 // get correct port number for server to listen for requests
 app.listen(PORT, () => {
