@@ -3,6 +3,9 @@ import { useRoutes } from 'react-router-dom';
 import './App.css';
 import Header from './Header/Header';
 import HomePage from './HomePage/HomePage';
+import LogoutPage from './LogoutPage/LogoutPage';
+import LoginPage from './LoginPage/LoginPage';
+import RegisterPage from './RegisterPage/RegisterPage';
 
 function App() {
 
@@ -14,10 +17,22 @@ function App() {
         {
           index: true,
           element: <HomePage />,
-        }
-      ]
-    }
-  ])
+        },
+        {
+          path: "/logout",
+          element: <LogoutPage />,
+        },
+        {
+          path: "/login",
+          element: <LoginPage />,
+        },
+        {
+          path: "/register",
+          element: <RegisterPage />,
+        },
+      ],
+    },
+  ]);
 
   return routes;
 };

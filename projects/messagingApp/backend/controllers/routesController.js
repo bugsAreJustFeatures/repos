@@ -59,7 +59,7 @@ async function postLogin(req, res, next) {
 
         // check there was a user
         if (!user) {
-            return res.status(400).json({ msg: "No user could be found" });
+            return res.status(202).json({ msg: "No user could be found" });
         };
 
         // a user was found so continue with login process
@@ -69,7 +69,7 @@ async function postLogin(req, res, next) {
 
         // password did not match
         if (!match) {
-            return res.status(400).json({ msg: "Password is incorrect" });
+            return res.status(202).json({ msg: "Password is incorrect" });
         };
 
         // everything was good so issue jwt
