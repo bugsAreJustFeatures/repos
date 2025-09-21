@@ -1,3 +1,6 @@
+import { PrismaClient } from "../database/generated/prisma/index.js";
+const prisma = new PrismaClient();
+
 import jwt from "jsonwebtoken";
 
 function checkJwt(req, res, next) {
@@ -9,15 +12,30 @@ function checkJwt(req, res, next) {
         const token = bearerToken.split(" ")[1]; // get the jwt from the bearer token in header
     
         // decrypt the token to check its valid
-        jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+        jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
             // jwt was invalid 
             if (err) {
                 return res.status(403).json({ msg: "JWT was invalid" });
             };
     
-            // valid jwt
-            req.user = user;
-            return res.status(200).json({ msg: "JWT is valid" });
+            // valid jwt - find user in db and send to frontend
+            try {
+                const findUser = await prisma.users.findFirst({
+                    where: {
+                        id: user.id,
+                    },
+                });
+
+                // check that user was found
+                if (!findUser) {
+                    return res.status(401).json({ msg: "No user could be found and authenticated" });
+                };
+
+                // found user
+                return res.status(200).json({ msg: "JWT is valid and user was found", user: findUser.username });
+            } catch (err) {
+                return res.status(500).json({ err });
+            };
         });
     } else {
         // no jwt 

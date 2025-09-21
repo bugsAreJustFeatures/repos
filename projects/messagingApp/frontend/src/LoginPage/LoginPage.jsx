@@ -36,11 +36,11 @@ export default function LoginPage() {
                 setFormError(true);
             };
 
-            // user input was good 
+            // user input was good but response from api was not
             if (!response.ok) {
                 console.error("Response from server was not ok - Could not log user in!");
 
-            } else {
+            } else { // all was good
                 // read response and get jwt to store in local storage
                 const data = await response.json();
                 localStorage.setItem("main", data.accessToken);
