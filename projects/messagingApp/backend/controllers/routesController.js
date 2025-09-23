@@ -145,7 +145,67 @@ const postRegister = [
     };
 }];
 
+async function postCreateChat(req, res, next) {
+
+    const usernames = [req.body.username];
+    const currentUserId = { id: req.user.sub }; // the user making the chat in the form that the prisma query below will be like so i can easily push into the array made below
+    let chatUsers = [];
+    
+    // try to check users exist and add all their id's into an array if they do
+    try {
+        chatUsers = await prisma.users.findMany({
+            where: {
+                username: { in: usernames },
+            },
+            select: {
+                id: true,
+            },
+        });
+
+        console.log("usernames: ", usernames)
+        console.log("usernamesLength: ", usernames.length)
+        console.log("chatUsers: ", chatUsers)
+        console.log("chatUsersLength: ", chatUsers.length)
+
+
+        // if one or more users doesnt exist
+        if (chatUsers.length !== usernames.length) {
+            return res.status(400).json({ msg: "One or more of the users could not be found." });
+        } else { // all found so add the current user to it
+            chatUsers.push(currentUserId)
+            console.log(chatUsers)
+        };
+
+    } catch (err) {
+        return res.status(500).json({ err });
+    };
+
+    // try to create a chat and put these users inside of it - updates both tables
+    try {
+        const createChat = await prisma.chats.create({
+            data: {
+                users: {
+                    create: chatUsers.map(user => ({
+                        user: {
+                            connect: { id: user.id },
+                        },
+                    })),
+                },
+            },
+        });
+
+        console.log(createChat)
+
+        if (!createChat) {
+            return res.status(500).json({ msg: "Could not create chat." });
+        };
+    } catch (err) {
+        return res.status(500).json({ msg: "Error whilst making chat", err })
+    }
+};
+
 export {
     postLogin,
     postRegister,
+    postCreateChat,
 }

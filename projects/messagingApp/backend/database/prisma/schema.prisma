@@ -14,8 +14,40 @@ datasource db {
   url      = env("LOCAL_DATABASE_URL")
 }
 
-model users {
-  id String @default(uuid())
+model users { // all the users
+  id String @id @default(uuid())
   username String @unique
   password String
+
+  chats chatUsers[] // links each user to each of the chats that they are in
+  messages messages[] // all the messages from a user
+}
+
+model chats { // all the chats
+  id String @id @default(uuid())
+  name String?
+  created_at DateTime @default(now())
+
+  users chatUsers[] // links each chat with a group of users
+  messages messages[] // all the messages in each chat
+}
+
+model messages {  
+  id String @id @default(uuid())
+  message_content String
+  creation_time DateTime @default(now())
+  chatId String
+  userId String
+
+  chat chats @relation(fields: [chatId], references: [id]) // this is fk the chat messages
+  user users @relation(fields: [userId], references: [id]) //  this is fk for user messages
+}
+
+model chatUsers { // links what users are in what chat
+  id String @id @default(uuid())
+  userId String
+  chatId String
+
+  user users @relation(fields: [userId], references: [id]) // this is fk for each chat that each user is in
+  chat chats @relation(fields: [chatId], references: [id]) // this is fk for each user and each chat they are in
 }

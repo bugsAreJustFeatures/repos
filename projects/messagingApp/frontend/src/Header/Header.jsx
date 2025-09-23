@@ -13,7 +13,6 @@ export default function Header() {
     const location = useLocation();
 
     useEffect(() => {
-        console.log(location)
         async function checkAuth() {
             try {
                 const response = await fetch("/api/checkAuth", {
@@ -31,9 +30,8 @@ export default function Header() {
                 console.log(data)
                 // user is logged in
                 if (response.status == 200) {
-                    console.log(200)
 
-                    setUsername(data.user); // update state with username
+                    setUsername(data.username); // update state with username
                     setLoggedIn(true);
 
                 } else if (response.status == 401 || response.status == 403) { // user is not logged in

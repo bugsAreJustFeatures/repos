@@ -50,9 +50,75 @@ export default function HomePage() {
         checkAuth();
     }, []);
 
+    async function handleCreateChat(e) {
+        // prevent default form
+        e.preventDefault();
+
+        const username = e.target.addUserInput.value;
+
+        try {
+            const response = await fetch("/api/createChat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("main")}`,
+                },
+                body: JSON.stringify({
+                    username,
+                }),
+            });
+
+            // check response
+
+            //read response
+            const data = await response.json();
+            console.log(data);
+
+            if (!response.ok) {
+                console.error("Something went wrong with API response")
+            };
+        } catch (err) {
+            console.error("Unexpected error occured: ", err);
+        };
+    };
+
+    async function handleMessageSubmit(e) {
+        // prevent default form 
+        e.preventDefault();
+
+        const message = e.target.messageContent.value; // get user message
+
+
+    };
+
     return (
         <div id={styles.wrapper}>
-            {loggedIn ? <p>Youre logged in</p> : <p>Youre not logged in</p>}
+            {loggedIn && (
+                <div id={styles.loggedInWrapper}>
+
+                    <div id={styles.createChatWrapper}>
+                        <form onSubmit={(e) => {handleCreateChat(e)}}>
+                            <label htmlFor="addUserInput">Add User:</label>
+                            <input type="text" name="addUserInput" id={styles.addUserInput} defaultValue={"123"} placeholder="To add someone, enter their username here"/>
+
+                            <button type="submit">Start chatting</button>
+                        </form>
+                    </div>
+
+                    <div id={styles.messagesWrapper}>
+
+                    </div>
+
+                    <div id={styles.messageFormWrapper}>
+                        <form onSubmit={(e) => {handleMessageSubmit(e)}}>
+                            <label htmlFor="messageContent">Send Message:</label>
+                            <input type="text" name="messageContent" id={styles.messageContentInput} placeholder="Send a Message" defaultValue={"Hello World!"}/>
+
+                            <button type="submit">&#129130;</button>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     )
 };

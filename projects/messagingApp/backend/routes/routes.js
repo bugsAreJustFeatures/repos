@@ -1,14 +1,16 @@
 import { Router } from "express";
 const router = Router();
 
-import { postLogin, postRegister } from "../controllers/routesController.js";
+import { postCreateChat, postLogin, postRegister } from "../controllers/routesController.js";
 
-import { checkJwt } from "../controllers/jwtController.js";
+import { checkJwtMiddleware, checkJwtRouteHandler } from "../controllers/jwtController.js";
 
 router.post("/login", postLogin);
 
 router.post("/register", postRegister);
 
-router.post("/checkAuth", checkJwt);
+router.post("/checkAuth", checkJwtRouteHandler);
+
+router.post("/createChat", checkJwtMiddleware, postCreateChat)
 
 export default router;
