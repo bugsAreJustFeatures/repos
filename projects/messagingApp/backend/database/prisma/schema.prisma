@@ -4,6 +4,13 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+
+// -- Self-Note -- \\
+
+// [] = the "1" part of relations "1-m" for example
+// @relation() = the "many" part of relation "many-1" for example
+
+
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
@@ -19,16 +26,16 @@ model users { // all the users
   username String @unique
   password String
 
-  chats chatUsers[] // links each user to each of the chats that they are in
+  chats chat_users[] // links each user to each of the chats that they are in
   messages messages[] // all the messages from a user
 }
 
 model chats { // all the chats
   id String @id @default(uuid())
-  name String?
+  name String @default(uuid())
   created_at DateTime @default(now())
 
-  users chatUsers[] // links each chat with a group of users
+  users chat_users[] // links each chat with a group of users
   messages messages[] // all the messages in each chat
 }
 
@@ -43,7 +50,7 @@ model messages {
   user users @relation(fields: [userId], references: [id]) //  this is fk for user messages
 }
 
-model chatUsers { // links what users are in what chat
+model chat_users { // links what users are in what chat
   id String @id @default(uuid())
   userId String
   chatId String

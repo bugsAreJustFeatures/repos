@@ -68,6 +68,8 @@ export default function Header() {
                         <Link to={"/logout"}>Logout</Link>
                         |
                         <Link to={`/users/${username}`}>{username}</Link>
+                        |
+                        <Link to={"/my-chats"}>My Chats</Link>
                     </div>
                 ) : (
                     <div id={styles.notLoggedInLinksWrapper}>

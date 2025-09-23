@@ -45,6 +45,39 @@ const registerValidation = [
         }).withMessage("Passwords do not match"),
 ];
 
+async function getFetchChats(req, res, next) {
+    const userId = req.user.sub;
+
+    // try to get all the chats of the user and send to frontend
+    try {
+        const userChats = await prisma.chats.findMany({
+            where: {
+                users: {
+                    some: {
+                        userId,
+                    },
+                },
+            },
+        });
+
+        // search went wrong with search
+        if (!userChats) {
+            return res.status(500).json({ msg: "Something went wrong searching for chats" });
+        };
+
+        // user has no chats
+        if (userChats.length == 0) {
+            return res.status(200).json({ msg: "No chats" });
+        } else { // user does have chats
+            return res.status(200).json({ msg: "Found chats", chats: userChats });
+        };
+
+    } catch (err) {
+        console.error(err)
+        return res.status(500).json({ err });
+    };
+};
+
 async function postLogin(req, res, next) {
     const username = req.body.username;
     const password = req.body.password;
@@ -199,12 +232,16 @@ async function postCreateChat(req, res, next) {
         if (!createChat) {
             return res.status(500).json({ msg: "Could not create chat." });
         };
+
+        // all went well so return success and chat name
+        return res.status(201).json({ msg: "Chat was created", chatName: createChat.name });
     } catch (err) {
         return res.status(500).json({ msg: "Error whilst making chat", err })
-    }
+    };
 };
 
 export {
+    getFetchChats,
     postLogin,
     postRegister,
     postCreateChat,
