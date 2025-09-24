@@ -98,11 +98,13 @@ export default function MyChatsPage() {
                 const data = await response.json();
                 console.log(data);
     
+                // check response was ok
                 if (!response.ok) {
                     console.error("Something went wrong with API response")
                 };
     
-                
+                // chat was made so take user to it
+                navigate(`/my-chats/${data.chatName}`);
             } catch (err) {
                 console.error("Unexpected error occured: ", err);
             };

@@ -78,6 +78,56 @@ async function getFetchChats(req, res, next) {
     };
 };
 
+async function getFetchMessages(req, res, next) {
+    const chatName = req.params.chatName;
+    let chat = [];
+    // try to find the chatId of a chat wiht the chatName provided above
+    try {
+        chat = await prisma.chats.findFirst({
+            where: {
+                name: chatName,
+            },
+            select: {
+                id: true,
+            },
+        });
+
+        console.log("chat: ", chat)
+
+        // check it exists
+        if (chat.length == 0) {
+            return res.status(500).json({ msg: "Could not find a chat with the name provided." });
+        };
+
+    } catch (err) {
+        return res.status(500).json({ msg: "Error occured whilst trying to find the chat", err });
+    };
+
+    // try to fetch all messagesof a chat wiht the chatName provided above
+    try {
+        const chatMessages = await prisma.messages.findMany({
+            where: {
+                chatId: chat.id,
+            },
+            orderBy: {
+                creation_time: "asc",
+            },
+        });
+
+        console.log("chatMessages: ", chatMessages);
+
+        // check if theres any messages
+        if (chatMessages.length == 0) {
+            return res.status(200).json({ msg: "Chat has no messages.", chatMessages: [] });
+        };
+
+        // there are messages
+        return res.status(200).json({ msg: "Chat has messages.", chatMessages: chatMessages })
+    } catch (err) {
+        return res.status(500).json({ err });
+    };
+};
+
 async function postLogin(req, res, next) {
     const username = req.body.username;
     const password = req.body.password;
@@ -242,6 +292,7 @@ async function postCreateChat(req, res, next) {
 
 export {
     getFetchChats,
+    getFetchMessages,
     postLogin,
     postRegister,
     postCreateChat,

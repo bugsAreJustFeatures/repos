@@ -52,7 +52,7 @@ export default function HomePage() {
 
     
     return (
-        <div>
+        <div id={styles.wrapper}>
             {loggedIn ? (
                 <div>
                     <p>Youre logged in</p>
