@@ -43,6 +43,7 @@ model messages {
   id String @id @default(uuid())
   message_content String
   creation_time DateTime @default(now())
+  username String 
   chatId String
   userId String
 

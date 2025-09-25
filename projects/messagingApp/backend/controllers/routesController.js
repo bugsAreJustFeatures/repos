@@ -80,6 +80,8 @@ async function getFetchChats(req, res, next) {
 
 async function getFetchMessages(req, res, next) {
     const chatName = req.params.chatName;
+    const currentUserId = req.user.sub;
+    console.log("currentUserId :", currentUserId);
     let chat = [];
     // try to find the chatId of a chat wiht the chatName provided above
     try {
@@ -121,8 +123,19 @@ async function getFetchMessages(req, res, next) {
             return res.status(200).json({ msg: "Chat has no messages.", chatMessages: [] });
         };
 
-        // there are messages
-        return res.status(200).json({ msg: "Chat has messages.", chatMessages: chatMessages })
+        // there are messages so split currentUser and other user chats up to display on frontend properly
+        const currentUserMessages = [];
+        const otherUserMessages = [];
+
+        chatMessages.map((msg) => {
+            if (msg.userId == currentUserId) { // is a currentUser message
+                currentUserMessages.push([msg.message_content]);
+            } else { // another user made this message
+                otherUserMessages.push([msg.message_content]); /// ---LEFT OFF HERE-- ///
+            };
+        });
+
+        return res.status(200).json({ msg: "Chat has messages.", currentUserMessages, otherUserMessages });
     } catch (err) {
         return res.status(500).json({ err });
     };
@@ -290,10 +303,72 @@ async function postCreateChat(req, res, next) {
     };
 };
 
+async function postSendMessage(req, res, next) {
+    const currentUserId = req.user.sub; // get the user who sent the message
+    const message = req.body.message; // the message the user wants to send
+    const chatName = req.body.chatName; // the name of the chat
+    let currentUser = [];
+    let chat = [];
+
+    // try to find username of currentUser
+    try {
+        currentUser = await prisma.users.findFirst({
+            where: {
+                id: currentUserId,
+            },
+            select: {
+                username: true,
+            },
+        });
+
+        console.log(currentUser.username)
+
+        // check if the user was found
+        if (currentUser.length == 0) {
+            return res.status(401).json({  msg: "Could not find the user who send the message" })
+        };
+    } catch (err) {
+        return res.status(500).json({ err });
+    };
+
+    // try to find the chat and get the chatId
+    try {
+        chat = await prisma.chats.findFirst({
+            where: {
+                name: chatName,
+            },
+            select: {
+                id: true,
+            },
+        });
+
+        if (chat.length == 0) {
+            return res.status(401).json({ msg: "Could not find the chat the user is in" });
+        };
+    } catch (err) {
+        return res.status(500).json({ err });
+    };
+
+    // try to add message to database
+    try {
+        const addMessage = await prisma.messages.create({
+            data: {
+                message_content: message,
+                username: currentUser.username,
+                chatId: chat.id,
+                userId: currentUserId,
+            }
+        })
+    } catch (err) {
+        return res.status(500).json({ err });
+    };
+};  
+
 export {
     getFetchChats,
     getFetchMessages,
     postLogin,
     postRegister,
     postCreateChat,
+    postSendMessage,
 }

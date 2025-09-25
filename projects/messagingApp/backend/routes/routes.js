@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router();
 
-import { getFetchChats, getFetchMessages, postCreateChat, postLogin, postRegister } from "../controllers/routesController.js";
+import { getFetchChats, getFetchMessages, postCreateChat, postLogin, postRegister, postSendMessage } from "../controllers/routesController.js";
 
 import { checkJwtMiddleware, checkJwtRouteHandler } from "../controllers/jwtController.js";
 
@@ -16,5 +16,7 @@ router.post("/register", postRegister);
 router.post("/checkAuth", checkJwtRouteHandler);
 
 router.post("/createChat", checkJwtMiddleware, postCreateChat);
+
+router.post("/sendMessage", checkJwtMiddleware, postSendMessage);
 
 export default router;
