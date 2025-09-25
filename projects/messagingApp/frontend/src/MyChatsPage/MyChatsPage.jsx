@@ -56,17 +56,16 @@ export default function MyChatsPage() {
                     },
                 });
 
-                console.log(response)
+                // read response
                 const data = await response.json();
-                console.log(data)
                 
                 if (!response.ok) {
                     console.error("Could not fetch chats")
                 };
-
+                //update state with fetched chats
                 setChats(data.chats);
             } catch (err) {
-                console.error("API Error", err);
+                // console.error("API Error", err);
             };
         };
 
@@ -78,7 +77,7 @@ export default function MyChatsPage() {
             // prevent default form
             e.preventDefault();
     
-            const username = e.target.addUserInput.value;
+            const username = e.target.addUserInput.value; // get the username that the user wants to create a chat with
     
             try {
                 const response = await fetch("/api/createChat", {
@@ -96,7 +95,6 @@ export default function MyChatsPage() {
     
                 //read response
                 const data = await response.json();
-                console.log(data);
     
                 // check response was ok
                 if (!response.ok) {
@@ -106,7 +104,7 @@ export default function MyChatsPage() {
                 // chat was made so take user to it
                 navigate(`/my-chats/${data.chatName}`);
             } catch (err) {
-                console.error("Unexpected error occured: ", err);
+                // console.error("Unexpected error occured: ", err);
             };
         };
 

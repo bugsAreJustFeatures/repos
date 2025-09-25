@@ -41,13 +41,14 @@ export default function RegisterPage() {
                     return;
                 } else {
                     // unknown error internally
-                    console.error("Could not register user, issue with API!");
+                    // console.error("Could not register user, issue with API!");
                 };
             };
 
+            // user was registered so send them to login page
             navigate("/login")
         } catch (err) {
-            console.error("Unknown error when registering new user: ", err);
+            // console.error("Unknown error when registering new user: ", err);
         };
     };
 

@@ -45,11 +45,12 @@ export default function LoginPage() {
                 const data = await response.json();
                 localStorage.setItem("main", data.accessToken);
 
+                // send user to home page
                 navigate("/");
             };
 
         } catch (err) {
-            console.error("Unknown error occured when trying to log user in: ", err);
+            // console.error("Unknown error occured when trying to log user in: ", err);
         };
     };
 

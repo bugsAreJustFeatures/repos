@@ -38,18 +38,17 @@ export default function HomePage() {
                         navigate("/register")
 
                     } else {
-                        console.error("Unknown error occured");
+                        // console.error("Unknown error occured");
                     };
                 };
 
             } catch (err) {
-                throw new Error("Something went wrong: ", err);
+                // throw new Error("Something went wrong: ", err);
             };
         };
 
         checkAuth();
     }, []);
-
     
     return (
         <div id={styles.wrapper}>

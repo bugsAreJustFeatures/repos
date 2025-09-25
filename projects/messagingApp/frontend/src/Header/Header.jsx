@@ -56,7 +56,7 @@ export default function Header() {
                     <img alt="brand logo"/>
                 </div>
                 <div id={styles.logoNameContainer}>
-                    <p>uMessage</p>
+                    <p>ouiMessage</p>
                 </div>
 
                 {loggedIn ? (

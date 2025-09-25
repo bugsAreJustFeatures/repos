@@ -73,7 +73,7 @@ async function getFetchChats(req, res, next) {
         };
 
     } catch (err) {
-        console.error(err)
+        // console.error(err)
         return res.status(500).json({ err });
     };
 };
@@ -81,7 +81,6 @@ async function getFetchChats(req, res, next) {
 async function getFetchMessages(req, res, next) {
     const chatName = req.params.chatName;
     const currentUserId = req.user.sub;
-    console.log("currentUserId :", currentUserId);
     let chat = [];
     // try to find the chatId of a chat wiht the chatName provided above
     try {
@@ -93,8 +92,6 @@ async function getFetchMessages(req, res, next) {
                 id: true,
             },
         });
-
-        console.log("chat: ", chat)
 
         // check it exists
         if (chat.length == 0) {
@@ -116,8 +113,6 @@ async function getFetchMessages(req, res, next) {
             },
         });
 
-        console.log("chatMessages: ", chatMessages);
-
         // check if theres any messages
         if (chatMessages.length == 0) {
             return res.status(200).json({ msg: "Chat has no messages.", chatMessages: [] });
@@ -126,8 +121,6 @@ async function getFetchMessages(req, res, next) {
         // there are messages so split currentUser and other user chats up to display on frontend properly
         const currentUserMessages = [];
         const otherUserMessages = [];
-
-        console.log(chatMessages)
 
         chatMessages.map((msg) => {
             if (msg.userId == currentUserId) { // is a currentUser message
@@ -268,18 +261,11 @@ async function postCreateChat(req, res, next) {
             },
         });
 
-        console.log("usernames: ", usernames)
-        console.log("usernamesLength: ", usernames.length)
-        console.log("chatUsers: ", chatUsers)
-        console.log("chatUsersLength: ", chatUsers.length)
-
-
         // if one or more users doesnt exist
         if (chatUsers.length !== usernames.length) {
             return res.status(400).json({ msg: "One or more of the users could not be found." });
         } else { // all found so add the current user to it
             chatUsers.push(currentUserId)
-            console.log(chatUsers)
         };
 
     } catch (err) {
@@ -299,8 +285,6 @@ async function postCreateChat(req, res, next) {
                 },
             },
         });
-
-        console.log(createChat)
 
         if (!createChat) {
             return res.status(500).json({ msg: "Could not create chat." });
@@ -366,7 +350,11 @@ async function postSendMessage(req, res, next) {
                 chatId: chat.id,
                 userId: currentUserId,
             }
-        })
+        });
+
+        if (!addMessage) {
+            return res.status(500).json({ msg: "Something went wrong when trying to send message" });
+        };
     } catch (err) {
         return res.status(500).json({ err });
     };

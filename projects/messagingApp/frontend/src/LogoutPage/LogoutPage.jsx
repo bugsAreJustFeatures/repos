@@ -6,8 +6,10 @@ export default function LogoutPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        // remvoe jwt from storage and unauthenticate user
         localStorage.removeItem("main");
 
+        // make it seem smoother and display the message below to allow user to understand
         setTimeout(() => {
             navigate("/");
         }, 750);
