@@ -36,7 +36,8 @@ export default function ChatPage() {
                 };
 
                 // response was good so check who user made the message and update the relevant states
-               
+                setCurrentUserMessages(data.currentUserMessages);
+                setOtherUserMessages(data.otherUserMessages);
             } catch (err) {
                 console.error("Unexpected Error: ", err);
             };
@@ -85,14 +86,35 @@ export default function ChatPage() {
 
             <div id={styles.otherUserMessages}>
 
-                Other user messages: <br />
+                {otherUserMessages && (
+                    <> 
+                        {otherUserMessages.map((msg) => (
+                            <div>
+                                {msg.username}:
+                                {msg.message}
+                                {msg.creation}
+                            </div>
+                        ))}
+                    </>
+                )}
 
 
             </div>
 
             <div id={styles.userMessages}>
 
-                Your messages: <br />
+                {currentUserMessages && (
+                    <> 
+                        {currentUserMessages.map((msg) => (
+                            <div>
+                                You:
+                                {msg.message}
+                                {msg.creation}
+                                
+                            </div>
+                        ))}
+                    </>
+                )}
 
             
             </div>

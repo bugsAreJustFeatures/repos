@@ -127,11 +127,21 @@ async function getFetchMessages(req, res, next) {
         const currentUserMessages = [];
         const otherUserMessages = [];
 
+        console.log(chatMessages)
+
         chatMessages.map((msg) => {
             if (msg.userId == currentUserId) { // is a currentUser message
-                currentUserMessages.push([msg.message_content]);
+                currentUserMessages.push({
+                    username: msg.username,
+                    message: msg.message_content,
+                    creation: msg.creation_time, 
+                });
             } else { // another user made this message
-                otherUserMessages.push([msg.message_content]); /// ---LEFT OFF HERE-- ///
+                otherUserMessages.push({
+                    username: msg.username,
+                    message: msg.message_content,
+                    creation: msg.creation_time, 
+                });
             };
         });
 
@@ -320,8 +330,6 @@ async function postSendMessage(req, res, next) {
                 username: true,
             },
         });
-
-        console.log(currentUser.username)
 
         // check if the user was found
         if (currentUser.length == 0) {
