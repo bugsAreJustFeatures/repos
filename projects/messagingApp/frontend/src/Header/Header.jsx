@@ -25,9 +25,7 @@ export default function Header() {
 
                 // check response
 
-                console.log(response)
                 const data = await response.json();
-                console.log(data)
                 // user is logged in
                 if (response.status == 200) {
 
@@ -35,11 +33,9 @@ export default function Header() {
                     setLoggedIn(true);
 
                 } else if (response.status == 401 || response.status == 403) { // user is not logged in
-                    console.log(401 + " or " + 403)
                     setLoggedIn(false);
 
                 } else { // an error occured
-                    console.log(error)
                     setLoggedIn(false);
                     console.error("Something went wrong whilst checking user credentials.");
 
