@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css"
 import { useState } from "react";
 
-
 export default function LoginPage() {
 
     // state variables
@@ -56,30 +55,32 @@ export default function LoginPage() {
 
     return (
 
-        <div id={styles.registerContentWrapper}>
-            {formError && (
-                <div id={styles.formErrorWrapper}>
-                    <ul>
-                        <li>
-                            <p>
-                                Username or password was incorrect
-                            </p>
-                        </li>
-                    </ul>
+        <div className="pageWrapper">
+            <div id={styles.registerContentWrapper}>
+                {formError && (
+                    <div id={styles.formErrorWrapper}>
+                        <ul>
+                            <li>
+                                <p>
+                                    Username or password was incorrect
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                )}
+
+                <div id={styles.loginFormWrapper}>
+                    <h2>Login</h2>
+                    <form onSubmit={(e) => handleLoginForm(e)}> 
+                        <label htmlFor="loginUsername">Username:</label>
+                        <input type="text" name="loginUsername" id={styles.loginUsername} required />
+
+                        <label htmlFor="loginPassword">Password:</label>
+                        <input type="password" name="loginPassword" id={styles.loginPassword} required />  
+                        
+                        <button type="submit">Login</button>
+                    </form>
                 </div>
-            )}
-
-            <div id={styles.loginFormWrapper}>
-                <h2>Login</h2>
-                <form onSubmit={(e) => handleLoginForm(e)}> 
-                    <label htmlFor="loginUsername">Username:</label>
-                    <input type="text" name="loginUsername" id={styles.loginUsername} required />
-
-                    <label htmlFor="loginPassword">Password:</label>
-                    <input type="password" name="loginPassword" id={styles.loginPassword} required />  
-                    
-                    <button type="submit">Login</button>
-                </form>
             </div>
         </div>
     )

@@ -5,13 +5,14 @@ html, body {
   padding: 0;
   overflow: hidden;
   font-family: monospace;
-  background-color: #D1D8BE;
+  background-color: #D1D8BE;  
 }
 
 .pageWrapper {
-  height: 90%;
-  margin: 0.25vh 25vw;
-  background-color: #D9A299;
-  border: thin solid black;
+  height: 88%;
+  margin: 0vh 25vw;
+  padding: 0.25rem 0.5rem;
+  border: 3px solid #76c2b291;
+  border-radius: 6px;
 }
 

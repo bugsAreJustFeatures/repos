@@ -62,7 +62,6 @@ function checkJwtRouteHandler(req, res, next) {
                 return res.status(403).json({ msg: "JWT was invalid" });
             };
     
-            console.log("user: ", user)
             // valid jwt - find user in db and send to frontend
             try {
                 const findUser = await prisma.users.findFirst({
@@ -73,7 +72,6 @@ function checkJwtRouteHandler(req, res, next) {
                         username: true,
                     },
                 });
-                console.log("checkJwtRouteHandler: ", findUser)
                 // check that user was found
                 if (!findUser) {
                     console.log("FIND USER CANT BE FOUND")

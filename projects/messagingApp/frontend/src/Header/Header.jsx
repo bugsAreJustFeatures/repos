@@ -51,12 +51,20 @@ export default function Header() {
     return (
         <>
             <div id={styles.wrapper}>
+                <div id={styles.permanentLinks}>
 
-                <div id={styles.logoImageContainer}>
-                    <img alt="brand logo"/>
-                </div>
-                <div id={styles.logoNameContainer}>
-                    <p>ouiMessage</p>
+                    <div id={styles.logoImageWrapper}>
+                        <img alt="brand logo"/>
+                    </div>
+
+                    <div id={styles.logoNameWrapper}>
+                        <Link to={"/"}>ouiMessage</Link>
+                    </div>
+
+                    <div id={styles.contactUsLinkWrapper}>
+                        <Link to={"/contact"}>Contact Us</Link>
+                    </div>
+                    
                 </div>
 
                 {loggedIn ? (
@@ -66,13 +74,14 @@ export default function Header() {
                         <Link to={`/users/${username}`}>{username}</Link>
                         |
                         <Link to={"/my-chats"}>My Chats</Link>
+                        |
+                        <Link to={"/settings"}>Settings</Link>
                     </div>
                 ) : (
                     <div id={styles.notLoggedInLinksWrapper}>
                         <Link to={"/login"}>Login</Link> 
                         <Link to={"/register"}>Register</Link> 
                     </div>
-
                 )}
 
             </div>

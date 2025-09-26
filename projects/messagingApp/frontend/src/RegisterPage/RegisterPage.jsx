@@ -53,36 +53,38 @@ export default function RegisterPage() {
     };
 
     return (
-        <div id={styles.registerContentWrapper}>
+        <div className="pageWrapper">
+            <div id={styles.registerContentWrapper}>
 
-            <h2>Register</h2>
+                <h2>Register</h2>
 
-            {validationErrors && (
-                <div id={styles.validationErrorWrapper}>
-                    <ul id={styles.validationErrorListWrapper}>
-                        {validationErrors.map((err, index) => (
-                            <li key={index} id={styles.validationMessageWrapper}>
-                                <p>{err.msg}</p>
-                            </li>
-                            ))
-                        }
-                    </ul>
+                {validationErrors && (
+                    <div id={styles.validationErrorWrapper}>
+                        <ul id={styles.validationErrorListWrapper}>
+                            {validationErrors.map((err, index) => (
+                                <li key={index} id={styles.validationMessageWrapper}>
+                                    <p>{err.msg}</p>
+                                </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                )}
+                                
+                <div id={styles.registerFormWrapper}>
+                    <form onSubmit={(e) => handleRegisterForm(e)}>
+                        <label htmlFor="registerUsername">Username:</label>
+                        <input type="text" name="registerUsername" id={styles.registerUsername} required placeholder="required" defaultValue={"abc"}/>
+
+                        <label htmlFor="registerPassword">Enter A Password:</label>
+                        <input type="password" name="registerPassword" id={styles.registerPassword} required placeholder="required" defaultValue={"abc"}/>
+
+                        <label htmlFor="registerConfirmPassword">Confirm Password:</label>
+                        <input type="password" name="registerConfirmPassword" id={styles.registerConfirmPassword} required placeholder="required" defaultValue={"abc"}/>
+
+                        <button type="submit">Create Account</button>
+                    </form>
                 </div>
-            )}
-                            
-            <div id={styles.registerFormWrapper}>
-                <form onSubmit={(e) => handleRegisterForm(e)}>
-                    <label htmlFor="registerUsername">Username:</label>
-                    <input type="text" name="registerUsername" id={styles.registerUsername} required placeholder="required" defaultValue={"abc"}/>
-
-                    <label htmlFor="registerPassword">Enter A Password:</label>
-                    <input type="password" name="registerPassword" id={styles.registerPassword} required placeholder="required" defaultValue={"abc"}/>
-
-                    <label htmlFor="registerConfirmPassword">Confirm Password:</label>
-                    <input type="password" name="registerConfirmPassword" id={styles.registerConfirmPassword} required placeholder="required" defaultValue={"abc"}/>
-
-                    <button type="submit">Create Account</button>
-                </form>
             </div>
         </div>
     )
