@@ -1,5 +1,5 @@
 #wrapper {
     height: 10%;
     width: 100%;
-    border: 1px solid red;
+    box-shadow: 0 5px 25px ;
 }

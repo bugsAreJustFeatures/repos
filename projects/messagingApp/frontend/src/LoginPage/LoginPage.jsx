@@ -73,10 +73,10 @@ export default function LoginPage() {
                 <h2>Login</h2>
                 <form onSubmit={(e) => handleLoginForm(e)}> 
                     <label htmlFor="loginUsername">Username:</label>
-                    <input type="text" name="loginUsername" id={styles.loginUsername} required defaultValue={"abc"}/>
+                    <input type="text" name="loginUsername" id={styles.loginUsername} required />
 
                     <label htmlFor="loginPassword">Password:</label>
-                    <input type="password" name="loginPassword" id={styles.loginPassword} required defaultValue={"abc"}/>  
+                    <input type="password" name="loginPassword" id={styles.loginPassword} required />  
                     
                     <button type="submit">Login</button>
                 </form>

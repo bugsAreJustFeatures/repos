@@ -1,7 +1,9 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
-import styles from "./ChatPage.module.css";
+// CSS Note //
+//global css, define by className or id = "myClassOrId", this is from the import of App.css in the App.jsx and is passed down
+import styles from "./ChatPage.module.css"; // module css, define with jsx object syntax classNmae or id = {styles.myClassOrId}
 
 export default function ChatPage() {
 
@@ -10,8 +12,13 @@ export default function ChatPage() {
     const [otherUserMessages, setOtherUserMessages] = useState([])// holds all messages from the other users
     const [messages, setMessages] = useState([]); // holds the final messages after sorting
 
+    // ref variables
+    const chatsRef = useRef(null); // lets me hold a reference of all the chats to know when to automatically put user onto the latest message (bottom of div)
+
+    // global variables
     const params = useParams(); // get the chat name from react route param in react router url
 
+    // useEffect for things that should happen on mount (only fetching messages)
     useEffect(() => {
         async function fetchMessages() {
             // try to fetch all messages in this chat   
@@ -35,18 +42,18 @@ export default function ChatPage() {
                 // response was good so check who user made the message and update the relevant states
                 setCurrentUserMessages(data.currentUserMessages);
                 setOtherUserMessages(data.otherUserMessages);
-                setFetchedMessages(true);
             } catch (err) {
                 console.error("Unexpected Error: ", err);
             };
         };
 
         
+
         fetchMessages();
     }, [])
 
+    // useEffect for things that should happen on mount and when certain states change
     useEffect(() => {
-
         function displayChatMessages() {
             let otherUserIndex = 0; // counter to use for the index of display other user messages
             let currentUserIndex = 0;// counter to use for the index of display current user messages
@@ -61,16 +68,16 @@ export default function ChatPage() {
                     if (!currentUserMessages[currentUserIndex]) {
                         results.push(
                             <div className={styles.otherUserMessage}>
-                                <div className={styles.otherUserMessageCreation}>
+                                <div className={styles.messageCreationTime}>
                                     {otherUserMessages[otherUserIndex].creation}
                                 </div>
 
-                                <div className={styles.otherUserMessageUsername}>
-                                    {otherUserMessages[otherUserIndex].username}:
+                                <div className={styles.messageUsername}>
+                                    {otherUserMessages[otherUserIndex].username}
 
                                 </div>
 
-                                <div className={styles.otherUserMessageMessage}>
+                                <div className={styles.messageContent}>
                                     {otherUserMessages[otherUserIndex].message}
 
                                 </div>
@@ -81,16 +88,15 @@ export default function ChatPage() {
                     } else if (!otherUserMessages[otherUserIndex]) {
                         results.push(
                             <div className={styles.currentUserMessage}>
-                                <div className={styles.currentUserMessageCreation}>
+                                <div className={styles.messageCreationTime}>
                                     {currentUserMessages[currentUserIndex].creation}
                                 </div>
 
-                                <div className={styles.currentUserMessageUsername}>
-                                    {currentUserMessages[currentUserIndex].username}:
-
+                                <div className={styles.messageUsername}>
+                                    You
                                 </div>
 
-                                <div className={styles.currentUserMessageMessage}>
+                                <div className={styles.messageContent}>
                                     {currentUserMessages[currentUserIndex].message}
 
                                 </div>
@@ -101,16 +107,16 @@ export default function ChatPage() {
                     } else if (otherUserMessages[otherUserIndex].creation < currentUserMessages[currentUserIndex].creation) {// they both have messages left so check what ones are oldest
                         results.push(
                             <div className={styles.otherUserMessage}>
-                                <div className={styles.otherUserMessageCreation}>
+                                <div className={styles.messageCreationTime}>
                                     {otherUserMessages[otherUserIndex].creation}
                                 </div>
 
-                                <div className={styles.otherUserMessageUsername}>
-                                    {otherUserMessages[otherUserIndex].username}:
+                                <div className={styles.messageUsername}>
+                                    {otherUserMessages[otherUserIndex].username}
 
                                 </div>
 
-                                <div className={styles.otherUserMessageMessage}>
+                                <div className={styles.messageContent}>
                                     {otherUserMessages[otherUserIndex].message}
 
                                 </div>
@@ -121,16 +127,16 @@ export default function ChatPage() {
                     } else if (otherUserMessages[otherUserIndex].creation > currentUserMessages[currentUserIndex].creation) { // either currentUser's message is older or no other user has sent anymore messages
                         results.push(
                             <div className={styles.currentUserMessage}>
-                                <div className={styles.currentUserMessageCreation}>
+                                <div className={styles.messageCreationTime}>
                                     {currentUserMessages[currentUserIndex].creation}
                                 </div>
 
-                                <div className={styles.currentUserMessageUsername}>
-                                    {currentUserMessages[currentUserIndex].username}:
+                                <div className={styles.messageUsername}>
+                                    You
 
                                 </div>
 
-                                <div className={styles.currentUserMessageMessage}>
+                                <div className={styles.messageContent}>
                                     {currentUserMessages[currentUserIndex].message}
 
                                 </div>
@@ -146,6 +152,20 @@ export default function ChatPage() {
 
         displayChatMessages();
     }, [otherUserMessages, currentUserMessages])
+
+    // useEffect that scrolls chat to latest message
+    useEffect(() => {
+        function goToLatestChat() {
+            const chats = chatsRef.current; // set it to the DOM element
+
+            // check if there is a DOM element, basically just checks if there are any chats
+            if (chats) {
+                chats.scrollTop = chats.scrollHeight;
+            };
+        };
+
+        goToLatestChat();
+    }, [messages])
 
     async function handleSendMessage(e) {
         // prevent default form 
@@ -176,23 +196,26 @@ export default function ChatPage() {
     };
 
     return (
-        <div id={styles.wrapper}>
+        <div className="pageWrapper">
+
             <div id={styles.chatWrapper}>
-                {messages && messages.map((msg, index) => (
-                    <div className={styles.globalMessageWrapper} key={index}>
-                        {msg}
-                    </div>
-                ))}
+                <div id={styles.chatMessagesWrapper} ref={chatsRef}>
+                    {messages && messages.map((msg, index) => (
+                        <div className={styles.chatMessages} key={index}>
+                            {msg}
+                        </div>
+                    ))}
+                </div>
+
+                <div id={styles.sendMessageFormWrapper}>
+                    <form onSubmit={(e) => {handleSendMessage(e)}} id={styles.sendMessageForm}>
+                        <input type="text" name="sendMessageInput" id={styles.sendMessageInput} placeholder="Send Message" required />
+
+                        <button type="submit" id={styles.sendMessageButton}><p>&#10148;</p></button>
+                    </form>
+                </div>
             </div>
 
-            <div id={styles.sendMessageFormWrapper}>
-                <form onSubmit={(e) => {handleSendMessage(e)}}>
-                    <label htmlFor="sendMessageInput">Send Message:</label>
-                    <input type="text" name="sendMessageInput" id={styles.sendMessageInput} defaultValue={"Hello World"} required />
-
-                    <button type="submit">Send Message</button>
-                </form>
-            </div>
         </div>
     )
 };
