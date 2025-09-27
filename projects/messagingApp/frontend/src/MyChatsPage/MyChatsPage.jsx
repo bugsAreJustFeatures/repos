@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 import styles from "./MyChatsPage.module.css";
+import editIcon from "../assets/pen.png";
 
 export default function MyChatsPage() {
 
@@ -59,6 +60,7 @@ export default function MyChatsPage() {
                 // read response
                 const data = await response.json();
                 
+                console.log(data)
                 if (!response.ok) {
                     console.error("Could not fetch chats")
                 };
@@ -130,6 +132,7 @@ export default function MyChatsPage() {
                                         <Link to={`/my-chats/${chat.name}`}>
                                             {chat.name}
                                         </Link>
+
                                     </div>
                                 ))}
                             </div>

@@ -45,6 +45,26 @@ const registerValidation = [
         }).withMessage("Passwords do not match"),
 ];
 
+const changeUsernameValidation = [
+    body("newUsername")
+        .trim()
+        .isAlphanumeric().withMessage("Username can only contain numbers and letters")
+        .isLength({ min: 3, max: 15 }).withMessage("Username can only be 3 - 15 characters long")
+        .custom(async (username) => { // custom test to check if username is taken
+            const usernameExists = await prisma.users.findFirst({
+                where: {
+                    username,
+                },
+            });
+            // flip boolean to make it so if a user exists i throw error and fail the validation which will trigger the validation err and send a message to the frontend otherwise if the username is not already in use, allow it
+            if (usernameExists) {
+                throw new Error("Username already exists")
+            } else {
+                return true;
+            };
+        }),
+];
+
 async function getFetchChats(req, res, next) {
     const userId = req.user.sub;
 
@@ -360,6 +380,44 @@ async function postSendMessage(req, res, next) {
     };
 };  
 
+const postChangeUsername = [
+    changeUsernameValidation,
+    async (req, res, next) => {
+
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(409).json({ msg: errors.array() });
+        };
+
+        const newUsername = req.body.newUsername;
+        const userId = req.user.sub;
+    
+        // try to change username in db
+        try {
+            const findUser = await prisma.users.update({
+                where: {
+                    id: userId,
+                },
+                data: {
+                    username: newUsername,
+                },
+            });
+
+            console.log(findUser)
+
+            if (!findUser) {
+                return res.status(500).json({ msg: "Could not find user in database" });
+            };
+
+            return res.status(201).json({ msg: [{ msg: "Username changed" }] });
+        } catch (err) {
+            return res.status(500).json({ err });
+        };
+    },
+];
+
+
 export {
     getFetchChats,
     getFetchMessages,
@@ -367,4 +425,5 @@ export {
     postRegister,
     postCreateChat,
     postSendMessage,
+    postChangeUsername,
 }

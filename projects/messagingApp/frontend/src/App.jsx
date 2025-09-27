@@ -11,6 +11,7 @@ import ProfilePage from './ProfilePage/ProfilePage';
 import ChatPage from './ChatPage/ChatPage';
 import SettingsPage from './SettingsPage/SettingsPage';
 import ContactPage from './ContactPage/ContactPage';
+import ErrorPage from './ErrorPage/ErrorPage';
 
 function App() {
 
@@ -54,6 +55,10 @@ function App() {
         {
           path: "/contact",
           element: <ContactPage />,
+        },
+        {
+          path: "*",
+          element: <ErrorPage />,
         },
       ],
     },
