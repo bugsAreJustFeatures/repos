@@ -109,33 +109,35 @@ export default function MyChatsPage() {
         };
 
     return (
-        <div id={styles.wrapper}>
-            {loggedIn && (
-                <div id={styles.loggedInWrapper}>
+        <div className="pageWrapper">
+            <div id={styles.myChatsWrapper}>
+                {loggedIn && (
+                    <div id={styles.loggedInWrapper}>
 
-                    <div id={styles.createChatWrapper}>
-                        <form onSubmit={(e) => {handleCreateChat(e)}}>
-                            <label htmlFor="addUserInput">Start chat with user:</label>
-                            <input type="text" name="addUserInput" id={styles.addUserInput} defaultValue={"123"} placeholder="To add someone, enter their username here"/>
+                        <div id={styles.createChatWrapper}>
+                            <form onSubmit={(e) => {handleCreateChat(e)}}>
+                                <label htmlFor="addUserInput">Start chat with user:</label>
+                                <input type="text" name="addUserInput" id={styles.addUserInput} defaultValue={"123"} placeholder="To add someone, enter their username here"/>
 
-                            <button type="submit">Start chatting</button>
-                        </form>
-                    </div>
-
-                    {chats && (
-                        <div id={styles.chatListWrapper}>
-                            {chats.map((chat, index) => (
-                                <div key={index} id={`styles.chat${index}Wrapper`}> 
-                                    <Link to={`/my-chats/${chat.name}`}>
-                                        {chat.name}
-                                    </Link>
-                                </div>
-                            ))}
+                                <button type="submit">Start chatting</button>
+                            </form>
                         </div>
-                    )}
 
-                </div>
-            )}
+                        {chats && (
+                            <div id={styles.chatListWrapper}>
+                                {chats.map((chat, index) => (
+                                    <div key={index} id={`styles.chat${index}Wrapper`}> 
+                                        <Link to={`/my-chats/${chat.name}`}>
+                                            {chat.name}
+                                        </Link>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
+                    </div>
+                )}
+            </div>
         </div>
     )
 };

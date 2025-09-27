@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
 
 import styles from "./Header.module.css";
+import icon from "../../public/chat-bubble.png";
 
 export default function Header() {
 
@@ -51,38 +52,39 @@ export default function Header() {
     return (
         <>
             <div id={styles.wrapper}>
-                <div id={styles.permanentLinks}>
+                <div id={styles.logoAndName}>
 
-                    <div id={styles.logoImageWrapper}>
-                        <img alt="brand logo"/>
+                    <div id={styles.logoWrapper}>
+                        <img alt="brand logo" src={icon} id={styles.headerLogo} />
                     </div>
 
                     <div id={styles.logoNameWrapper}>
-                        <Link to={"/"}>ouiMessage</Link>
+                        <Link to={"/"} id={styles.logoName} className={styles.headerLinks}>ouiMessage</Link>
                     </div>
 
-                    <div id={styles.contactUsLinkWrapper}>
-                        <Link to={"/contact"}>Contact Us</Link>
-                    </div>
+                    
                     
                 </div>
 
-                {loggedIn ? (
-                    <div id={styles.loggedInLinksWrapper}> 
-                        <Link to={"/logout"}>Logout</Link>
-                        |
-                        <Link to={`/users/${username}`}>{username}</Link>
-                        |
-                        <Link to={"/my-chats"}>My Chats</Link>
-                        |
-                        <Link to={"/settings"}>Settings</Link>
-                    </div>
-                ) : (
-                    <div id={styles.notLoggedInLinksWrapper}>
-                        <Link to={"/login"}>Login</Link> 
-                        <Link to={"/register"}>Register</Link> 
-                    </div>
-                )}
+                <div id={styles.links}>
+                    {loggedIn ? (
+                        <>
+                            <Link to={"/my-chats"} className={styles.headerLinks}>My Chats</Link>
+                            <Link to={`/users/${username}`} className={styles.headerLinks}>{username}</Link>
+                            <Link to={"/logout"} className={styles.headerLinks}>Logout</Link>
+                            
+                            <Link to={"/settings"} className={styles.headerLinks}>Settings</Link>
+                        </>
+                        
+                    ) : (
+                        <>
+                            <Link to={"/login"} className={styles.headerLinks}>Login</Link> 
+                            <Link to={"/register"} className={styles.headerLinks}>Register</Link> 
+                        </>
+                        
+                    )} 
+                        <Link to={"/contact"} className={styles.headerLinks}>Contact Us</Link>
+                </div>
 
             </div>
 

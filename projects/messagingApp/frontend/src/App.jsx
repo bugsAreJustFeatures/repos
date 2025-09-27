@@ -9,6 +9,8 @@ import RegisterPage from './RegisterPage/RegisterPage';
 import MyChatsPage from './MyChatsPage/MyChatsPage';
 import ProfilePage from './ProfilePage/ProfilePage';
 import ChatPage from './ChatPage/ChatPage';
+import SettingsPage from './SettingsPage/SettingsPage';
+import ContactPage from './ContactPage/ContactPage';
 
 function App() {
 
@@ -44,6 +46,14 @@ function App() {
         {
           path: "/my-chats/:chatName",
           element: <ChatPage />,
+        },
+        {
+          path: "/settings",
+          element: <SettingsPage />,
+        },
+        {
+          path: "/contact",
+          element: <ContactPage />,
         },
       ],
     },
