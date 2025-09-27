@@ -1,9 +1,26 @@
 
+import styles from "./ContactPage.module.css";
+
 export default function ContactPage() {
 
     return (
         <div className="pageWrapper">
-            This is contact us page
+
+            <div id={styles.contactPageWrapper}>
+
+                <p>
+                    Email: hrobertson.contact@gmail.com
+                </p>
+                
+                <p>
+                    GitHub: https://github.com/bugsAreJustFeatures
+                </p>
+
+                <p>
+                    See you there &#128075;
+                </p>
+
+            </div>
         </div>
     )
 };
